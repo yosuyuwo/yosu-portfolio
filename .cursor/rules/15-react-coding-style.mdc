@@ -56,9 +56,15 @@ export function UserCard({ user, onSelect }: Props) {
 - Never put `"use client"` on `page.tsx` — keep the page a Server Component and extract interactive regions into Client Components
 - Never import server-only modules into client files
 
-## Prefer shadcn / Base UI Over Native HTML
+## shadcn as UI foundation (HARD RULE)
 
-When a primitive exists in `components/ui/`, use it (`Button`, `Input`, etc.). Add missing wrappers via `pnpm dlx shadcn@latest add …` before inventing one-offs.
+Never invent UI primitives or one-off styled controls from raw HTML/`div` soup. Always start from shadcn:
+
+1. Prefer an existing primitive in `components/ui/` (`Button`, `Input`, `Card`, etc.).
+2. If it is missing, add it with `pnpm dlx shadcn@latest add <component>` first.
+3. Build feature UI by composing and wrapping those primitives — extend via props, variants, and thin feature components, not by reimplementing the control.
+
+Raw elements are only acceptable when no shadcn (or Base UI) primitive can express the need (e.g. a layout `div`, semantic `main`/`section`, or a GSAP animation host). Form controls, dialogs, menus, tabs, and similar interactive UI always go through shadcn.
 
 ### Field + TanStack Form
 

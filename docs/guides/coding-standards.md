@@ -14,8 +14,10 @@ Agent-facing rules live in [`.cursor/rules/`](../../.cursor/rules/). Always-on r
 | `16-react-hooks` | Hooks discipline |
 | `17-react-patterns` | Suspense, forms, data fetching |
 | `18-react-security` | XSS, URLs, server trust |
-| `20-portfolio-stack` | TanStack Form, Zod, GSAP, nuqs, Supabase, tRPC, R2 |
+| `20-portfolio-stack` | TanStack Form, Zod, GSAP, nuqs, Supabase, tRPC, R2; shadcn-first UI |
 | `21-file-organization` | Colocate → lift; kebab-case; skeletons |
+
+**UI hard rule:** never invent UI components from scratch. Add the shadcn primitive (`pnpm dlx shadcn@latest add …`) and compose/extend it.
 
 Stack scaffolding:
 

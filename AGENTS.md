@@ -11,6 +11,7 @@ Follow [`.cursor/rules/`](.cursor/rules/) (summary: [`docs/guides/coding-standar
 Hard rules for this repo:
 
 - File organization: colocate then lift — see `21-file-organization.mdc` (supersedes hybrid `sections/` layouts)
+- UI: never invent primitives — add/use shadcn (`pnpm dlx shadcn@latest add …`), then compose on top — see `15-react-coding-style.mdc` / `20-portfolio-stack.mdc`
 - Stack: TanStack Form + Zod, GSAP, nuqs, Supabase (works), tRPC (API), R2 CDN consume-only — see `20-portfolio-stack.mdc`
 
 ## Agent skills

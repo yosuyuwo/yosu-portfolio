@@ -7,6 +7,14 @@ alwaysApply: true
 
 Canonical libraries for this site. Prefer these over alternatives unless an ADR says otherwise.
 
+## shadcn / Base UI (HARD RULE)
+
+UI is built **on** shadcn — never invent parallel components.
+
+1. Use `components/ui/*` when the primitive exists
+2. Otherwise `pnpm dlx shadcn@latest add <component>` before writing UI
+3. Feature components compose/extend those primitives; they do not replace them with hand-rolled buttons, inputs, dialogs, etc.
+
 ## Zod
 
 - Schema source of truth for forms, tRPC inputs/outputs, and env parsing
