@@ -1,0 +1,41 @@
+---
+description: Portfolio file organization — colocate then lift; kebab-case folders; skeletons
+alwaysApply: true
+---
+
+# File Organization
+
+This rule is the file-organization source of truth for this repo. It supersedes the hybrid `sections/` pattern from the cross-project React style guide.
+
+**Core model — colocate, then lift to the nearest common ancestor:**
+
+1. **Route.** A component/hook/util/type used by only one `page.tsx` lives inside that route's own folder.
+2. **Feature.** Reused by a sibling route within the same top-level feature (e.g. shared between `works/[slug]` and `works/new`) → lifts one level to that feature's own folder, e.g. `app/works/_components/`.
+3. **Route group.** Reused across different features but still within one route group (e.g. both under `(site)`) → lifts to the route-group root, e.g. `app/(site)/_components/`.
+4. **Root.** Only for components consumed by root layout or reused on multiple pages across the site → `components/`, `hooks/`, `lib/`, `types/` (this repo has no `src/` prefix).
+
+The same lift logic applies uniformly to components and to non-component logic (hooks/lib/types) — one mental model, not two. Root `components/` is expected to stay small (mostly `ui/` shadcn primitives). Feature chrome that is only used inside a route group stays under that group's `_components/`.
+
+**Folder naming:** non-route folders at every level are underscore-prefixed — `_components/`, `_hooks/`, `_lib/`, `_types/` (mirrors root's category names; there is no generic catch-all `utils/`). This applies one level deep inside an individual component's own folder too (e.g. `hero-section/_components/`, `hero-section/_hooks/`). Root-level folders keep bare names (`components/`, `hooks/`, `lib/`, `types/`). Server-only code that is not route-scoped lives under `server/`.
+
+**Component shape:** defaults to a single kebab-case file (`user-menu.tsx`). Once it needs child components, a component-local hook, and/or its own async Suspense boundary, it becomes a folder of the same kebab-case name:
+
+- `index.tsx` — the component itself
+- `_components/` — children
+- `_hooks/` — local hooks
+- `skeleton.tsx` / `error.tsx` — loading and error fallback UI as direct siblings of `index.tsx`
+
+Kebab-case applies whether it's a file or a folder — no rename when a component graduates from one to the other.
+
+## Skeletons
+
+- Every component folder that suspends or awaits data may have a sibling `skeleton.tsx`.
+- Child components can own their own `skeleton.tsx`. Parents compose child skeletons instead of one mega-skeleton — easier to maintain when a child layout changes.
+- Skeleton only data-dependent leaves (cards, images, API text). Keep structural headings/nav as real content when they don't depend on async data.
+- Match the loaded layout (no reflow); prefer `animate-pulse` for placeholders.
+
+## Hygiene
+
+- Promote on second use — leave route-local until a sibling needs it
+- No vanity barrels; import the file directly
+- shadcn primitives stay one-per-file in `components/ui/`

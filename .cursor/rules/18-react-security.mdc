@@ -1,0 +1,40 @@
+---
+description: React/Next security — XSS, URLs, server actions, env exposure
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# React Security
+
+## XSS via `dangerouslySetInnerHTML`
+
+Treat every usage as a review halt. Prefer text or sanitized markdown. If raw HTML is required, sanitize at the call site (e.g. DOMPurify).
+
+## Unsafe URL Schemes
+
+Validate `http:`, `https:`, `mailto:` before putting user-controlled values in `href` / `src`.
+
+## `target="_blank"`
+
+Always pair with `rel="noopener noreferrer"`.
+
+## Server Actions / tRPC Mutations
+
+Same trust level as a public API:
+
+- Zod-validate every input
+- Authenticate/authorize inside the mutation when mutating protected data
+- Never trust client-only gates
+
+## Env Vars
+
+| Kind | Examples |
+|---|---|
+| Public | `NEXT_PUBLIC_R2_CDN_URL`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` |
+| Server-only | `SUPABASE_SERVICE_ROLE_KEY` |
+
+Audit every new `NEXT_PUBLIC_*` — it ships to the browser.
+
+## Auth Storage
+
+Prefer httpOnly cookies for sessions. Do not store secrets in `localStorage`.

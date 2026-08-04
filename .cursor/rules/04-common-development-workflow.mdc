@@ -1,0 +1,45 @@
+---
+description: Feature workflow — research, plan, TDD, review, commit via project skills
+alwaysApply: true
+---
+
+# Development Workflow
+
+Use this repo's Matt Pocock engineering skills (see `AGENTS.md` and `.agents/skills/`). Prefer those over inventing a parallel process.
+
+## Feature Implementation Workflow
+
+### 0. Research & Reuse (MANDATORY before any new implementation)
+
+- Search the codebase and existing patterns first
+- Check primary vendor docs for APIs in use (Next.js, shadcn, tRPC, Supabase, TanStack Form, Zod, GSAP, nuqs)
+- Search package registries before writing utility code — prefer battle-tested libraries
+- Prefer adopting or porting a proven approach over writing net-new code when it meets the requirement
+
+### 1. Plan First
+
+- Sharpen with `/grill-with-docs` or `/grill-me` when the idea is still soft
+- Multi-session work → `/to-spec` then `/to-tickets` (tickets partitioned into **plans** sized for one `/implement` run)
+- Huge foggy efforts → `/wayfinder` first, then hand off to `/to-spec`
+
+### 2. TDD Approach
+
+- `/implement` drives `/tdd` at pre-agreed seams
+- Write tests first (RED) → implement (GREEN) → refactor
+- Run typecheck regularly; full suite once at the end of the plan
+
+### 3. Code Review
+
+- `/code-review` after the plan's work lands
+- Address CRITICAL and HIGH issues before considering the plan done
+
+### 4. Commit
+
+- Commit on the current branch when the plan (or agreed slice) is done
+- Prefer concise messages focused on why
+- Never commit secrets (`.env.local`, service role keys)
+
+### 5. Pre-Review Checks
+
+- `pnpm typecheck`, `pnpm lint`, and `pnpm build` (or CI equivalents) pass
+- Resolve merge conflicts; keep the branch up to date with the target

@@ -1,0 +1,25 @@
+---
+description: TypeScript security — env secrets and safe config access
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# TypeScript/JavaScript Security
+
+## Secret Management
+
+```typescript
+// NEVER: Hardcoded secrets
+const apiKey = "sk-proj-xxxxx"
+
+// ALWAYS: Environment variables
+const apiKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+if (!apiKey) {
+  throw new Error("SUPABASE_SERVICE_ROLE_KEY not configured")
+}
+```
+
+- Mark server-only modules with `import "server-only"`
+- Never read service-role or private keys in Client Components
+- Audit every new `NEXT_PUBLIC_*` variable — it ships to the browser

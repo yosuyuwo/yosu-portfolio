@@ -1,0 +1,47 @@
+---
+description: React Hooks rules — effects, deps, memoization, custom hooks
+globs: "**/*.{tsx,jsx}"
+alwaysApply: false
+---
+
+# React Hooks
+
+## Rules of Hooks
+
+1. Hooks only at the top level of a function component or another hook
+2. Never in loops, conditionals, nested functions, or after early returns
+3. Always called in the same order on every render
+4. Only inside React function components or custom hooks (`use…`)
+
+## `useEffect` — When NOT to Use
+
+`useEffect` synchronizes with external systems. It is not for:
+
+- Derived state — compute during render
+- Transforming data for rendering — compute during render
+- Resetting state when a prop changes — use a `key` or derive
+- Notifying parents — call the callback in the event handler
+
+GSAP timelines and third-party DOM libs belong in effects (or dedicated hooks) with cleanup.
+
+## Dependency Arrays
+
+- Include every reactive value referenced inside
+- Never silence `exhaustive-deps` without a one-line why
+- Split effects that grow unwieldy
+
+## Cleanup
+
+Every subscription, interval, listener, GSAP context/timeline, or in-flight request must clean up on unmount or dep change.
+
+## `useMemo` / `useCallback`
+
+Default: **do not memoize**. Add only when identity matters for a memoized child, another hook dependency, or a measured hot path.
+
+## Custom Hooks
+
+Extract when the same sequence appears in 2+ places or has a clear nameable purpose. Keep route/feature-local hooks under `_hooks/` per `21-file-organization.mdc`.
+
+## React 19
+
+Prefer `use`, `useActionState`, `useOptimistic`, `useTransition` over hand-rolled equivalents when they fit.

@@ -1,0 +1,89 @@
+---
+description: React/Next coding style — naming, JSX, RSC, shadcn, forms
+globs: "**/*.{tsx,jsx}"
+alwaysApply: false
+---
+
+# React Coding Style
+
+**File organization** for this repo lives in `21-file-organization.mdc` (colocate → lift; kebab-case folders; per-component `skeleton.tsx`). Use that model — not a hybrid `sections/` layout.
+
+## File Extensions
+
+- `.tsx` for any file containing JSX
+- `.ts` for pure logic, custom hooks without JSX, type definitions
+- `.test.tsx` / `.test.ts` mirroring the source file
+
+## Naming
+
+- Component **symbols**: `PascalCase`; **files/folders**: `kebab-case` (`user-card.tsx` / `user-card/index.tsx` export `UserCard`)
+- Custom hooks: `useCamelCase` symbol, kebab-case file (`use-debounce.ts`)
+- Context: `<Domain>Context`, `<Domain>Provider`, `use<Domain>`
+- Event handlers: `handleClick` inside; prop `onClick`
+- Boolean props: `isLoading`, `hasError`, `canSubmit`
+
+## Component Shape
+
+```tsx
+type Props = {
+  user: User
+  onSelect: (id: string) => void
+}
+
+export function UserCard({ user, onSelect }: Props) {
+  return (
+    <button type="button" onClick={() => onSelect(user.id)}>
+      {user.name}
+    </button>
+  )
+}
+```
+
+- Prefer `type Props = {}` for closed prop shapes
+- Always destructure props in the parameter list
+- Default export only for Next.js `page.tsx` / `layout.tsx` / `route.ts` entry files; prefer named exports elsewhere
+
+## JSX
+
+- Self-close tags with no children
+- Use fragments when no DOM wrapper is needed
+- Extract multi-line conditional logic above the return
+
+## Server / Client Boundary (App Router)
+
+- Default new files to Server Components — add `"use client"` only for state, effects, refs, browser APIs, or event handlers
+- `"use client"` on line 1 before imports
+- Never put `"use client"` on `page.tsx` — keep the page a Server Component and extract interactive regions into Client Components
+- Never import server-only modules into client files
+
+## Prefer shadcn / Base UI Over Native HTML
+
+When a primitive exists in `components/ui/`, use it (`Button`, `Input`, etc.). Add missing wrappers via `pnpm dlx shadcn@latest add …` before inventing one-offs.
+
+### Field + TanStack Form
+
+Wire labelled inputs with `Field` / `FieldLabel` / `FieldError` once those shadcn pieces are installed. Pair with TanStack Form + Zod (see `20-portfolio-stack.mdc`).
+
+### Icon-only buttons
+
+Wrap icon-only buttons in `Tooltip`; match `aria-label` to tooltip text; describe the action, not the icon.
+
+### Inputs need placeholders
+
+Every `Input` / `Textarea` sets a `placeholder` showing expected format or blank-means-something.
+
+## Imports
+
+- React first, then third-party, then `@/` absolute, then relative
+- Type-only imports: `import type { … }`
+
+## State
+
+- Local first (`useState`), lift only when shared
+- URL state via **nuqs** when it should be shareable/bookmarkable
+- Context for low-frequency cross-cutting reads (theme)
+- Server data via **tRPC** (+ TanStack Query) — not ad-hoc `useEffect` fetches
+
+## Class Components
+
+Forbidden in new code.

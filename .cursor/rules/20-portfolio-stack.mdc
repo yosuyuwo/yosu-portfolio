@@ -1,0 +1,54 @@
+---
+description: Portfolio stack — TanStack Form, Zod, GSAP, nuqs, Supabase, tRPC, R2
+alwaysApply: true
+---
+
+# Portfolio Stack
+
+Canonical libraries for this site. Prefer these over alternatives unless an ADR says otherwise.
+
+## Zod
+
+- Schema source of truth for forms, tRPC inputs/outputs, and env parsing
+- Infer types with `z.infer<typeof schema>` — do not duplicate hand-written interfaces
+
+## TanStack Form
+
+- Default form library for multi-field or validated forms
+- Validate with Zod (shared schemas)
+- Pair with shadcn `Field` / `Input` / `Button` when available
+
+## nuqs
+
+- All shareable UI state that belongs in the URL (filters, tabs, pagination, modal ids)
+- Prefer typed parsers over raw `useSearchParams` string parsing
+
+## GSAP
+
+- Motion library for hero/section presence and intentional transitions
+- Create animations in Client Components or hooks; kill/revert on cleanup (`gsap.context` or timeline `.kill()`)
+- Prefer 2–3 purposeful motions per visually led page over constant decoration
+
+## Supabase
+
+- Persistence for portfolio **works** (and related content)
+- Browser/anon client only with RLS for public reads
+- Service-role client only in `server/` modules marked `server-only`
+- UI never talks to Supabase directly for business reads/writes — go through tRPC
+
+## tRPC
+
+- Typed API between Next.js and the frontend
+- Routers under `server/trpc/`; HTTP handler at `app/api/trpc/[trpc]/route.ts`
+- Procedures validate with Zod; data access via `server/db/`
+- Server Components may use a server-side caller; Client Components use tRPC + TanStack Query hooks
+
+## R2 CDN (consume-only)
+
+- Public assets via `NEXT_PUBLIC_R2_CDN_URL` and `cdnUrl()` from `@/lib/cdn`
+- Configure `images.remotePatterns` in `next.config.ts` to match the CDN host
+- No upload SDK in this app
+
+## Layout reminder
+
+Colocate then lift — see `21-file-organization.mdc`.

@@ -1,0 +1,62 @@
+---
+description: React patterns — RSC boundaries, Suspense, forms, data fetching
+globs: "**/*.{tsx,jsx}"
+alwaysApply: false
+---
+
+# React Patterns
+
+## Container / Presentational
+
+Containers own data/side effects; presentational components render from props. With App Router, Server Components often play the container role and pass data into Client Components.
+
+## State Location
+
+1. One component → `useState`
+2. Parent + few children → lift + props
+3. Distant low-frequency → Context
+4. Shareable URL state → **nuqs**
+5. Server-derived portfolio data → **tRPC** (TanStack Query on the client)
+
+## Suspense + Errors
+
+Pair every Suspense boundary with `ErrorBoundary` from `@/components/error-boundary` (`react-error-boundary`). Prefer narrow boundaries; compose child `skeleton.tsx` files instead of one giant parent skeleton (see `21-file-organization.mdc`).
+
+```tsx
+import { Suspense } from "react"
+import { ErrorBoundary } from "@/components/error-boundary"
+import { WorksList } from "./_components/works-list"
+import { WorksListSkeleton } from "./_components/works-list/skeleton"
+
+<ErrorBoundary>
+  <Suspense fallback={<WorksListSkeleton />}>
+    <WorksList />
+  </Suspense>
+</ErrorBoundary>
+```
+
+
+## Forms
+
+Use **TanStack Form** + **Zod** for all non-trivial forms (see `20-portfolio-stack.mdc`). Prefer uncontrolled form actions only for trivial one-field cases.
+
+## Data Fetching
+
+| Strategy | When |
+|---|---|
+| tRPC in Server Components / routers | Default for portfolio works and mutations |
+| TanStack Query via tRPC client hooks | Client cache, optimistic UI, polling |
+| RSC `await` of a tRPC caller | Server-rendered pages without client cache |
+| `fetch` in `useEffect` | Avoid |
+
+## Lists and Keys
+
+Stable keys — never index for lists that reorder/insert/delete.
+
+## Composition
+
+Prefer `children`, slots, and compound components over inheritance.
+
+## Animation
+
+Use **GSAP** for intentional motion (see stack rule). Prefer a small number of purposeful animations over decorative noise.

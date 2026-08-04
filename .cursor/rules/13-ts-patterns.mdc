@@ -1,0 +1,40 @@
+---
+description: Shared TypeScript patterns — hooks, repositories, API shapes
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# TypeScript/JavaScript Patterns
+
+## tRPC + Zod
+
+Prefer tRPC procedures with Zod input/output schemas over ad-hoc REST handlers. Portfolio works data is fetched through tRPC from Supabase (see `20-portfolio-stack.mdc`).
+
+## Custom Hooks Pattern
+
+```typescript
+export function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value)
+
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedValue(value), delay)
+    return () => clearTimeout(handler)
+  }, [value, delay])
+
+  return debouncedValue
+}
+```
+
+## Repository Pattern (server-only)
+
+Keep Supabase access behind small server modules under `server/db/` (or feature `_lib/`). Callers go through tRPC routers — UI never imports Supabase service clients.
+
+```typescript
+interface Repository<T> {
+  findAll(filters?: Filters): Promise<T[]>
+  findById(id: string): Promise<T | null>
+  create(data: CreateDto): Promise<T>
+  update(id: string, data: UpdateDto): Promise<T>
+  delete(id: string): Promise<void>
+}
+```

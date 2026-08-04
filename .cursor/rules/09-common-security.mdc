@@ -1,0 +1,39 @@
+---
+description: Mandatory security checks, secrets, and incident response
+alwaysApply: true
+---
+
+# Security Guidelines
+
+## Mandatory Security Checks
+
+Before ANY commit:
+- [ ] No hardcoded secrets (API keys, passwords, tokens, Supabase service role)
+- [ ] All user inputs validated (Zod at boundaries)
+- [ ] Injection prevention (parameterized queries / Supabase client APIs — never string-built SQL)
+- [ ] XSS prevention (no unsanitized HTML)
+- [ ] Auth/authorization verified when endpoints mutate data
+- [ ] Error messages don't leak sensitive data
+
+## Secret Management
+
+- NEVER hardcode secrets in source code
+- ALWAYS use environment variables (see `.env.example`)
+- Only `NEXT_PUBLIC_*` values may ship to the client — treat them as public
+- Validate that required server secrets are present where used
+- Rotate any secrets that may have been exposed
+
+## Portfolio-specific
+
+- Supabase **anon** key may be `NEXT_PUBLIC_` when RLS protects data
+- Supabase **service role** key is server-only — never prefix with `NEXT_PUBLIC_`
+- R2 CDN base URL is public (`NEXT_PUBLIC_R2_CDN_URL`); never put R2 access keys in this consume-only app
+
+## Security Response Protocol
+
+If a security issue is found:
+1. STOP immediately
+2. Use the security-review skill / process
+3. Fix CRITICAL issues before continuing
+4. Rotate any exposed secrets
+5. Review the codebase for similar issues

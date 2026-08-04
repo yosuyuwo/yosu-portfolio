@@ -1,19 +1,31 @@
-# Next.js template
+# yosu-portfolio
 
-This is a Next.js template with shadcn/ui and Cloudflare R2 CDN (consume-only).
+Next.js portfolio with shadcn/ui, R2 CDN assets, Supabase-backed works, and tRPC.
 
 ## Setup
 
 ```bash
 pnpm install
 cp .env.example .env.local
-# Set NEXT_PUBLIC_R2_CDN_URL to your public R2 custom domain
+# Fill R2 + Supabase values
 pnpm dev
 ```
 
-## R2 CDN
+## Stack
 
-Use `cdnUrl()` from `@/lib/cdn` with `next/image` for portfolio assets. The CDN hostname must match `images.remotePatterns` in `next.config.ts`.
+| Concern | Library |
+|---------|---------|
+| UI | shadcn / Base UI |
+| Forms | TanStack Form + Zod |
+| URL state | nuqs |
+| Motion | GSAP |
+| Works data | Supabase (via tRPC) |
+| API | tRPC + TanStack Query |
+| Assets | Cloudflare R2 CDN (consume-only) |
+
+See [docs/guides/coding-standards.md](docs/guides/coding-standards.md) and [`.cursor/rules/`](.cursor/rules/).
+
+## R2 CDN
 
 ```tsx
 import Image from "next/image"
@@ -22,7 +34,7 @@ import { cdnUrl } from "@/lib/cdn"
 <Image src={cdnUrl("portfolio/hero.webp")} alt="..." width={1200} height={800} />
 ```
 
-## Adding components
+## Adding UI
 
 ```bash
 pnpm dlx shadcn@latest add button

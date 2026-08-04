@@ -4,6 +4,15 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
+## Coding standards
+
+Follow [`.cursor/rules/`](.cursor/rules/) (summary: [`docs/guides/coding-standards.md`](docs/guides/coding-standards.md)).
+
+Hard rules for this repo:
+
+- File organization: colocate then lift — see `21-file-organization.mdc` (supersedes hybrid `sections/` layouts)
+- Stack: TanStack Form + Zod, GSAP, nuqs, Supabase (works), tRPC (API), R2 CDN consume-only — see `20-portfolio-stack.mdc`
+
 ## Agent skills
 
 ### Issue tracker
