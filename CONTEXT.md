@@ -5,7 +5,7 @@ Personal hire/collaborate portfolio: Works as the entry surface, About for who a
 ## Language
 
 **Work**:
-A published portfolio piece - list shows cover, title, summary, and date; detail adds description, gallery, and meta (role, year, links, stack).
+A published portfolio piece - list always shows cover, title, summary, and date; detail always adds description and gallery (gallery may be empty); role, year, links, and stack are optional meta.
 _Avoid_: Project, case study, post (unless a Work is explicitly framed as one)
 
 **Works**:
@@ -25,8 +25,8 @@ A named cluster of skills on About (e.g. Design, Eng, Tools) - not a flat tag cl
 _Avoid_: Tags, tech stack (as the About section name)
 
 **Social**:
-A public contact or profile link shown in the sidebar footer. V1 set: email, GitHub, LinkedIn, Instagram.
-_Avoid_: External link, nav item (Socials are footer chrome, not primary nav)
+A public contact or profile link shown in the sidebar footer - href plus an attached icon; not typed by platform kind. V1 ships email, GitHub, LinkedIn, Instagram as ordinary Socials.
+_Avoid_: External link, nav item, kind/platform enum (Socials are footer chrome, not primary nav)
 
 **Sidebar**:
 The persistent chrome for logo wordmark, primary navigation (Works, About), and Socials. Simple inset shell - not dashboard chrome.
