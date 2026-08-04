@@ -116,7 +116,7 @@ function SocialFooter() {
   )
 }
 
-/** A — research-faithful stripped inset shell */
+/** A - research-faithful stripped inset shell */
 export function VariantASidebar() {
   return (
     <Sidebar variant="inset" collapsible="offcanvas">
@@ -133,67 +133,6 @@ export function VariantASidebar() {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
-}
-
-/** B — flush sidebar (no inset plane), same chrome stack */
-export function VariantBSidebar() {
-  return (
-    <Sidebar variant="sidebar" collapsible="offcanvas">
-      <SidebarHeader className="border-b border-sidebar-border px-4 py-5">
-        <a href="#" className="inline-flex">
-          <LogoMark />
-        </a>
-        <p className="mt-3 text-xs text-muted-foreground">Yosua Yuwono</p>
-      </SidebarHeader>
-      <SidebarContent className="px-2 pt-6">
-        <PrimaryNav />
-      </SidebarContent>
-      <SidebarFooter className="gap-2 border-t border-sidebar-border p-3">
-        <SocialFooter />
-      </SidebarFooter>
-    </Sidebar>
-  )
-}
-
-/** C — top chrome, no left sidebar */
-export function VariantCTopChrome() {
-  return (
-    <header className="sticky top-0 z-20 border-b bg-background/90 backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-5xl items-center gap-6 px-4">
-        <a href="#" className="inline-flex shrink-0">
-          <LogoMark className="h-6" />
-        </a>
-        <nav className="flex items-center gap-1 text-sm">
-          <a
-            href="#"
-            className="rounded-md bg-muted px-3 py-1.5 font-medium text-foreground"
-          >
-            Works
-          </a>
-          <a
-            href="#"
-            className="rounded-md px-3 py-1.5 text-muted-foreground hover:bg-muted/70 hover:text-foreground"
-          >
-            About
-          </a>
-        </nav>
-        <div className="ml-auto flex items-center gap-1">
-          {socials.map((social) => (
-            <a
-              key={social.id}
-              href={social.href}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
-              aria-label={social.label}
-            >
-              {social.icon}
-            </a>
-          ))}
-        </div>
-      </div>
-    </header>
   )
 }
 
