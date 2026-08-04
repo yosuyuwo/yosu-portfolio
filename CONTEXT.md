@@ -29,5 +29,5 @@ A public contact or profile link shown in the sidebar footer - href plus an atta
 _Avoid_: External link, nav item, kind/platform enum (Socials are footer chrome, not primary nav)
 
 **Sidebar**:
-The persistent chrome for logo wordmark, primary navigation (Works, About), and Socials. Simple inset shell - not dashboard chrome.
+The persistent chrome for logo wordmark, primary navigation (Works, About), and Socials, plus an inset top bar with the sidebar trigger (no breadcrumbs). Simple inset shell - not dashboard chrome.
 _Avoid_: Nav bar, menu, drawer (unless referring to the mobile sheet behavior of the sidebar primitive)
