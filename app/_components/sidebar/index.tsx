@@ -27,7 +27,7 @@ export function Sidebar({ activeSection }: { activeSection: SectionId }) {
         </SidebarContent>
         <SidebarFooter className="relative z-10 gap-2 px-2 pb-3">
           <SocialNav />
-          <div className="hidden md:block">
+          <div className="mt-4 hidden pt-1 md:block">
             <SidebarCollapseControl />
           </div>
         </SidebarFooter>

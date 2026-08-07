@@ -15,7 +15,7 @@ export function CoverBlock({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-md animate-pulse",
+        "overflow-hidden rounded-2xl animate-pulse",
         COVER_TONES[index % COVER_TONES.length],
         className,
       )}

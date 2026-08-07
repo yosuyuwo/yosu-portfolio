@@ -21,7 +21,7 @@ export function WorkGallery({
         <div
           key={`${item.src}-${i}`}
           className={cn(
-            "w-full shrink-0 rounded-xl",
+            "w-full shrink-0 rounded-2xl",
             i === 0 ? "aspect-4/3" : "aspect-16/10",
             COVER_TONES[(index + i) % COVER_TONES.length],
           )}

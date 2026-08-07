@@ -35,9 +35,16 @@ export const SITE_SOCIALS = [
 ] as const
 
 export const HERO = {
-  line: "Product / Frontend Engineer — Converting ideas into interfaces.",
-  support: "Open to hire and collaborate. Tell me what you're building.",
-  ctaLabel: "Contact",
+  greeting: "What's up!",
+  bio: "I began as a frontend and UI/UX developer in 2020. Since 2023, I have been a full-stack product engineer. I take projects from idea to launch. I create clear user interfaces, and I build the APIs and databases that support them.",
+  ctaLabel: "Contact Me",
+} as const
+
+export const HERO_PORTRAIT = {
+  src: "/profile/portrait.webp",
+  alt: "Portrait of Yosua Yuwono",
+  width: 960,
+  height: 1280,
 } as const
 
 export const CONTACT = {
@@ -48,14 +55,8 @@ export const CONTACT = {
 } as const
 
 export const ABOUT_INTRO =
-  "Developer since 2020, with the strongest focus on UI/UX and frontend. Since 2023 I have worked as a full-stack product engineer, shipping interfaces end to end and shaping the product around them. I also design APIs and database structure when the work calls for it."
+  "I care about the fine details in every step of the process. I work to turn ideas into real products that focus entirely on the user. A successful project is one that works smoothly and meets the needs of the people using it."
 
-export const ABOUT_PORTRAIT = {
-  src: "/profile/portrait.webp",
-  alt: "Portrait of Yosua Yuwono",
-  width: 320,
-  height: 427,
-} as const
 
 export const EXPERIENCE = [
   {
