@@ -1,5 +1,14 @@
-import { PortfolioShell } from "@/app/_components/portfolio-shell"
+import { AboutSection } from "@/app/_components/about-section"
+import { HeroSection } from "@/app/_components/hero-section"
+import { Shell } from "@/app/_components/shell"
+import { WorksSection } from "@/app/_components/works-section"
 
 export default function Page() {
-  return <PortfolioShell />
+  return (
+    <Shell>
+      <HeroSection />
+      <WorksSection />
+      <AboutSection />
+    </Shell>
+  )
 }

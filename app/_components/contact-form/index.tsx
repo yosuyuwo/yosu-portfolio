@@ -1,7 +1,6 @@
 "use client"
 
 import { useForm } from "@tanstack/react-form"
-import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -13,38 +12,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 
-const CONTACT_MAILTO = "mailto:yosuayuwono@gmail.com"
-
-const contactSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.email("Enter a valid email"),
-  subject: z.string().min(1, "Subject is required"),
-  message: z.string().min(1, "Message is required"),
-})
-
-type ContactValues = z.infer<typeof contactSchema>
-
-const DEFAULTS: ContactValues = {
-  name: "",
-  email: "",
-  subject: "",
-  message: "",
-}
-
-function buildMailtoUrl(values: ContactValues): string {
-  const body = [`From: ${values.name} <${values.email}>`, "", values.message].join(
-    "\n",
-  )
-  const params = new URLSearchParams({
-    subject: values.subject,
-    body,
-  })
-  return `${CONTACT_MAILTO}?${params.toString()}`
-}
+import { buildMailtoUrl } from "./_lib/build-mailto-url"
+import { CONTACT_DEFAULTS, contactSchema } from "./_lib/contact-schema"
 
 export function ContactForm({ onSubmitted }: { onSubmitted?: () => void }) {
   const form = useForm({
-    defaultValues: DEFAULTS,
+    defaultValues: CONTACT_DEFAULTS,
     validators: {
       onSubmit: contactSchema,
     },

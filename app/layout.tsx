@@ -4,6 +4,7 @@ import { Geist_Mono, IBM_Plex_Sans } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { NuqsProvider } from "@/lib/nuqs/provider"
+import { SITE_METADATA } from "@/lib/site-content"
 import { TRPCReactProvider } from "@/lib/trpc/client"
 import { cn } from "@/lib/utils"
 
@@ -15,9 +16,8 @@ const fontMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Yosua Yuwono",
-  description:
-    "Hi — I'm Yosua. Glad you're here. Have a look at my work, and reach out if you'd like to build something together.",
+  title: SITE_METADATA.title,
+  description: SITE_METADATA.description,
 }
 
 export default function RootLayout({
