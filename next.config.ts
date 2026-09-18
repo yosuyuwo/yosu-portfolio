@@ -11,6 +11,7 @@ function r2Hostname() {
 }
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["*.shares.zrok.io"],
   images: {
     remotePatterns: [
       {

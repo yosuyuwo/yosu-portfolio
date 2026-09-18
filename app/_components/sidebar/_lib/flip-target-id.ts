@@ -5,4 +5,5 @@ export type FlipTargetId =
   | "github"
   | "linkedin"
   | "instagram"
+  | "resume"
   | "collapse"

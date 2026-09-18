@@ -18,7 +18,7 @@ export function MainContent({
   return (
     <SidebarInset
       ref={scrollRef}
-      className="z-10 min-h-0 overflow-y-auto overscroll-contain rounded-xl shadow-md will-change-transform md:m-0!"
+      className="z-10 min-h-0 scroll-smooth overflow-y-auto overscroll-contain rounded-xl shadow-md will-change-transform md:m-0!"
       style={style}
     >
       {children}

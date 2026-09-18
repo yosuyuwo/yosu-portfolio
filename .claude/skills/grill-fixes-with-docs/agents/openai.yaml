@@ -1,0 +1,5 @@
+interface:
+  display_name: "Grill Fixes with Docs"
+  short_description: "Grill a bug fix and write its docs"
+policy:
+  allow_implicit_invocation: false

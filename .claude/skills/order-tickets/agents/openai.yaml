@@ -1,0 +1,3 @@
+interface:
+  display_name: "Order Tickets"
+  short_description: "Sync .scratch/ORDER.md with tickets on disk"

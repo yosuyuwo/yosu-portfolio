@@ -9,8 +9,20 @@ The first band on the site — a compact preamble row (short what-I-do line + su
 _Avoid_: Home, landing, splash, intro section (when meaning this band; About still has its own intro); tall hero or multi-CTA marketing block
 
 **Work**:
-A published portfolio piece - list always shows cover, title, summary, and date; detail always adds description and gallery (gallery may be empty); role, year, links, and stack are optional meta. Detail opens as a near-fullscreen Dialog on the same route: copy + meta on the left, cover/gallery on the right (single-column scroll on small screens). Not a sheet, in-page expand, or separate URL. Works list is a cover-led grid that switches to two columns via container query at `@2xl`.
-_Avoid_: Project, case study, post (unless a Work is explicitly framed as one); sheet or in-page expand for Work detail
+A published portfolio piece - list always shows cover, title, summary, and date; detail always adds description and gallery (gallery may be empty); role, year, category, status, links, and stack are optional meta. Links is a list of `{label, href}` pairs (e.g. Landing, Marketplace) - a Work may have zero, one, or several. One Work = one coherent delivery phase for a client/product - a landing page and a web app shipped as the same phase fold into a single Work, while a later distinct revamp or rebuild becomes its own Work. Detail opens as a near-fullscreen Dialog on the same route: copy + meta on the left, cover/gallery on the right (single-column scroll on small screens). Not a sheet, in-page expand, or separate URL. Works list is a cover-led grid that switches to two columns via container query at `@2xl`.
+_Avoid_: Project, case study, post (unless a Work is explicitly framed as one); sheet or in-page expand for Work detail; splitting a same-phase landing+webapp pair into two Works
+
+**Work category**:
+A short type tag on a Work (e.g. Landing, Web App, E-commerce, Internal Tool) shown on the card for scannability, describing the nature of what was built.
+_Avoid_: Stack, tech tag (category is about deliverable type, not technology)
+
+**Work status**:
+Ongoing or Completed - whether the engagement is still active. Independent of `publishedAt`.
+_Avoid_: Archived, Paused, Confidential (not used in this portfolio's status set)
+
+**Competition entry**:
+A Work built for a competition/challenge rather than a client engagement, shown with a distinguishing badge separate from status and category.
+_Avoid_: Folding competition context into the description prose only
 
 **Works**:
 The primary list of Works on the single-page site, below the Hero. It is not a separate route.

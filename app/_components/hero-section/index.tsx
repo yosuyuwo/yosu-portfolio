@@ -35,7 +35,7 @@ export function HeroSection() {
               {HERO.greeting}
             </p>
             <h1 className="mt-1 text-2xl font-medium tracking-tight text-foreground">
-              I&apos;m {SITE_GIVEN_NAME}
+              {HERO.title}
             </h1>
             <p className="mt-2 text-sm leading-relaxed text-foreground">
               {HERO.bio}

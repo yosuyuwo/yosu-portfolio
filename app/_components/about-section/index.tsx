@@ -1,8 +1,6 @@
-import {
-  ABOUT_INTRO,
-  EXPERIENCE,
-  SKILL_GROUPS,
-} from "@/lib/site-content"
+import { ABOUT_INTRO, EXPERIENCE, SKILL_GROUPS } from "@/lib/site-content"
+import { StackIcon } from "@/components/stack/stack-icon"
+import { STACK_LINKS } from "@/components/stack/stack-links"
 
 import { formatRange } from "./_lib/format-range"
 
@@ -48,8 +46,31 @@ export function AboutSection() {
             {SKILL_GROUPS.map((group) => (
               <div key={group.id} className="max-w-prose">
                 <dt className="text-sm font-medium">{group.name}</dt>
-                <dd className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                  {group.skills.join(", ")}
+                <dd className="mt-1 flex flex-wrap items-center gap-x-1 gap-y-1 text-sm leading-relaxed text-muted-foreground">
+                  {group.skills.map((skill, i) => {
+                    const href = STACK_LINKS[skill]
+                    const isLast = i === group.skills.length - 1
+
+                    return (
+                      <span key={skill} className="inline-flex items-center">
+                        {href ? (
+                          <a
+                            href={href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-foreground underline-offset-2 hover:underline"
+                          >
+                            <StackIcon name={skill} />
+                            {skill}
+                          </a>
+                        ) : (
+                          skill
+                        )}
+                        {isLast ? "" : ","}
+                        {isLast ? "" : " "}
+                      </span>
+                    )
+                  })}
                 </dd>
               </div>
             ))}
