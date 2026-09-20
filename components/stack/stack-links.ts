@@ -15,6 +15,7 @@ export const STACK_LINKS: Record<string, string> = {
   "Sanity CMS": "https://www.sanity.io",
   Sanity: "https://www.sanity.io",
   Mantine: "https://mantine.dev",
+  Xendit: "https://www.xendit.co",
   "TanStack Query": "https://tanstack.com/query",
   "Payload CMS": "https://payloadcms.com",
   Payload: "https://payloadcms.com",

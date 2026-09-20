@@ -17,6 +17,14 @@ const workSectionSchema = z.object({
   imageSide: z.enum(["left", "right"]).optional(),
 })
 
+const workFactsSchema = z.object({
+  client: z.string(),
+  context: z.enum(["freelance", "agency", "competition", "personal"]),
+  teamSize: z.string(),
+  duration: z.string(),
+  myScope: z.array(z.string()),
+})
+
 export const workItemSchema = z.object({
   id: z.string(),
   slug: z.string(),
@@ -31,8 +39,10 @@ export const workItemSchema = z.object({
   liveSite: projectLinkSchema.optional(),
   github: projectLinkSchema.optional(),
   stack: z.array(z.string()).optional(),
+  facts: workFactsSchema.optional(),
 })
 
 export type ProjectLink = z.infer<typeof projectLinkSchema>
 export type WorkSection = z.infer<typeof workSectionSchema>
+export type WorkFacts = z.infer<typeof workFactsSchema>
 export type WorkItem = z.infer<typeof workItemSchema>

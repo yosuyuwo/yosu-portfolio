@@ -19,6 +19,9 @@ const works: WorkItem[] = WORKS.map((rawWork) => {
       images: section.images ? [...section.images] : undefined,
     })),
     stack: work.stack ? [...work.stack] : undefined,
+    facts: work.facts
+      ? { ...work.facts, myScope: [...work.facts.myScope] }
+      : undefined,
   }
 })
 

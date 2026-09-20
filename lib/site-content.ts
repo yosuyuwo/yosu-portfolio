@@ -339,23 +339,51 @@ export const WORKS = [
     slug: "elevate",
     title: "Elevate Former",
     summary:
-      "Booking site for a Slow Resistance Training studio. Full feature ownership, client gave complete trust on scope.",
+      "Booking site for a Slow Resistance Training studio in Bali. Full feature ownership, client gave complete trust on scope.",
     coverPath: "/works/elevate/cover.webp",
     coverVideoPath: "/works/elevate/cover.webm",
     publishedAt: "2024-12-24",
+    facts: {
+      client: "Elevate Former (via Morfolabs)",
+      context: "agency",
+      teamSize: "2 — me on frontend, tech lead on backend",
+      duration: "4 months",
+      myScope: [
+        "Landing site",
+        "Booking flow",
+        "Schedule calendar",
+        "API contract co-design",
+      ],
+    },
     sections: [
       {
-        heading: "Overview",
-        body: "Built the landing and booking experience for a Slow Resistance Training (SRT) fitness studio. The client gave full trust on feature decisions, not just structure and layout. Used TanStack Query instead of tRPC here since the backend just exposed an external API, so a lighter data-fetching setup made more sense. Also reviewed quality on the outsourced admin panel. Logo design was handled by an external designer.",
+        heading: "Context",
+        body: "Elevate Former was a Slow Resistance Training studio in Bali launching from scratch, built through Morfolabs for an owner who also ran a pilates studio. Eight instructors and a handful of front-desk staff, with no system of their own — bookings came in through a third-party app the pilates side already used, and an admin re-entered each one by hand. I owned the frontend end to end; my colleague led the backend.",
         images: [
           { src: "/works/elevate/cover.webp", alt: "Elevate Former cover" },
         ],
+      },
+      {
+        heading: "The hard part",
+        body: "Partway in, the studio confirmed they would keep taking bookings through the third-party app as well as ours. That left two sources for the same classes — and the third-party service had no API, only a web interface. Rather than leave the admins re-typing every external booking, we scraped that interface and fed the results into our own bookings. One way, theirs into ours. The manual re-entry disappeared. It didn't remove the overlap: with both channels open, the same class could fill twice. The owner's call was to accept that and settle it at the front desk, so we didn't build a lock that both systems would have had to honour.",
+      },
+      {
+        heading: "What I decided",
+        body: "Two things I'd keep. The first was the error contract. We designed the API to be read by a developer as much as by a user — typed error enums like PASSWORD_REQUIRED rather than prose strings — and on the frontend I wrote one helper that turned the convention into copy: anything ending in _IS_REQUIRED becomes \"<field> is required\". One function covered dozens of cases, and new codes from the backend rendered correctly without a frontend change. The second was the schedule calendar. Nobody asked for it. The brief was a booking flow; I thought a scrollable week view you could filter down to a favourite instructor was simply a better way to read a class schedule than a list, and the client's trust extended far enough that I could just build it.",
+      },
+      {
+        heading: "On the stack",
+        body: "Mantine over shadcn, which in 2024 was still early and harder to override at the level this needed. TanStack Query over tRPC, since the backend was a separate service exposing its own API — a lighter fetching layer fit better than a typed router we didn't own both ends of. Payments ran through Xendit on an API my colleague and I built together. Logo design came from an external designer.",
+      },
+      {
+        heading: "Where it landed",
+        body: "It ran for over a year. Marketing and the instructors did the heavy lifting, and the studio onboarded thousands of members through it. Elevate Former has since closed. What I'd revisit is the admin panel — it was built by an outsourced team, and I reviewed it and fixed a number of issues, but the deeper changes I'd have wanted sat outside my scope.",
       },
     ],
     role: "Frontend",
     year: 2024,
     liveSite: { status: "live", href: "https://elevate-former.vercel.app/" },
-    stack: ["Next.js", "Mantine", "TanStack Query", "Nuqs", "Zod"],
+    stack: ["Next.js", "Mantine", "TanStack Query", "Xendit", "Nuqs", "Zod"],
   },
 ] as const
 
