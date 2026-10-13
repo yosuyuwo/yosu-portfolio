@@ -27,3 +27,7 @@ Default five-role vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `
 ### Domain docs
 
 Single-context — `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
+### Career notes
+
+Career notes and biography live in `docs/career/` — a separate **private** repo (`yosuyuwo/yosu-career`) cloned into this one and gitignored here, so searches that respect `.gitignore` skip it; read it by path. It is the source of truth for `lib/site-content.ts` and the résumé. This repo is public: never copy its contents into tracked files verbatim — only curated, non-confidential wording. Commit notes with `git -C docs/career …`, not in this repo.

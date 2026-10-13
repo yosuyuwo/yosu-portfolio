@@ -35,3 +35,6 @@ pnpm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# raw career dossiers from other repos (may hold client-confidential detail)
+docs/career/
