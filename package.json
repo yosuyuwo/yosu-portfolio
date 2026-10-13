@@ -11,7 +11,8 @@
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
-    "resume:generate": "tsx scripts/generate-resume.tsx"
+    "resume:generate": "tsx scripts/generate-resume.tsx",
+    "notes:sync": "git -C docs/career add -A && git -C docs/career commit -m \"update notes\" && git -C docs/career push"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
