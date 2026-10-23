@@ -60,12 +60,22 @@ export const ABOUT_INTRO =
 
 export const EXPERIENCE = [
   {
-    id: "e1",
-    organization: "Freelance",
-    role: "Product / frontend engineer",
-    startDate: "2026-05-01",
+    id: "e6",
+    organization: "Techova Labs",
+    role: "Co-founder, Product Engineer",
+    startDate: "2026-08-01",
     endDate: null,
-    blurb: "Working on freelance product and frontend projects.",
+    blurb:
+      "Co-founded a Surabaya SaaS company building AI automation; first product Terbit turns articles into Instagram content.",
+  },
+  {
+    id: "e1",
+    organization: "Quanta Labs",
+    role: "Co-founder, Product Engineer",
+    startDate: "2026-01-01",
+    endDate: null,
+    blurb:
+      "Co-founded a product studio; design and build client products end to end, including Gaiana and Eastern Star Logistics.",
   },
   {
     id: "e2",
@@ -73,32 +83,35 @@ export const EXPERIENCE = [
     role: "UI & Frontend Engineer → Product Engineer",
     startDate: "2023-08-01",
     endDate: "2026-05-01",
-    blurb: "Full-time; started on UI/frontend, moved into product engineering.",
+    blurb:
+      "Planned and built tens of client products with the tech lead; reviewed outsourced work.",
   },
   {
     id: "e3",
     organization: "Centrum Ivan Merz",
-    role: "Frontend Developer (freelance)",
+    role: "Designer & Frontend Developer (contract)",
     startDate: "2022-04-01",
     endDate: "2022-10-01",
-    blurb: "Built an LMS from scratch.",
+    blurb:
+      "Designed and built a learning platform for older learners, starting from UX research.",
   },
   {
     id: "e4",
     organization: "Kantin Sehat (outclass.id)",
-    role: "Frontend Developer (internship)",
+    role: "Frontend Developer (internship program)",
     startDate: "2021-06-01",
     endDate: "2021-10-01",
-    blurb: "Frontend internship.",
+    blurb:
+      "Team of four; built a mobile-first school canteen payment app from scratch.",
   },
   {
     id: "e5",
     organization: "Widya Mandala Accounting Games",
     role: "Game Designer & Frontend Developer",
-    startDate: "2020-02-01",
-    endDate: "2020-05-01",
+    startDate: "2021-06-01",
+    endDate: "2021-10-01",
     blurb:
-      "Design + frontend for the accounting games project (event ran in 2021).",
+      "Team of two; designed and built three real-time web games for a university event.",
   },
 ] as const
 
@@ -179,6 +192,88 @@ export const WORKS_SECTION = {
 
 export const WORKS = [
   {
+    id: "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+    slug: "gaiana",
+    title: "Gaiana",
+    summary:
+      "Dress rental and sale storefront in Surabaya. Designed and built end to end, from catalogue to checkout to operations.",
+    coverPath: "/works/gaiana/cover.webp",
+    coverVideoPath: "/works/gaiana/cover.webm",
+    publishedAt: "2026-10-12",
+    sections: [
+      {
+        heading: "Overview",
+        body: "Gaiana rents and sells occasion dresses. I designed and built the storefront and the back-office behind it through Quanta Labs, the studio I co-founded. It launched in October 2026 after five months of work, replacing a business that ran on Excel and Google Drive.",
+        images: [
+          {
+            src: "/works/gaiana/home.webp",
+            alt: "Gaiana home page with a full-bleed editorial hero",
+          },
+        ],
+      },
+      {
+        heading: "Designed for the customer",
+        body: "Renting a dress is a date problem as much as a shopping one. Customers filter by rental date, size, colour, price, occasion, length and neckline, and the size filter works from their own measurements. Those filters come from the same attributes the team uses to organise the catalogue, so nothing is maintained twice.",
+        images: [
+          {
+            src: "/works/gaiana/filters.webp",
+            alt: "Gaiana catalogue with the filter panel open",
+          },
+        ],
+        imageSide: "left",
+      },
+      {
+        heading: "One dress, one calendar",
+        body: "The customer picks a single event date. The calendar shows when the garment arrives and when it goes back, and dates taken by other bookings are already blocked. A rental holds more than the day it is worn, so courier transit, preparation and cleaning are booked alongside it, and the same rule runs on the product page, at checkout and in the back-office.",
+        images: [
+          {
+            src: "/works/gaiana/calendar.webp",
+            alt: "Gaiana product page calendar showing arrival, event day and return",
+          },
+        ],
+      },
+      {
+        heading: "How it was built",
+        body: "I work with AI agents, and I don't ship slop. Each feature went from questioning to prototype to spec to tested code, with the decisions written down along the way. The goal is a product nobody would guess was built that way.",
+      },
+      {
+        heading: "Screens",
+        images: [
+          {
+            src: "/works/gaiana/catalogue.webp",
+            alt: "Gaiana catalogue with search and sorting",
+          },
+          {
+            src: "/works/gaiana/product.webp",
+            alt: "Gaiana product page with gallery, colour, size and measurements",
+          },
+          {
+            src: "/works/gaiana/how-to-rent.webp",
+            alt: "Gaiana How to Rent page explaining the six rental steps",
+          },
+          {
+            src: "/works/gaiana/home-id.webp",
+            alt: "Gaiana home page in Indonesian",
+          },
+        ],
+      },
+    ],
+    role: "Design, Frontend & Backend",
+    year: 2026,
+    liveSite: { status: "live", href: "https://gaiana.id" },
+    stack: [
+      "Next.js",
+      "shadcn/ui",
+      "Prisma",
+      "tRPC",
+      "PostgreSQL",
+      "GSAP",
+      "Nuqs",
+      "Zod",
+      "Claude",
+    ],
+  },
+  {
     id: "dddddddd-dddd-4ddd-8ddd-dddddddddddd",
     slug: "wilmots",
     title: "Wilmot's Warehouse",
@@ -253,29 +348,6 @@ export const WORKS = [
       href: "https://github.com/WeCipta/Wilmots-warehouse-landing",
     },
     stack: ["Next.js", "GSAP", "Nuqs", "Zod", "Claude"],
-  },
-  {
-    id: "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
-    slug: "gaiana",
-    title: "Gaiana",
-    summary:
-      "Dress rental and sale storefront in Surabaya. Full storefront and admin panel, solo freelance build.",
-    coverPath: "/works/gaiana/cover.webp",
-    publishedAt: "2026-06-30",
-    sections: [
-      {
-        heading: "Overview",
-        body: "Built the whole storefront and admin panel for a dress rental and sale platform solo, as a freelance project outside of Morfolabs. New arrivals go up weekly, so the admin panel had to make listing and catalogue management fast for the team running it day to day. Still an ongoing project.",
-        images: [{ src: "/works/gaiana/cover.webp", alt: "Gaiana cover" }],
-      },
-    ],
-    role: "Frontend & Backend",
-    year: 2026,
-    liveSite: {
-      status: "in-progress",
-      href: "https://gaiana-ecommerce.vercel.app",
-    },
-    stack: ["Next.js", "shadcn/ui", "Prisma", "tRPC", "Nuqs", "Zod", "Claude"],
   },
   {
     id: "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",

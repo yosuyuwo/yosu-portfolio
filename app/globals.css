@@ -45,6 +45,19 @@
     --radius-2xl: calc(var(--radius) * 1.8);
     --radius-3xl: calc(var(--radius) * 2.2);
     --radius-4xl: calc(var(--radius) * 2.6);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@utility duration-fast {
+    transition-duration: 150ms;
+}
+
+@utility duration-normal {
+    transition-duration: 300ms;
+}
+
+@utility duration-slow {
+    transition-duration: 500ms;
 }
 
 :root {

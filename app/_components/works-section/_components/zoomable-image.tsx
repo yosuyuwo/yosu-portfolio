@@ -25,7 +25,7 @@ export function ZoomableImage({
         type="button"
         onClick={() => setOpen(true)}
         className={cn(
-          "group relative block aspect-16/10 w-full overflow-hidden rounded-2xl bg-muted",
+          "group relative block aspect-16/9 w-full overflow-hidden rounded-2xl bg-muted",
           className
         )}
       >
