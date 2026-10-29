@@ -22,9 +22,12 @@ export function Meta() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className={cn("flex items-center gap-2 text-left", LINK_CLASS)}
+        className={cn(
+          "flex items-center gap-2 text-left whitespace-nowrap",
+          LINK_CLASS
+        )}
       >
-        <span className="relative flex size-1.5">
+        <span className="relative flex size-1.5 shrink-0">
           <span className="absolute inline-flex size-full animate-ping rounded-full bg-brand opacity-70 motion-reduce:hidden" />
           <span className="relative inline-flex size-1.5 rounded-full bg-brand" />
         </span>

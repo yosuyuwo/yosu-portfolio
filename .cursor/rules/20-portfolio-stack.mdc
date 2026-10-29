@@ -53,9 +53,10 @@ UI is built **on** shadcn — never invent parallel components.
 
 ## R2 CDN (consume-only)
 
-- Public assets via `NEXT_PUBLIC_R2_CDN_URL` and `cdnUrl()` from `@/lib/cdn`
-- Configure `images.remotePatterns` in `next.config.ts` to match the CDN host
-- No upload SDK in this app
+- Public assets via `NEXT_PUBLIC_R2_CDN_URL` and `cdnUrl()` from `@/lib/cdn`; bucket keys mirror `public/`, and `cdnUrl()` falls back to the local path when the env var is unset
+- Work media is resolved once in `app/_lib/works.ts` — keep plain `/works/...` paths in `lib/site-content.ts`
+- `images.remotePatterns` in `next.config.ts` derives the CDN host from the env var
+- No upload SDK in this app — uploads go through `pnpm assets:sync` (rclone, credentials in rclone's config)
 
 ## Layout reminder
 

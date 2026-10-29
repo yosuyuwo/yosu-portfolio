@@ -1,48 +1,38 @@
+import { CONTENT_GRID } from "@/app/_lib/page-grid"
+import type { WorkSection } from "@/app/_lib/work-item"
 import { cn } from "@/lib/utils"
 
-import type { WorkSection } from "@/app/_lib/work-item"
 import { ZoomableImage } from "./zoomable-image"
 
 export function WorkDetailSection({ section }: { section: WorkSection }) {
-  const images = section.images ?? []
-  const [heroImage, ...restImages] = images
-  const hasBody = Boolean(section.body)
-  const imageSide = section.imageSide ?? "right"
+  const [heroImage, ...restImages] = section.images ?? []
+  const heroSpan =
+    section.imageSide === "left"
+      ? "md:col-span-10"
+      : "md:col-span-9 md:col-start-4"
 
   return (
-    <div>
-      <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">
+    <section className={cn(CONTENT_GRID, "gap-y-6 md:gap-y-8")}>
+      <h2 className="font-serif text-[1.75rem] leading-[1.05] text-balance md:col-span-3">
         {section.heading}
-      </p>
+      </h2>
 
-      {hasBody && heroImage ? (
-        <div className="mt-3 grid gap-8 md:grid-cols-2 md:items-start md:gap-12">
-          <p
-            className={cn(
-              "text-[17px] leading-relaxed text-foreground/90",
-              imageSide === "left" && "md:order-2"
-            )}
-          >
-            {section.body}
-          </p>
-          <ZoomableImage
-            src={heroImage.src}
-            alt={heroImage.alt}
-            className={imageSide === "left" ? "md:order-1" : undefined}
-          />
-        </div>
-      ) : hasBody ? (
-        <p className="mt-3 max-w-2xl text-[17px] leading-relaxed text-foreground/90">
+      {section.body ? (
+        <p className="max-w-[60ch] text-[clamp(1.0625rem,1.4vw,1.25rem)] leading-[1.6] text-pretty text-foreground/90 md:col-span-7 md:col-start-4">
           {section.body}
         </p>
-      ) : heroImage ? (
-        <div className="mt-3">
-          <ZoomableImage src={heroImage.src} alt={heroImage.alt} />
-        </div>
+      ) : null}
+
+      {heroImage ? (
+        <ZoomableImage
+          src={heroImage.src}
+          alt={heroImage.alt}
+          className={cn(heroSpan, section.body && "md:mt-4")}
+        />
       ) : null}
 
       {restImages.length ? (
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 md:col-span-9 md:col-start-4">
           {restImages.map((image, i) => (
             <ZoomableImage
               key={`${image.src}-${i}`}
@@ -52,6 +42,6 @@ export function WorkDetailSection({ section }: { section: WorkSection }) {
           ))}
         </div>
       ) : null}
-    </div>
+    </section>
   )
 }

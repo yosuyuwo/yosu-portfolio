@@ -68,7 +68,7 @@ export function Chapter({
                 href={`/work/${work.slug}`}
                 className={cn(
                   buttonVariants({ variant: "outline", size: "sm" }),
-                  "group/work h-8 rounded-full border-border bg-transparent px-3.5 text-sm hover:border-brand hover:bg-transparent hover:text-brand"
+                  "group/work h-8 border-border bg-transparent px-3.5 text-sm hover:border-brand hover:bg-transparent hover:text-brand"
                 )}
               >
                 {work.title}

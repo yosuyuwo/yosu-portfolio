@@ -1,5 +1,4 @@
-import Link from "next/link"
-
+import { TransitionLink } from "@/app/_components/transition-link"
 import { WorkCoverMedia } from "@/app/_components/work-cover-media"
 import type { WorkItem } from "@/app/_lib/work-item"
 import { workYear } from "@/app/_lib/works"
@@ -15,7 +14,7 @@ export function WorkCard({
 
   return (
     <li data-enter>
-      <Link
+      <TransitionLink
         href={`/work/${work.slug}`}
         className="group flex w-full flex-col gap-3 focus-visible:outline-none"
       >
@@ -48,7 +47,7 @@ export function WorkCard({
             {work.role}
           </span>
         ) : null}
-      </Link>
+      </TransitionLink>
     </li>
   )
 }

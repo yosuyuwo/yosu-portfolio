@@ -1,13 +1,11 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 
-import { ContactFooter } from "@/app/_components/contact-footer"
-import { PageEnter } from "@/app/_components/page-enter"
-import { ContactDialogProvider } from "@/app/_hooks/use-contact-dialog"
 import { WORK_ITEMS } from "@/app/_lib/works"
+import { JsonLd } from "@/lib/seo/json-ld"
+import { workSchema } from "@/lib/seo/schemas"
 import { SITE_NAME } from "@/lib/site-content"
 
-import { DetailBar } from "./_components/detail-bar"
 import { NextWork } from "./_components/next-work"
 import { WorkDetail } from "./_components/work-detail"
 
@@ -21,7 +19,19 @@ export async function generateMetadata(
   const { slug } = await props.params
   const work = WORK_ITEMS.find((w) => w.slug === slug)
   if (!work) return {}
-  return { title: `${work.title} · ${SITE_NAME}`, description: work.summary }
+  return {
+    title: work.title,
+    description: work.summary,
+    alternates: { canonical: `/work/${work.slug}` },
+    openGraph: {
+      type: "article",
+      url: `/work/${work.slug}`,
+      title: `${work.title} · ${SITE_NAME}`,
+      description: work.summary,
+      publishedTime: work.publishedAt,
+      authors: [SITE_NAME],
+    },
+  }
 }
 
 export default async function WorkPage(props: PageProps<"/work/[slug]">) {
@@ -33,14 +43,10 @@ export default async function WorkPage(props: PageProps<"/work/[slug]">) {
   const next = WORK_ITEMS[(index + 1) % WORK_ITEMS.length]
 
   return (
-    <ContactDialogProvider>
-      <PageEnter />
-      <DetailBar />
-      <main>
-        <WorkDetail work={work} />
-        <NextWork work={next} />
-      </main>
-      <ContactFooter />
-    </ContactDialogProvider>
+    <main key={slug}>
+      <JsonLd data={workSchema(work)} />
+      <WorkDetail work={work} />
+      <NextWork work={next} />
+    </main>
   )
 }

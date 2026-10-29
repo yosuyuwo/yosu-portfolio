@@ -1,10 +1,11 @@
 import { LogoMark } from "@/app/_components/logo-mark"
+import { TransitionLink } from "@/app/_components/transition-link"
 import { SITE_FAMILY_NAME, SITE_GIVEN_NAME } from "@/lib/site-content"
 
-export function Brand() {
+export function Brand({ isHome }: { isHome: boolean }) {
   return (
-    <a
-      href="#top"
+    <TransitionLink
+      href={isHome ? "#top" : "/"}
       data-enter
       className="group flex items-center gap-3 focus-visible:outline-none"
     >
@@ -14,6 +15,6 @@ export function Brand() {
         <br />
         {SITE_FAMILY_NAME}
       </span>
-    </a>
+    </TransitionLink>
   )
 }

@@ -41,8 +41,8 @@ A named cluster of skills on About (e.g. Design, Eng, Tools) - not a flat tag cl
 _Avoid_: Tags, tech stack (as the About section name)
 
 **Contact form**:
-Hire/collaborate inquiry fields (name, email, subject, message) that submit by building a `mailto:` URL and navigating to it. Opened as a bottom Sheet from the Hero CTA and the mobile top-bar CTA, not a Dialog, separate contact page, or inline About block.
-_Avoid_: Contact page, lead form, newsletter signup; Dialog or side Sheet for Contact
+Hire/collaborate inquiry (inquiry type — project or role — then name, email, subject, message) that submits by building a `mailto:` URL and navigating to it. Opens as a two-column Dialog (headline + direct contact details beside the form) from the "Open to work" and "Get in touch" triggers; not a separate contact page or inline About block.
+_Avoid_: Contact page, lead form, newsletter signup
 
 **Social**:
 A public contact or profile link shown in the sidebar footer - href plus an attached icon; not typed by platform kind. V1 ships email, GitHub, LinkedIn, Instagram as ordinary Socials.

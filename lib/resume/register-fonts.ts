@@ -2,14 +2,18 @@ import path from "node:path"
 
 import { Font } from "@react-pdf/renderer"
 
-import { PDF_FONT_FAMILY } from "./pdf-theme"
+import { PDF_FONTS } from "./pdf-theme"
 
-const FONT_DIR = path.join(
-  process.cwd(),
-  "node_modules/@fontsource/ibm-plex-sans/files"
-)
+const FONTSOURCE_DIR = path.join(process.cwd(), "node_modules/@fontsource")
 
-const WEIGHTS = [400, 500, 600, 700] as const
+function fontFile(pkg: string, weight: number, style = "normal") {
+  return path.join(
+    FONTSOURCE_DIR,
+    pkg,
+    "files",
+    `${pkg}-latin-${weight}-${style}.woff`
+  )
+}
 
 let registered = false
 
@@ -18,10 +22,18 @@ export function registerResumeFonts() {
   registered = true
 
   Font.register({
-    family: PDF_FONT_FAMILY,
-    fonts: WEIGHTS.map((weight) => ({
-      src: path.join(FONT_DIR, `ibm-plex-sans-latin-${weight}-normal.woff`),
-      fontWeight: weight,
+    family: PDF_FONTS.sans,
+    fonts: [400, 500, 600].map((fontWeight) => ({
+      src: fontFile("geist-sans", fontWeight),
+      fontWeight,
+    })),
+  })
+
+  Font.register({
+    family: PDF_FONTS.mono,
+    fonts: [400, 500].map((fontWeight) => ({
+      src: fontFile("geist-mono", fontWeight),
+      fontWeight,
     })),
   })
 

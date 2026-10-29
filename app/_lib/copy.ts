@@ -2,9 +2,8 @@ export const INTRO = {
   lead: "Product engineer who",
   emphasis: "designs.",
   location: "Surabaya, ID",
-  currently: "Open to product & frontend engineering roles",
   previously: "UI & product engineering @ Morfolabs, and more",
-  availability: "Open for projects",
+  availability: "Open to work",
 } as const
 
 export const SECTIONS = {
@@ -14,6 +13,7 @@ export const SECTIONS = {
 } as const
 
 export const CONTACT_CTA = {
-  headline: "Let's talk",
+  lead: "Let's",
+  emphasis: "talk.",
   note: "Have an idea or a role in mind? Tell me about it.",
 } as const

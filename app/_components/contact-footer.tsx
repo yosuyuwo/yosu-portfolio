@@ -1,95 +1,148 @@
 "use client"
 
-import { ArrowUpRightIcon } from "lucide-react"
+import { useRef } from "react"
 
-import { ContactForm } from "@/app/_components/contact-form"
 import { useContactDialog } from "@/app/_hooks/use-contact-dialog"
+import { useFitText } from "@/app/_hooks/use-fit-text"
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
-import {
-  CONTACT,
   CONTACT_EMAIL,
   FOOTER_COPYRIGHT_NAME,
+  RESUME_FILE,
+  SITE_FAMILY_NAME,
+  SITE_GIVEN_NAME,
   SITE_SOCIALS,
 } from "@/lib/site-content"
+import { cn } from "@/lib/utils"
 
-import { CONTACT_CTA, SECTIONS } from "@/app/_lib/copy"
+import { CONTACT_CTA, INTRO, SECTIONS } from "@/app/_lib/copy"
+import { CONTENT_COLUMN, CONTENT_GRID, RAIL_GRID } from "@/app/_lib/page-grid"
+import { ContactDialog } from "./contact-dialog"
 import { LocalTime } from "./local-time"
 import { SectionLabel } from "./section-label"
 
 const META_CLASS = "font-mono text-[11px] tracking-[0.12em] uppercase"
+const MUTED_CLASS = "text-muted-foreground max-md:text-background/60"
+const LINK_CLASS = "transition-colors duration-fast hover:text-brand"
+
+const COPYRIGHT = `© ${new Date().getFullYear()} ${FOOTER_COPYRIGHT_NAME}`
+
+// on desktop the sticky sidebar already shows these, right above the footer
+function MobileMeta() {
+  const { setOpen } = useContactDialog()
+
+  return (
+    <div className={cn("grid gap-5 md:hidden", META_CLASS, MUTED_CLASS)}>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className={cn("flex items-center gap-2 text-left", LINK_CLASS)}
+      >
+        <span className="size-1.5 rounded-full bg-brand" />
+        {INTRO.availability}
+      </button>
+      <ul className="flex flex-wrap gap-x-5 gap-y-2">
+        <li>
+          <a
+            href={RESUME_FILE.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={LINK_CLASS}
+          >
+            CV ↗
+          </a>
+        </li>
+        {SITE_SOCIALS.filter((s) => s.id !== "email").map((social) => (
+          <li key={social.id}>
+            <a
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={LINK_CLASS}
+            >
+              {social.label} ↗
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div className="flex justify-between gap-4">
+        <LocalTime />
+        <span>{COPYRIGHT}</span>
+      </div>
+    </div>
+  )
+}
 
 export function ContactFooter() {
-  const { open, setOpen } = useContactDialog()
+  const { setOpen } = useContactDialog()
+  const wordmarkRef = useRef<HTMLParagraphElement>(null)
+  useFitText(wordmarkRef)
 
   return (
     <footer
       id="contact"
-      className="border-t border-border bg-foreground text-background"
+      className={cn(
+        "overflow-hidden max-md:bg-foreground max-md:text-background",
+        RAIL_GRID
+      )}
     >
-      <div className="mx-auto max-w-6xl px-4 pt-14 pb-8 md:px-8 md:pt-20">
-        <SectionLabel {...SECTIONS.contact} className="text-background/60" />
-        <p className="mt-6 max-w-md text-sm leading-relaxed text-background/70">
-          {CONTACT_CTA.note}
-        </p>
+      <p className={cn("hidden px-7 pt-20 md:block", META_CLASS, MUTED_CLASS)}>
+        {COPYRIGHT}
+      </p>
 
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          className="group mt-4 flex w-full items-end justify-between gap-4 border-b border-background/15 pb-6 text-left focus-visible:outline-none"
+      <div className={cn(CONTENT_COLUMN, "pt-14 md:pt-0")}>
+        <div
+          className={cn(
+            CONTENT_GRID,
+            "gap-y-8 md:border-t md:border-border md:pt-20"
+          )}
         >
-          <span className="text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.9] font-semibold tracking-[-0.05em] transition-colors duration-normal group-hover:text-brand group-focus-visible:text-brand">
-            {CONTACT_CTA.headline}
-          </span>
-          <ArrowUpRightIcon
-            aria-hidden
-            className="mb-1 size-[clamp(2rem,4vw,3.5rem)] shrink-0 stroke-[1.25] transition-[translate,color] duration-normal ease-out-expo group-hover:translate-x-2 group-hover:-translate-y-2 group-hover:text-brand"
+          <SectionLabel
+            {...SECTIONS.contact}
+            className="max-md:text-background/60 md:col-span-3"
           />
-        </button>
-
-        <div className={`mt-8 grid gap-6 md:grid-cols-12 ${META_CLASS}`}>
-          <a
-            href={`mailto:${CONTACT_EMAIL}`}
-            className="normal-case transition-colors duration-fast hover:text-brand md:col-span-4"
-          >
-            {CONTACT_EMAIL}
-          </a>
-          <ul className="flex flex-wrap gap-x-6 gap-y-2 md:col-span-5">
-            {SITE_SOCIALS.filter((s) => s.id !== "email").map((social) => (
-              <li key={social.id}>
-                <a
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors duration-fast hover:text-brand"
-                >
-                  {social.label} ↗
-                </a>
-              </li>
-            ))}
-          </ul>
-          <LocalTime className="md:col-span-3 md:text-right" />
+          <div className="grid gap-6 md:col-span-9 md:grid-cols-9">
+            <p
+              className={cn(
+                "text-sm leading-relaxed md:col-span-4",
+                MUTED_CLASS
+              )}
+            >
+              {CONTACT_CTA.note}
+            </p>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className={cn("text-sm md:col-span-3", LINK_CLASS)}
+            >
+              {CONTACT_EMAIL}
+            </a>
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              className="justify-self-start text-sm underline decoration-current/30 underline-offset-4 transition-colors duration-fast hover:text-brand hover:decoration-brand md:col-span-2 md:justify-self-end"
+            >
+              Get in touch ↗
+            </button>
+          </div>
+          <MobileMeta />
         </div>
+      </div>
 
-        <p className={`mt-12 text-background/50 ${META_CLASS}`}>
-          © {new Date().getFullYear()} {FOOTER_COPYRIGHT_NAME}
+      <div
+        aria-hidden
+        className="pointer-events-none mt-14 px-4 select-none md:col-span-2 md:px-7"
+      >
+        <p
+          ref={wordmarkRef}
+          className="w-max translate-y-[0.12em] [mask-image:linear-gradient(to_bottom,black_30%,transparent_95%)] pr-[0.06em] leading-[0.8] font-medium tracking-[-0.06em] whitespace-nowrap text-foreground/[0.08] max-md:text-background/[0.14]"
+        >
+          {SITE_GIVEN_NAME}{" "}
+          <span className="font-serif font-normal tracking-normal italic">
+            {SITE_FAMILY_NAME}
+          </span>
         </p>
       </div>
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle>{CONTACT.dialogTitle}</DialogTitle>
-            <DialogDescription>{CONTACT.dialogDescription}</DialogDescription>
-          </DialogHeader>
-          <ContactForm onSubmitted={() => setOpen(false)} />
-        </DialogContent>
-      </Dialog>
+      <ContactDialog />
     </footer>
   )
 }

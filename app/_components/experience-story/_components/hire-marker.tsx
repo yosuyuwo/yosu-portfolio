@@ -26,7 +26,7 @@ export function HireMarker({ onContact }: { onContact: () => void }) {
           <Button
             type="button"
             onClick={onContact}
-            className="group/cta h-9 gap-2 rounded-full px-4 font-mono text-[11px] tracking-[0.12em] uppercase"
+            className="group/cta h-9 gap-2 px-4 font-mono text-[11px] tracking-[0.12em] uppercase"
           >
             {STORY_OUTRO.cta}
             <span

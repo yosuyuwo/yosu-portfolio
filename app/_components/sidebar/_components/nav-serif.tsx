@@ -1,18 +1,29 @@
-import { NAV_ITEMS, type NavSectionId } from "@/app/_lib/nav"
+import { TransitionLink } from "@/app/_components/transition-link"
+import { NAV_ITEMS, navHref, type NavSectionId } from "@/app/_lib/nav"
 import { cn } from "@/lib/utils"
+
+import { WorkList } from "./work-list"
 
 const LAYER_CLASS =
   "absolute bottom-1.5 left-0 origin-bottom-left whitespace-nowrap transition-[opacity,translate,scale,filter,color] duration-slow ease-out-expo"
 
-export function NavSerif({ active }: { active: NavSectionId }) {
+export function NavSerif({
+  active,
+  isHome,
+  currentSlug,
+}: {
+  active: NavSectionId
+  isHome: boolean
+  currentSlug: string | null
+}) {
   return (
     <ul className="flex flex-col">
       {NAV_ITEMS.map((item) => {
         const isActive = item.id === active
         return (
           <li key={item.id} data-enter>
-            <a
-              href={`#${item.id}`}
+            <TransitionLink
+              href={navHref(item.id, isHome)}
               aria-current={isActive ? "location" : undefined}
               className="group relative block h-9 focus-visible:outline-none"
             >
@@ -39,7 +50,8 @@ export function NavSerif({ active }: { active: NavSectionId }) {
               >
                 {item.label}
               </span>
-            </a>
+            </TransitionLink>
+            {item.id === "work" ? <WorkList currentSlug={currentSlug} /> : null}
           </li>
         )
       })}

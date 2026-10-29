@@ -1,11 +1,8 @@
-"use client"
-
-import { useState } from "react"
 import Image from "next/image"
 
-import { cn } from "@/lib/utils"
-
+import { CoverVideo } from "@/app/_components/cover-video"
 import type { WorkItem } from "@/app/_lib/work-item"
+import { cn } from "@/lib/utils"
 
 /**
  * Renders a work's cover video when available, falling back to the
@@ -15,35 +12,26 @@ export function WorkCoverMedia({
   work,
   className,
   priority,
+  isStill,
   sizes = "(max-width: 768px) 100vw, 50vw",
-  onError,
 }: {
   work: WorkItem
   className?: string
   priority?: boolean
+  isStill?: boolean
   sizes?: string
-  onError?: () => void
 }) {
-  const [hasError, setHasError] = useState(false)
-
-  if (work.coverVideoPath) {
+  if (work.coverVideoPath && !isStill) {
     return (
-      <video
-        className={cn(
-          "absolute inset-0 h-full w-full object-cover object-top",
-          className
-        )}
+      <CoverVideo
         src={work.coverVideoPath}
         poster={work.coverPath || undefined}
-        autoPlay
-        muted
-        loop
-        playsInline
+        className={className}
       />
     )
   }
 
-  if (!work.coverPath || hasError) return null
+  if (!work.coverPath) return null
 
   return (
     <Image
@@ -53,10 +41,6 @@ export function WorkCoverMedia({
       priority={priority}
       sizes={sizes}
       className={cn("object-cover object-top", className)}
-      onError={() => {
-        setHasError(true)
-        onError?.()
-      }}
     />
   )
 }

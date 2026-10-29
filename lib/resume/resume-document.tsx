@@ -1,222 +1,213 @@
-import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer"
+import { Children, Fragment, type ReactNode } from "react"
+
+import { Document, Image, Link, Page, Text, View } from "@react-pdf/renderer"
 
 import {
-  ABOUT_INTRO,
   CONTACT_EMAIL,
+  CONTACT_MAILTO,
+  EDUCATION,
   EXPERIENCE,
-  HERO,
+  HERO_PORTRAIT,
+  RESUME,
+  SITE_LOCATION,
   SITE_NAME,
   SITE_SOCIALS,
   SKILL_GROUPS,
   WORKS,
 } from "@/lib/site-content"
 
-import { formatDateRange } from "./format-month-year"
-import { PDF_COLORS, PDF_FONT_FAMILY } from "./pdf-theme"
+import { formatDateRange, formatMonthYear } from "./format-month-year"
 import { toPdfSafeText } from "./pdf-safe-text"
+import { styles } from "./resume-styles"
 
-const RESUME_SOCIAL_IDS = new Set<string>(["email", "github", "linkedin"])
+const RESUME_PROFILE_IDS = new Set<string>(["linkedin", "github"])
 
-const styles = StyleSheet.create({
-  page: {
-    fontFamily: PDF_FONT_FAMILY,
-    fontSize: 9,
-    color: PDF_COLORS.inkMuted,
-    backgroundColor: PDF_COLORS.background,
-    paddingTop: 20,
-    paddingBottom: 16,
-    paddingHorizontal: 44,
-  },
-  header: {
-    marginBottom: 6,
-  },
-  name: {
-    fontSize: 23,
-    fontWeight: 700,
-    color: PDF_COLORS.ink,
-    letterSpacing: -0.4,
-  },
-  tagline: {
-    marginTop: 2,
-    fontSize: 10,
-    fontWeight: 500,
-    color: PDF_COLORS.inkSubtle,
-    textTransform: "uppercase",
-    letterSpacing: 1.4,
-  },
-  contactRow: {
-    marginTop: 4,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    fontSize: 9,
-    color: PDF_COLORS.inkSubtle,
-  },
-  contactItem: {
-    marginRight: 12,
-  },
-  section: {
-    marginTop: 4,
-  },
-  sectionTitle: {
-    fontSize: 8.5,
-    fontWeight: 700,
-    color: PDF_COLORS.ink,
-    textTransform: "uppercase",
-    letterSpacing: 1.6,
-    paddingBottom: 2,
-    marginBottom: 4,
-    borderBottomWidth: 1,
-    borderBottomColor: PDF_COLORS.rule,
-  },
-  summaryText: {
-    lineHeight: 1.4,
-    color: PDF_COLORS.inkMuted,
-  },
-  entry: {
-    marginBottom: 2,
-  },
-  entryHeadRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-  },
-  entryTitle: {
-    flex: 1,
-    paddingRight: 10,
-    fontSize: 10,
-  },
-  entryOrg: {
-    fontWeight: 700,
-    color: PDF_COLORS.ink,
-  },
-  entryRole: {
-    fontWeight: 500,
-    color: PDF_COLORS.inkMuted,
-  },
-  entryDate: {
-    fontSize: 8,
-    color: PDF_COLORS.inkSubtle,
-    flexShrink: 0,
-  },
-  entryMeta: {
-    marginTop: 1,
-    fontSize: 8,
-    color: PDF_COLORS.inkSubtle,
-  },
-  entryBlurb: {
-    marginTop: 2,
-    lineHeight: 1.4,
-    color: PDF_COLORS.inkSubtle,
-  },
-  skillsGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
-  skillGroup: {
-    width: "50%",
-    marginBottom: 3,
-    paddingRight: 12,
-  },
-  skillGroupName: {
-    fontSize: 8,
-    fontWeight: 700,
-    color: PDF_COLORS.ink,
-    textTransform: "uppercase",
-    letterSpacing: 1,
-    marginBottom: 2,
-  },
-  skillList: {
-    lineHeight: 1.4,
-    color: PDF_COLORS.inkSubtle,
-  },
-})
+function displayUrl(href: string): string {
+  return href.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")
+}
 
-function resumeContactItems(): string[] {
-  return SITE_SOCIALS.filter((social) => RESUME_SOCIAL_IDS.has(social.id)).map(
-    (social) =>
-      social.id === "email"
-        ? CONTACT_EMAIL
-        : social.href.replace(/^https?:\/\//, "").replace(/\/$/, "")
+function contactItems(): { label: string; href?: string }[] {
+  const profiles = SITE_SOCIALS.filter((social) =>
+    RESUME_PROFILE_IDS.has(social.id)
+  ).map((social) => ({ label: displayUrl(social.href), href: social.href }))
+
+  return [
+    { label: SITE_LOCATION },
+    { label: CONTACT_EMAIL, href: CONTACT_MAILTO },
+    ...profiles,
+  ]
+}
+
+function Section({ title, children }: { title: string; children: ReactNode }) {
+  const [first, ...rest] = Children.toArray(children)
+
+  return (
+    <View style={styles.section}>
+      {/* the heading moves with its first entry, so it's never stranded at a page end */}
+      <View wrap={false}>
+        <View style={styles.sectionHead}>
+          <View style={styles.sectionMarker} />
+          <Text style={styles.sectionTitle}>{title}</Text>
+        </View>
+        {first}
+      </View>
+      {rest}
+    </View>
   )
 }
 
-export function ResumeDocument() {
-  const latestRole = EXPERIENCE[0]?.role ?? ""
+function Bullets({ items }: { items: readonly string[] }) {
+  return (
+    <View style={styles.bulletList}>
+      {items.map((item) => (
+        <View key={item} style={styles.bulletRow}>
+          <View style={styles.bulletMarker} />
+          <Text style={styles.bulletText}>{toPdfSafeText(item)}</Text>
+        </View>
+      ))}
+    </View>
+  )
+}
+
+function EntryHead({ title, date }: { title: string; date: string }) {
+  return (
+    <View style={styles.entryHeadRow}>
+      <Text style={styles.entryTitle}>{title}</Text>
+      <Text style={styles.entryDate}>{date}</Text>
+    </View>
+  )
+}
+
+function Header({ portrait }: { portrait: Buffer }) {
+  const items = contactItems()
 
   return (
-    <Document title={`${SITE_NAME} — Resume`} author={SITE_NAME}>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.header}>
-          <Text style={styles.name}>{SITE_NAME}</Text>
-          <Text style={styles.tagline}>{latestRole}</Text>
-          <View style={styles.contactRow}>
-            {resumeContactItems().map((item) => (
-              <Text key={item} style={styles.contactItem}>
-                {item}
-              </Text>
-            ))}
-          </View>
-        </View>
+    <View style={styles.header}>
+      <View style={styles.headerText}>
+        <Text style={styles.name}>{SITE_NAME}</Text>
+        <Text style={styles.headline}>{RESUME.headline}</Text>
+        <Text style={styles.contactRow}>
+          {items.map((item, index) => (
+            <Fragment key={item.label}>
+              {index > 0 ? (
+                <Text style={styles.contactSeparator}>{"  /  "}</Text>
+              ) : null}
+              {item.href ? (
+                <Link src={item.href} style={styles.contactLink}>
+                  {item.label}
+                </Link>
+              ) : (
+                item.label
+              )}
+            </Fragment>
+          ))}
+        </Text>
+      </View>
+      <Image
+        src={{ data: portrait, format: "jpg" }}
+        style={styles.portrait}
+        aria-label={HERO_PORTRAIT.alt}
+      />
+    </View>
+  )
+}
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Summary</Text>
-          <Text style={styles.summaryText}>
-            {HERO.bio} {ABOUT_INTRO}
+function ExperienceSection() {
+  return (
+    <Section title="Experience">
+      {EXPERIENCE.map((role) => (
+        <View key={role.id} style={styles.entry} wrap={false}>
+          <EntryHead
+            title={role.role}
+            date={formatDateRange(role.startDate, role.endDate)}
+          />
+          <Text style={styles.entrySubtitle}>{role.organization}</Text>
+          <Bullets items={role.highlights} />
+        </View>
+      ))}
+    </Section>
+  )
+}
+
+function ProjectsSection() {
+  return (
+    <Section title="Selected Projects">
+      {WORKS.map((work) => (
+        <View key={work.id} style={styles.entry} wrap={false}>
+          <EntryHead title={work.title} date={String(work.year)} />
+          <Text style={styles.entrySubtitle}>
+            {work.role}
+            {"  /  "}
+            <Link src={work.liveSite.href} style={styles.entryLink}>
+              {displayUrl(work.liveSite.href)}
+            </Link>
+          </Text>
+          <Text style={styles.projectSummary}>{work.summary}</Text>
+          <Text style={styles.projectStack}>
+            Stack: {work.stack.join(", ")}
           </Text>
         </View>
+      ))}
+    </Section>
+  )
+}
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Experience</Text>
-          {EXPERIENCE.map((role) => (
-            <View key={role.id} style={styles.entry} wrap={false}>
-              <View style={styles.entryHeadRow}>
-                <Text style={styles.entryTitle}>
-                  <Text style={styles.entryOrg}>{role.organization}</Text>
-                  <Text style={styles.entryRole}>
-                    {" "}
-                    — {toPdfSafeText(role.role)}
-                  </Text>
-                </Text>
-                <Text style={styles.entryDate}>
-                  {formatDateRange(role.startDate, role.endDate)}
-                </Text>
-              </View>
-              <Text style={styles.entryBlurb}>{role.blurb}</Text>
-            </View>
-          ))}
+function SkillsSection() {
+  return (
+    <Section title="Skills">
+      {SKILL_GROUPS.map((group) => (
+        <View key={group.id} style={styles.skillRow} wrap={false}>
+          <Text style={styles.skillGroupName}>{group.name}</Text>
+          <Text style={styles.skillList}>{group.skills.join(", ")}</Text>
         </View>
+      ))}
+    </Section>
+  )
+}
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Selected Work</Text>
-          {WORKS.map((work) => (
-            <View key={work.id} style={styles.entry} wrap={false}>
-              <View style={styles.entryHeadRow}>
-                <Text style={styles.entryTitle}>
-                  <Text style={styles.entryOrg}>{work.title}</Text>
-                </Text>
-                <Text style={styles.entryDate}>{work.year}</Text>
-              </View>
-              <Text style={styles.entryMeta}>
-                {[work.role, work.stack?.join(" · ")]
-                  .filter(Boolean)
-                  .join(" · ")}
-              </Text>
-              <Text style={styles.entryBlurb}>{work.summary}</Text>
-            </View>
-          ))}
-        </View>
+function EducationSection() {
+  if (EDUCATION.length === 0) return null
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Skills</Text>
-          <View style={styles.skillsGrid}>
-            {SKILL_GROUPS.map((group) => (
-              <View key={group.id} style={styles.skillGroup} wrap={false}>
-                <Text style={styles.skillGroupName}>{group.name}</Text>
-                <Text style={styles.skillList}>{group.skills.join(", ")}</Text>
-              </View>
-            ))}
-          </View>
+  return (
+    <Section title="Education">
+      {EDUCATION.map((entry) => (
+        <View key={entry.id} style={styles.entry} wrap={false}>
+          <EntryHead
+            title={entry.credential}
+            date={formatDateRange(entry.startDate, entry.endDate)}
+          />
+          <Text style={styles.entrySubtitle}>{entry.institution}</Text>
         </View>
+      ))}
+    </Section>
+  )
+}
+
+export function ResumeDocument({ portrait }: { portrait: Buffer }) {
+  const updated = formatMonthYear(new Date().toISOString())
+
+  return (
+    <Document
+      title={`${SITE_NAME} — CV`}
+      author={SITE_NAME}
+      subject={RESUME.headline}
+      language="en"
+    >
+      <Page size="A4" style={styles.page}>
+        <Header portrait={portrait} />
+
+        <Section title="Summary">
+          <Text>{RESUME.summary}</Text>
+        </Section>
+
+        <ExperienceSection />
+        <ProjectsSection />
+        <SkillsSection />
+        <EducationSection />
+
+        <Text style={styles.footer} fixed>
+          {SITE_NAME} / CV / Updated {updated}
+        </Text>
       </Page>
     </Document>
   )

@@ -1,4 +1,5 @@
 import { INTRO } from "@/app/_lib/copy"
+import { SITE_NAME } from "@/lib/site-content"
 
 import { LocalTime } from "./local-time"
 
@@ -15,6 +16,7 @@ export function Intro() {
         data-enter
         className="max-w-[22ch] text-[clamp(1.625rem,3.2vw,2.5rem)] leading-[1.1] font-medium tracking-[-0.035em] text-balance md:col-span-8"
       >
+        <span className="sr-only">{SITE_NAME}, </span>
         {INTRO.lead}{" "}
         <em className="font-serif text-[1.12em] font-normal tracking-normal text-brand">
           {INTRO.emphasis}
@@ -22,16 +24,6 @@ export function Intro() {
       </h1>
 
       <dl className="grid content-end gap-3 text-sm md:col-span-4">
-        <div
-          data-enter
-          className="grid grid-cols-[6.5rem_1fr] items-baseline gap-3"
-        >
-          <dt className={LABEL_CLASS}>Currently</dt>
-          <dd className="flex items-baseline gap-2">
-            <span className="size-1.5 shrink-0 -translate-y-px rounded-full bg-brand" />
-            {INTRO.currently}
-          </dd>
-        </div>
         <div
           data-enter
           className="grid grid-cols-[6.5rem_1fr] items-baseline gap-3"
