@@ -5,8 +5,6 @@ import {
   ABOUT_INTRO,
   ABOUT_WORKFLOW,
   HERO_PORTRAIT,
-  RESUME,
-  SITE_NAME,
   SKILL_GROUPS,
 } from "@/lib/site-content"
 
@@ -17,37 +15,33 @@ import { SectionLabel } from "./section-label"
 const SUBHEAD_CLASS =
   "font-mono text-[11px] tracking-[0.14em] text-muted-foreground uppercase"
 
+// the portrait floats so the quote wraps around it and continues underneath, magazine-style
 function WorkflowQuote() {
   return (
-    <figure className="group grid max-w-2xl grid-cols-[6.5rem_minmax(0,1fr)] items-start gap-5 border-t border-border pt-8 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-8">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-muted ring-1 ring-border">
+    <div className="group flow-root max-w-2xl border-t border-border pt-8">
+      <div className="relative float-left mt-1 mr-5 mb-3 aspect-[4/5] w-28 overflow-hidden rounded-md bg-muted ring-1 ring-border sm:mr-8 sm:mb-4 sm:w-36">
         <Image
           src={cdnUrl(HERO_PORTRAIT.src)}
           alt={HERO_PORTRAIT.alt}
           fill
-          sizes="(min-width: 640px) 9rem, 6.5rem"
+          sizes="(min-width: 640px) 9rem, 7rem"
           className="object-cover object-top grayscale transition-[filter,scale] duration-slow ease-out-expo group-hover:scale-[1.03] group-hover:grayscale-0"
         />
       </div>
 
-      <div className="flex flex-col gap-4">
-        <h2 className={SUBHEAD_CLASS}>How I work</h2>
-        <blockquote className="relative text-[clamp(1rem,1.3vw,1.125rem)] leading-relaxed tracking-[-0.01em] text-pretty">
+      <h2 className={SUBHEAD_CLASS}>How I work</h2>
+      <blockquote className="mt-4 text-[clamp(1rem,1.3vw,1.125rem)] leading-relaxed tracking-[-0.01em] text-pretty">
+        <p>
           <span
             aria-hidden
-            className="absolute -top-3 -left-4 font-serif text-5xl leading-none text-brand/40 select-none sm:-left-6"
+            className="mr-0.5 font-serif text-[1.6em] leading-none text-brand/60 select-none"
           >
             &ldquo;
           </span>
-          <p>{ABOUT_WORKFLOW}</p>
-        </blockquote>
-        <figcaption className="flex flex-wrap items-center gap-x-2 font-mono text-[11px] tracking-[0.12em] text-muted-foreground uppercase">
-          <span className="h-px w-5 bg-brand" />
-          <span className="text-foreground">{SITE_NAME}</span>
-          <span>{RESUME.headline}</span>
-        </figcaption>
-      </div>
-    </figure>
+          {ABOUT_WORKFLOW}
+        </p>
+      </blockquote>
+    </div>
   )
 }
 
