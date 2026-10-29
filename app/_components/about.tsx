@@ -1,12 +1,4 @@
-import Image from "next/image"
-
-import { cdnUrl } from "@/lib/cdn"
-import {
-  ABOUT_INTRO,
-  ABOUT_WORKFLOW,
-  HERO_PORTRAIT,
-  SKILL_GROUPS,
-} from "@/lib/site-content"
+import { ABOUT_INTRO, ABOUT_WORKFLOW, SKILL_GROUPS } from "@/lib/site-content"
 
 import { SECTIONS } from "@/app/_lib/copy"
 import { ExperienceStory } from "./experience-story"
@@ -14,36 +6,6 @@ import { SectionLabel } from "./section-label"
 
 const SUBHEAD_CLASS =
   "font-mono text-[11px] tracking-[0.14em] text-muted-foreground uppercase"
-
-// the portrait floats so the quote wraps around it and continues underneath, magazine-style
-function WorkflowQuote() {
-  return (
-    <div className="group flow-root max-w-2xl border-t border-border pt-8">
-      <div className="relative float-left mt-1 mr-5 mb-3 aspect-[4/5] w-28 overflow-hidden rounded-md bg-muted ring-1 ring-border sm:mr-8 sm:mb-4 sm:w-36">
-        <Image
-          src={cdnUrl(HERO_PORTRAIT.src)}
-          alt={HERO_PORTRAIT.alt}
-          fill
-          sizes="(min-width: 640px) 9rem, 7rem"
-          className="object-cover object-top grayscale transition-[filter,scale] duration-slow ease-out-expo group-hover:scale-[1.03] group-hover:grayscale-0"
-        />
-      </div>
-
-      <h2 className={SUBHEAD_CLASS}>How I work</h2>
-      <blockquote className="mt-4 text-[clamp(1rem,1.3vw,1.125rem)] leading-relaxed tracking-[-0.01em] text-pretty">
-        <p>
-          <span
-            aria-hidden
-            className="mr-0.5 font-serif text-[1.6em] leading-none text-brand/60 select-none"
-          >
-            &ldquo;
-          </span>
-          {ABOUT_WORKFLOW}
-        </p>
-      </blockquote>
-    </div>
-  )
-}
 
 export function About() {
   return (
@@ -60,7 +22,15 @@ export function About() {
           <p className="max-w-[46ch] text-[clamp(1.125rem,1.6vw,1.375rem)] leading-[1.4] tracking-[-0.015em] text-balance">
             {ABOUT_INTRO}
           </p>
-          <WorkflowQuote />
+
+          <div className="max-w-2xl">
+            <p className="text-[clamp(1rem,1.3vw,1.125rem)] leading-relaxed tracking-[-0.01em] text-pretty">
+              {ABOUT_WORKFLOW.headline}
+            </p>
+            <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
+              {ABOUT_WORKFLOW.process}
+            </p>
+          </div>
         </div>
 
         <div>

@@ -53,8 +53,11 @@ export const CONTACT = {
 export const ABOUT_INTRO =
   "Began as a Frontend and UI/UX developer in 2020. Since 2023, I have been a full-stack product engineer. I care not only about your product but also about finding the right tools and processes that make it possible."
 
-export const ABOUT_WORKFLOW =
-  "I build with AI agents every day, but nothing ships on autopilot. Each feature goes from questions to prototype to spec to tested code, with the decisions written down, and I review and QA every change by hand. The goal is work polished enough that you'd be surprised AI was involved at all."
+export const ABOUT_WORKFLOW = {
+  headline: "I build with AI agents every day, but nothing ships on autopilot.",
+  process:
+    "Questions, prototype, spec, tested code. Every change reviewed by hand.",
+} as const
 
 export const SITE_LOCATION = "Surabaya, Indonesia"
 
