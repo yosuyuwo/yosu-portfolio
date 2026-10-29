@@ -110,7 +110,9 @@ export function ContactForm({ onSubmitted }: { onSubmitted?: () => void }) {
           name="inquiryType"
           children={(field) => (
             <Field>
-              <FieldLabel htmlFor={field.name}>What&apos;s this about?</FieldLabel>
+              <FieldLabel htmlFor={field.name}>
+                What&apos;s this about?
+              </FieldLabel>
               <Select
                 items={CONTACT_INQUIRY_TYPE_LABELS}
                 value={field.state.value}

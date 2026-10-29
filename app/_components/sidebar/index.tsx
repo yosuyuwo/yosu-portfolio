@@ -1,42 +1,21 @@
 "use client"
 
-import {
-  Sidebar as SidebarRoot,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarRail,
-} from "@/components/ui/sidebar"
-import { Separator } from "@/components/ui/separator"
-import type { SectionId } from "@/app/_types/section-id"
+import { useActiveSection } from "@/app/_hooks/use-active-section"
 
-import { BrandHeader } from "./_components/brand-header"
-import { PrimaryNav } from "./_components/primary-nav"
-import { ResumeDownloadLink } from "./_components/resume-download-link"
-import { SidebarCollapseControl } from "./_components/sidebar-collapse-control"
-import { SocialNav } from "./_components/social-nav"
-import { FlipHighlightProvider } from "./_hooks/use-flip-highlight"
+import { Brand } from "./_components/brand"
+import { Meta } from "./_components/meta"
+import { NavSerif } from "./_components/nav-serif"
 
-export function Sidebar({ activeSection }: { activeSection: SectionId }) {
+export function Sidebar() {
+  const active = useActiveSection()
+
   return (
-    <SidebarRoot variant="inset" collapsible="icon">
-      <FlipHighlightProvider active={activeSection}>
-        <SidebarHeader className="relative z-10 hidden px-2 pt-3 md:flex">
-          <BrandHeader />
-        </SidebarHeader>
-        <SidebarContent className="relative z-10 gap-4 px-2 pt-6 md:pt-2">
-          <PrimaryNav />
-        </SidebarContent>
-        <SidebarFooter className="relative z-10 gap-2 px-2 pb-3">
-          <SocialNav />
-          <Separator className="my-1 group-data-[collapsible=icon]:hidden" />
-          <ResumeDownloadLink />
-          <div className="mt-4 hidden pt-1 md:block">
-            <SidebarCollapseControl />
-          </div>
-        </SidebarFooter>
-      </FlipHighlightProvider>
-      <SidebarRail />
-    </SidebarRoot>
+    <aside className="sticky top-0 hidden h-svh w-52 flex-col px-7 py-7 md:flex">
+      <Brand />
+      <nav aria-label="Main" className="mt-20">
+        <NavSerif active={active} />
+      </nav>
+      <Meta />
+    </aside>
   )
 }

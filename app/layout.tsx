@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Geist_Mono, IBM_Plex_Sans } from "next/font/google"
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -8,11 +8,18 @@ import { SITE_METADATA } from "@/lib/site-content"
 import { TRPCReactProvider } from "@/lib/trpc/client"
 import { cn } from "@/lib/utils"
 
-const ibmPlexSans = IBM_Plex_Sans({ subsets: ["latin"], variable: "--font-sans" })
+const fontSans = Geist({ subsets: ["latin"], variable: "--font-sans" })
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+})
+
+const fontSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-serif",
 })
 
 export const metadata: Metadata = {
@@ -30,12 +37,20 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
       className={cn(
-        "h-full overflow-hidden font-sans antialiased",
+        "scroll-pt-14 scroll-smooth font-sans antialiased md:scroll-pt-6",
+        fontSans.variable,
         fontMono.variable,
-        ibmPlexSans.variable,
+        fontSerif.variable
       )}
     >
-      <body className="h-full overflow-hidden">
+      <body className="selection:bg-brand selection:text-background">
+        <noscript>
+          <style>{"[data-enter]{visibility:visible}"}</style>
+        </noscript>
+        <div
+          aria-hidden
+          className="pointer-events-none fixed inset-0 z-50 grain opacity-[0.05] mix-blend-multiply dark:opacity-[0.07] dark:mix-blend-screen"
+        />
         <NuqsProvider>
           <TRPCReactProvider>
             <ThemeProvider>{children}</ThemeProvider>
