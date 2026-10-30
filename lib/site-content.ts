@@ -3,7 +3,7 @@ export const SITE_FAMILY_NAME = "Yuwono"
 export const SITE_NAME = `${SITE_GIVEN_NAME} ${SITE_FAMILY_NAME}`
 export const SITE_SHORT_NAME = SITE_GIVEN_NAME
 
-export const CONTACT_EMAIL = "yosuayuwono@gmail.com"
+export const CONTACT_EMAIL = "hello@yosuayuwono.com"
 export const CONTACT_MAILTO = `mailto:${CONTACT_EMAIL}`
 
 export const SITE_LOGO = {
@@ -54,9 +54,10 @@ export const ABOUT_INTRO =
   "Began as a Frontend and UI/UX developer in 2020. Since 2023, I have been a full-stack product engineer. I care not only about your product but also about finding the right tools and processes that make it possible."
 
 export const ABOUT_WORKFLOW = {
-  headline: "I build with AI agents every day, but nothing ships on autopilot.",
+  headline:
+    "Right now, I build with AI agents every day, but nothing ships on autopilot.",
   process:
-    "Questions, prototype, spec, tested code. Every change reviewed by hand.",
+    "Questions, prototype, spec, tested code. Every change reviewed by hand. This way I can be fast while keeping quality up.",
 } as const
 
 export const SITE_LOCATION = "Surabaya, Indonesia"
@@ -152,7 +153,15 @@ export type Education = {
   endDate: string | null
 }
 
-export const EDUCATION: readonly Education[] = []
+export const EDUCATION: readonly Education[] = [
+  {
+    id: "istts-skom",
+    institution: "Institut Sains dan Teknologi Terpadu Surabaya (iSTTS)",
+    credential: "Bachelor of Computer Science (S.Kom.)",
+    startDate: "2018-01-01",
+    endDate: "2023-01-01",
+  },
+]
 
 export const RESUME = {
   headline: "Product Engineer & Frontend Developer",
@@ -442,7 +451,7 @@ export const WORKS = [
     sections: [
       {
         heading: "Overview",
-        body: "Built the landing site and reporting portal for Asosiasi Blockchain Indonesia (ABI), a non-profit mobilizing blockchain actors across Indonesia, through Morfolabs. No access to the reporting portal post-handoff. Team of two, frontend end to end with a tech lead on backend.",
+        body: "Built the landing site and reporting portal for Asosiasi Blockchain Indonesia (ABI), a non-profit mobilizing blockchain actors across Indonesia, through Morfolabs. No access to the reporting portal post-handoff. Team of two, frontend end to end with Awank Kaley on backend.",
         images: [
           {
             src: "/works/abi/cover.webp",
@@ -477,7 +486,7 @@ export const WORKS = [
     sections: [
       {
         heading: "Overview",
-        body: "Built the landing and booking experience for a Slow Resistance Training (SRT) fitness studio. The client gave full trust on feature decisions, not just structure and layout. Data fetching runs through tRPC on top of TanStack Query, in front of the backend's external API. Also reviewed quality on the outsourced admin panel. Logo design was handled by an external designer.",
+        body: "Built the landing and booking experience for a Slow Resistance Training (SRT) fitness studio. The client gave full trust on feature decisions, not just structure and layout. Data fetching runs through tRPC on top of TanStack Query, in front of the backend's external API, which Awank Kaley built. Also reviewed quality on the outsourced admin panel. Logo design was handled by an external designer.",
         images: [
           { src: "/works/elevate/cover.webp", alt: "Elevate Former cover" },
         ],

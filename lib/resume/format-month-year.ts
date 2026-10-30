@@ -5,6 +5,16 @@ export function formatMonthYear(iso: string): string {
   }).format(new Date(iso))
 }
 
+export function formatYearRange(
+  startDate: string,
+  endDate: string | null
+): string {
+  const start = new Date(startDate).getUTCFullYear()
+  return endDate
+    ? `${start} – ${new Date(endDate).getUTCFullYear()}`
+    : `${start} – Present`
+}
+
 export function formatDateRange(
   startDate: string,
   endDate: string | null

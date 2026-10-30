@@ -16,7 +16,11 @@ import {
   WORKS,
 } from "@/lib/site-content"
 
-import { formatDateRange, formatMonthYear } from "./format-month-year"
+import {
+  formatDateRange,
+  formatMonthYear,
+  formatYearRange,
+} from "./format-month-year"
 import { toPdfSafeText } from "./pdf-safe-text"
 import { styles } from "./resume-styles"
 
@@ -174,7 +178,7 @@ function EducationSection() {
         <View key={entry.id} style={styles.entry} wrap={false}>
           <EntryHead
             title={entry.credential}
-            date={formatDateRange(entry.startDate, entry.endDate)}
+            date={formatYearRange(entry.startDate, entry.endDate)}
           />
           <Text style={styles.entrySubtitle}>{entry.institution}</Text>
         </View>
