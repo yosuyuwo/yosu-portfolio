@@ -1,14 +1,14 @@
 import { CONTACT_MAILTO } from "@/lib/site-content"
 
-import {
-  CONTACT_INQUIRY_TYPE_LABELS,
-  type ContactValues,
-} from "./contact-schema"
+import type { ContactValues } from "./contact-schema"
+import { formatStartDate } from "./start-date"
 
 export function buildMailtoUrl(values: ContactValues): string {
   const body = [
     `From: ${values.name} <${values.email}>`,
-    CONTACT_INQUIRY_TYPE_LABELS[values.inquiryType],
+    ...(values.startDate
+      ? [`Expected start: ${formatStartDate(values.startDate)}`]
+      : []),
     "",
     values.message,
   ].join("\n")

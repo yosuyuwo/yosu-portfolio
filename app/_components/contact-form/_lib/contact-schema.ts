@@ -1,27 +1,27 @@
 import { z } from "zod"
 
-export const CONTACT_INQUIRY_TYPES = ["idea", "role"] as const
-export type ContactInquiryType = (typeof CONTACT_INQUIRY_TYPES)[number]
+import { todayIso } from "./start-date"
 
-export const CONTACT_INQUIRY_TYPE_LABELS: Record<ContactInquiryType, string> = {
-  idea: "I have a project idea",
-  role: "I want to hire you for a role",
-}
+const startDateSchema = z
+  .union([z.literal(""), z.iso.date("Enter a valid date")])
+  .refine((value) => value === "" || value >= todayIso(), {
+    message: "Pick today or a later date",
+  })
 
 export const contactSchema = z.object({
-  inquiryType: z.enum(CONTACT_INQUIRY_TYPES),
   name: z.string().min(1, "Name is required"),
   email: z.email("Enter a valid email"),
   subject: z.string().min(1, "Subject is required"),
+  startDate: startDateSchema,
   message: z.string().min(1, "Message is required"),
 })
 
 export type ContactValues = z.infer<typeof contactSchema>
 
 export const CONTACT_DEFAULTS: ContactValues = {
-  inquiryType: "idea",
   name: "",
   email: "",
   subject: "",
+  startDate: "",
   message: "",
 }
