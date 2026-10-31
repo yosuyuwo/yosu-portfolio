@@ -85,9 +85,16 @@ export function ContactFooter() {
         RAIL_GRID
       )}
     >
-      <p className={cn("hidden px-7 pt-20 md:block", META_CLASS, MUTED_CLASS)}>
-        {COPYRIGHT}
-      </p>
+      <div
+        className={cn(
+          "hidden gap-1.5 px-7 pt-20 md:grid",
+          META_CLASS,
+          MUTED_CLASS
+        )}
+      >
+        <p>{COPYRIGHT}</p>
+        <LocalTime />
+      </div>
 
       <div className={cn(CONTENT_COLUMN, "pt-14 md:pt-0")}>
         <div

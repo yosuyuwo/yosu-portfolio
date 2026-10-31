@@ -1,6 +1,6 @@
 "use client"
 
-import { LocalTime } from "@/app/_components/local-time"
+import { useChatPanel } from "@/app/_hooks/use-chat-panel"
 import { useContactDialog } from "@/app/_hooks/use-contact-dialog"
 import { INTRO } from "@/app/_lib/copy"
 import { RESUME_FILE, SITE_SOCIALS } from "@/lib/site-content"
@@ -10,6 +10,7 @@ import { LINK_CLASS, META_CLASS } from "../_lib/link-class"
 
 export function Meta() {
   const { setOpen } = useContactDialog()
+  const { setOpen: setChatOpen } = useChatPanel()
 
   return (
     <div
@@ -59,7 +60,13 @@ export function Meta() {
         ))}
       </ul>
 
-      <LocalTime />
+      <button
+        type="button"
+        onClick={() => setChatOpen(true)}
+        className={cn("cursor-pointer text-left uppercase", LINK_CLASS)}
+      >
+        Ask about me
+      </button>
     </div>
   )
 }

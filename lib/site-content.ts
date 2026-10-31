@@ -251,6 +251,74 @@ export const WORKS_SECTION = {
 
 export const WORKS = [
   {
+    id: "ffffffff-ffff-4fff-8fff-ffffffffffff",
+    slug: "terbit",
+    title: "Terbit",
+    summary:
+      "Landing site, brand and studio interface for an AI tool that turns articles into on-brand Instagram posts.",
+    coverPath: "/works/terbit/cover.webp",
+    coverVideoPath: "/works/terbit/cover.webm",
+    publishedAt: "2026-10-31",
+    sections: [
+      {
+        heading: "Overview",
+        body: "Terbit, from Techova Labs, the company I co-founded, turns an article link into Instagram carousels, posts and stories that fit a brand's own templates. I built its landing page, designed its logo and theme, and redesigned the three studios where teams write, edit and lay out what the AI produces. I co-create the product and keep refining its interface.",
+        images: [
+          {
+            src: "/works/terbit/landing-hero.webp",
+            alt: "Top of the Terbit landing page in the light theme, with the headline over a painted meadow and the top of the Naskah app screen",
+          },
+        ],
+      },
+      {
+        heading: "A landing page that shows the product",
+        body: "One scroll-driven video walks a visitor from pasting a link to a scheduled post, so the page demonstrates the product instead of describing it. Copy was written first, in Indonesian, and limited to claims the product can support.",
+        images: [
+          {
+            src: "/works/terbit/landing-steps.webp",
+            alt: "The Cara kerja section: step 02, AI menulis tiap slide, beside the Studio Konten window showing six generated slides",
+          },
+        ],
+        imageSide: "left",
+      },
+      {
+        heading: "Brand and studio",
+        body: "A Techova palette, display type and a dark sidebar across the app, plus a studio shell with its own top bar and AI assistant.",
+        images: [
+          {
+            src: "/works/terbit/landing-hero-dark.webp",
+            alt: "The Terbit landing hero in the dark theme, with the painting turned into a moonlit night sky",
+          },
+        ],
+      },
+      {
+        heading: "Screens",
+        images: [
+          {
+            src: "/works/terbit/landing-one-article.webp",
+            alt: "The Satu naskah section: one article turned into three Instagram carousels in different brand styles",
+          },
+          {
+            src: "/works/terbit/landing-schedule.webp",
+            alt: "The Jadwal section: a monthly Instagram posting calendar with scheduled carousels",
+          },
+          {
+            src: "/works/terbit/auth-login.webp",
+            alt: "The Terbit sign-in page: a frosted card over a painted sunlit meadow",
+          },
+          {
+            src: "/works/terbit/auth-register.webp",
+            alt: "The Terbit sign-up page: a frosted card over the same painted meadow",
+          },
+        ],
+      },
+    ],
+    role: "Frontend & Design",
+    year: 2026,
+    liveSite: { status: "live", href: "https://terbit.techovalabs.com" },
+    stack: ["Next.js", "Tailwind CSS", "GSAP", "Lenis", "next-intl"],
+  },
+  {
     id: "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
     slug: "gaiana",
     title: "Gaiana",

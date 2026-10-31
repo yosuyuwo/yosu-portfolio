@@ -2,13 +2,15 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google"
 
 import "./globals.css"
+import { ChatSheet } from "@/app/_components/chat/mobile-sheet"
 import { ContactFooter } from "@/app/_components/contact-footer"
 import { IntroOverlay } from "@/app/_components/intro-overlay"
 import { RouteEnter } from "@/app/_components/route-enter"
 import { Sidebar } from "@/app/_components/sidebar"
 import { TopBar } from "@/app/_components/top-bar"
+import { ChatPanelProvider } from "@/app/_hooks/use-chat-panel"
 import { ContactDialogProvider } from "@/app/_hooks/use-contact-dialog"
-import { INTRO_KIND_SCRIPT } from "@/app/_lib/intro-kind"
+import { INTRO_VISIT_SCRIPT } from "@/app/_lib/intro-visit"
 import { ThemeProvider } from "@/components/theme-provider"
 import { NuqsProvider } from "@/lib/nuqs/provider"
 import { SITE_METADATA, SITE_NAME } from "@/lib/site-content"
@@ -79,7 +81,7 @@ export default function RootLayout({
       )}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: INTRO_KIND_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: INTRO_VISIT_SCRIPT }} />
       </head>
       {/* extensions such as Grammarly inject attributes on <body> before hydration */}
       <body
@@ -100,16 +102,19 @@ export default function RootLayout({
         <NuqsProvider>
           <ThemeProvider>
             <ContactDialogProvider>
-              <IntroOverlay />
-              <RouteEnter />
-              <div className="md:grid md:grid-cols-[auto_minmax(0,1fr)]">
-                <Sidebar />
-                <div>
-                  <TopBar />
-                  {children}
+              <ChatPanelProvider>
+                <IntroOverlay />
+                <RouteEnter />
+                <div className="md:grid md:grid-cols-[var(--rail)_minmax(0,1fr)]">
+                  <Sidebar />
+                  <div>
+                    <TopBar />
+                    {children}
+                  </div>
                 </div>
-              </div>
-              <ContactFooter />
+                <ContactFooter />
+                <ChatSheet />
+              </ChatPanelProvider>
             </ContactDialogProvider>
           </ThemeProvider>
         </NuqsProvider>

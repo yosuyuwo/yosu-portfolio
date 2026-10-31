@@ -165,7 +165,7 @@
   }
 }
 
-:root[data-intro-kind="none"] [data-intro] {
+:root[data-intro-skip] [data-intro] {
   display: none;
 }
 

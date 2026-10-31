@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation"
 
 import { LogoMark } from "@/app/_components/logo-mark"
 import { TransitionLink } from "@/app/_components/transition-link"
+import { useChatPanel } from "@/app/_hooks/use-chat-panel"
 import { NAV_ITEMS, navHref } from "@/app/_lib/nav"
 import { RESUME_FILE, SITE_NAME } from "@/lib/site-content"
 import { cn } from "@/lib/utils"
@@ -13,6 +14,7 @@ const LINK_CLASS =
 
 export function TopBar() {
   const isHome = usePathname() === "/"
+  const { setOpen: setChatOpen } = useChatPanel()
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md md:hidden">
@@ -43,6 +45,14 @@ export function TopBar() {
           >
             CV ↗
           </a>
+          <button
+            type="button"
+            aria-label="Ask about me"
+            onClick={() => setChatOpen(true)}
+            className={cn("cursor-pointer uppercase", LINK_CLASS)}
+          >
+            Ask
+          </button>
         </nav>
       </div>
     </header>
