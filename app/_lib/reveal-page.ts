@@ -111,7 +111,8 @@ export function leavePage(): Promise<void> {
 /**
  * Scrolls `section` into the page-header slot while everything around it
  * fades, then drops the rest of the page so the incoming route's hero
- * mounts in exactly the same spot.
+ * mounts in exactly the same spot. The slot sits below whatever the page
+ * renders above its hero (e.g. the back link), measured from the current page.
  */
 export function handOff(section: HTMLElement): Promise<void> {
   const main = section.closest("main")
@@ -125,7 +126,12 @@ export function handOff(section: HTMLElement): Promise<void> {
     ...section.querySelectorAll<HTMLElement>("[data-handoff-fade]"),
   ]
   const mainTop = (main?.getBoundingClientRect().top ?? 0) + window.scrollY
-  const targetY = section.getBoundingClientRect().top + window.scrollY - mainTop
+  const anchor = main?.querySelector<HTMLElement>("[data-handoff-anchor]")
+  const slotOffset = anchor
+    ? anchor.getBoundingClientRect().top + window.scrollY - mainTop
+    : 0
+  const targetY =
+    section.getBoundingClientRect().top + window.scrollY - mainTop - slotOffset
   const scroll = { y: window.scrollY }
 
   return new Promise((resolve) => {
@@ -133,6 +139,7 @@ export function handOff(section: HTMLElement): Promise<void> {
       .timeline({
         onComplete: () => {
           for (const el of leaving) el.style.display = "none"
+          section.style.marginTop = `${slotOffset}px`
           scrollInstant(0)
           document.documentElement.setAttribute(HANDOFF_ATTR, "")
           resolve()

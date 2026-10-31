@@ -17,9 +17,10 @@ export function WorkHero({
 }) {
   const Title = isPageHeader ? "h1" : "h2"
   const heroAttr = isPageHeader ? { "data-hero": "" } : {}
+  const anchorAttr = isPageHeader ? { "data-handoff-anchor": "" } : {}
 
   return (
-    <div className="pt-14 md:pt-24">
+    <div {...anchorAttr} className="pt-14 md:pt-24">
       <div className={cn(CONTENT_GRID, "gap-y-6")}>
         <div className="h-4 font-mono text-[11px] leading-4 tracking-[0.12em] text-muted-foreground uppercase md:col-span-12">
           {eyebrow}
