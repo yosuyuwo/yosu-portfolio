@@ -11,7 +11,7 @@ export const CHAT_COPY = {
   thinking: "Thinking",
   assistantName: "Yosua",
   notice:
-    "If I can't answer a question or you report a problem, I may save just that message so I can follow up. A problem report also keeps your browser type and the page. Nothing else is stored.",
+    "Nothing is stored or logged.",
 } as const
 
 export const CHAT_SUGGESTIONS = [
