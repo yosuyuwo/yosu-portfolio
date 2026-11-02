@@ -72,7 +72,7 @@ export const STORY_CHAPTERS: readonly StoryChapter[] = [
     body: [
       "My first project was frontend only: the designs were done, and my job was to check them and build them. After that, clients mostly came with the features they wanted, and Wirawan, our tech lead, and I planned and built the rest between the two of us.",
       "He led, but almost every decision was a conversation, and he talked an approach through with me before we committed to it. That is where I stopped implementing and started owning what we built and why.",
-      "Over nearly three years that added up to tens of client products, most of them under NDA, plus internal tools and the company's own site. I was also in charge of outsourced work, reviewing it to keep it working and on course. I left in May 2026, looking for other opportunities.",
+      "Over nearly three years that added up to tens of client products, most of them under NDA, plus internal tools and the company's own site. I was also in charge of outsourced work, reviewing it to keep it working and on course. My contract ended in May 2026.",
     ],
     workSlugs: ["abi", "morfolabs", "elevate"],
   },
