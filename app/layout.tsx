@@ -11,6 +11,7 @@ import { TopBar } from "@/app/_components/top-bar"
 import { ChatPanelProvider } from "@/app/_hooks/use-chat-panel"
 import { ContactDialogProvider } from "@/app/_hooks/use-contact-dialog"
 import { INTRO_VISIT_SCRIPT } from "@/app/_lib/intro-visit"
+import { RAIL_GRID } from "@/app/_lib/page-grid"
 import { toWorkLink } from "@/app/_lib/work-link"
 import { WORK_ITEMS } from "@/app/_lib/works"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -107,7 +108,7 @@ export default function RootLayout({
             <ChatPanelProvider>
               <IntroOverlay />
               <RouteEnter />
-              <div className="md:grid md:grid-cols-[var(--rail)_minmax(0,1fr)]">
+              <div className={RAIL_GRID}>
                 <Sidebar works={WORK_LINKS} />
                 <div>
                   <TopBar />

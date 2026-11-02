@@ -28,7 +28,7 @@ export function Sidebar({ works }: { works: readonly WorkLink[] }) {
   const { close } = useSidebarSwap({ isOpen, setOpen, navRef, chatRef })
 
   return (
-    <aside className="sticky top-0 hidden h-svh min-w-0 flex-col md:flex">
+    <aside className="sticky top-0 hidden h-svh min-w-0 flex-col lg:flex">
       <div
         ref={navRef}
         inert={isOpen}

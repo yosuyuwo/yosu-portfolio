@@ -9,11 +9,14 @@ import { useChatPanel } from "@/app/_hooks/use-chat-panel"
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
 import { useIsMobile } from "@/hooks/use-mobile"
 
+// Tailwind's lg: below it the sidebar, which hosts the desktop chat, is hidden
+const SIDEBAR_MIN_WIDTH = 1024
+
 const ChatPanel = dynamic(() => loadChatPanel().then((m) => m.ChatPanel))
 
 export function ChatSheet() {
   const { isOpen, setOpen } = useChatPanel()
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobile(SIDEBAR_MIN_WIDTH)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
   return (

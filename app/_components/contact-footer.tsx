@@ -17,7 +17,7 @@ import { LocalTime } from "./local-time"
 import { SectionLabel } from "./section-label"
 
 const META_CLASS = "font-mono text-[11px] tracking-[0.12em] uppercase"
-const MUTED_CLASS = "text-muted-foreground max-md:text-background/60"
+const MUTED_CLASS = "text-muted-foreground max-lg:text-background/60"
 const LINK_CLASS = "transition-colors duration-fast hover:text-brand"
 
 const COPYRIGHT = `© ${new Date().getFullYear()} ${FOOTER_COPYRIGHT_NAME}`
@@ -27,7 +27,7 @@ function MobileMeta() {
   const { setOpen } = useContactDialog()
 
   return (
-    <div className={cn("grid gap-5 md:hidden", META_CLASS, MUTED_CLASS)}>
+    <div className={cn("grid gap-5 lg:hidden", META_CLASS, MUTED_CLASS)}>
       <button
         type="button"
         onClick={() => setOpen(true)}
@@ -74,13 +74,13 @@ export function ContactFooter() {
     <footer
       id="contact"
       className={cn(
-        "overflow-hidden max-md:bg-foreground max-md:text-background max-md:[--brand:var(--brand-inverse)]",
+        "overflow-hidden max-lg:bg-foreground max-lg:text-background max-lg:[--brand:var(--brand-inverse)]",
         RAIL_GRID
       )}
     >
       <div
         className={cn(
-          "hidden gap-1.5 px-7 pt-20 md:grid",
+          "hidden gap-1.5 px-7 pt-20 lg:grid",
           META_CLASS,
           MUTED_CLASS
         )}
@@ -89,16 +89,16 @@ export function ContactFooter() {
         <LocalTime />
       </div>
 
-      <div className={cn(CONTENT_COLUMN, "pt-14 md:pt-0")}>
+      <div className={cn(CONTENT_COLUMN, "pt-14 lg:pt-0")}>
         <div
           className={cn(
             CONTENT_GRID,
-            "gap-y-8 md:border-t md:border-border md:pt-20"
+            "gap-y-8 lg:border-t lg:border-border lg:pt-20"
           )}
         >
           <SectionLabel
             {...SECTIONS.contact}
-            className="max-md:text-background/60 md:col-span-3"
+            className="max-lg:text-background/60 md:col-span-3"
           />
           <div className="grid gap-6 md:col-span-9 md:grid-cols-9">
             <p
