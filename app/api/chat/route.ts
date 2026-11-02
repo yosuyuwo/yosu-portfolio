@@ -1,7 +1,11 @@
 import { chatRequestSchema, type ChatMessage } from "@/app/_lib/chat-schema"
 
 import { isCovered } from "./_lib/coverage"
-import { createInquiryTool, readInquiryEnv } from "./_lib/inquiry"
+import {
+  createInquiryTool,
+  readInquiryEnv,
+  type ChatTool,
+} from "./_lib/inquiry"
 import { buildKnowledge } from "./_lib/knowledge"
 import { offTopicReply, isOffTopicRequest } from "./_lib/off-topic"
 import { UpstreamError, readChatEnv, streamReply } from "./_lib/openrouter"
@@ -51,6 +55,16 @@ async function isUncovered(
 ): Promise<boolean> {
   const facts = buildKnowledge(new Date(), visitorText, learnedAnswers)
   return !(await isCovered(facts, messages, signal))
+}
+
+function gateTool(tool: ChatTool, isAllowed: Promise<boolean>): ChatTool {
+  return {
+    ...tool,
+    execute: async (rawArguments) => {
+      if (!(await isAllowed)) throw new Error("Tool call skipped: uncovered")
+      return tool.execute(rawArguments)
+    },
+  }
 }
 
 export async function POST(request: Request) {
@@ -120,13 +134,30 @@ export async function POST(request: Request) {
       ? await store.learnedAnswers().catch(() => [])
       : []
 
-    const uncovered = await isUncovered(
+    const uncoveredPromise = isUncovered(
       parsed.data.messages,
       visitorText,
       learnedAnswers,
       request.signal
-    )
-    if (uncovered) {
+    ).catch(() => false)
+
+    // the reply starts alongside the coverage check so its latency overlaps; the tool waits for the verdict so an aborted reply never sends an inquiry
+    const replyAbort = new AbortController()
+    const replyPromise = streamReply({
+      system: buildSystemPrompt({
+        inquiryEnabled: Boolean(tool),
+        visitorText,
+        learnedAnswers,
+      }),
+      messages: parsed.data.messages,
+      signal: AbortSignal.any([request.signal, replyAbort.signal]),
+      onFinish: slot.release,
+      tool: tool && gateTool(tool, uncoveredPromise.then((u) => !u)),
+    })
+    replyPromise.catch(() => {})
+
+    if (await uncoveredPromise) {
+      replyAbort.abort()
       slot.release()
       if (store) {
         await store.record(visitorText).catch((error: unknown) => {
@@ -136,19 +167,7 @@ export async function POST(request: Request) {
       return textResponse(uncoveredReply(visitorText))
     }
 
-    const stream = await streamReply({
-      system: buildSystemPrompt({
-        inquiryEnabled: Boolean(tool),
-        visitorText,
-        learnedAnswers,
-      }),
-      messages: parsed.data.messages,
-      signal: request.signal,
-      onFinish: slot.release,
-      tool,
-    })
-
-    return textResponse(stream)
+    return textResponse(await replyPromise)
   } catch (error) {
     slot.release()
     console.error("[chat] upstream failure", error)

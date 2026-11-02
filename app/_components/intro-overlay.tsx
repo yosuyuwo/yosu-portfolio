@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react"
 
 import { STACK_X, Y_OFFSET, Y_PATH } from "@/app/_components/logo-mark"
 import { shouldSkipIntro } from "@/app/_lib/intro-visit"
-import { revealPage } from "@/app/_lib/reveal-page"
+import { bootWithoutIntro, revealPage } from "@/app/_lib/reveal-page"
 import { cdnUrl } from "@/lib/cdn"
 import { HERO_PORTRAIT } from "@/lib/site-content"
 
@@ -30,7 +30,7 @@ export function IntroOverlay() {
     const mm = gsap.matchMedia()
     mm.add("(prefers-reduced-motion: no-preference)", () => {
       if (shouldSkipIntro()) {
-        revealPage()
+        bootWithoutIntro()
         return
       }
 
@@ -100,7 +100,8 @@ export function IntroOverlay() {
             alt=""
             width={HERO_PORTRAIT.width}
             height={HERO_PORTRAIT.height}
-            priority
+            loading="lazy"
+            fetchPriority="high"
             className="h-[58svh] w-auto object-cover grayscale md:h-[66svh]"
           />
         </div>

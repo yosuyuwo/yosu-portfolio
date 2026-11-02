@@ -2,9 +2,9 @@
 
 import { useRef, useState } from "react"
 import type { WheelEvent } from "react"
-import Image from "next/image"
 import { XIcon } from "lucide-react"
 
+import { FadeInImage } from "@/app/_components/fade-in-image"
 import {
   Dialog,
   DialogClose,
@@ -107,11 +107,12 @@ export function ImageLightbox({
               transformOrigin: "0 0",
             }}
           >
-            <Image
+            <FadeInImage
               src={src}
               alt={alt}
               fill
               className="object-contain"
+              skeletonClassName="dark"
               sizes="98vw"
             />
           </div>

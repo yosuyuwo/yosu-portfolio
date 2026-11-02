@@ -1,12 +1,15 @@
 "use client"
 
+import dynamic from "next/dynamic"
 import { useRef } from "react"
 
-import { ChatPanel } from "@/app/_components/chat"
 import { CHAT_COPY } from "@/app/_components/chat/_lib/copy"
+import { loadChatPanel } from "@/app/_components/chat/_lib/load-chat-panel"
 import { useChatPanel } from "@/app/_hooks/use-chat-panel"
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
 import { useIsMobile } from "@/hooks/use-mobile"
+
+const ChatPanel = dynamic(() => loadChatPanel().then((m) => m.ChatPanel))
 
 export function ChatSheet() {
   const { isOpen, setOpen } = useChatPanel()

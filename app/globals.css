@@ -24,6 +24,8 @@
   --color-chart-3: var(--chart-3);
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
+  --color-chart-mine: var(--chart-mine);
+  --color-chart-others: var(--chart-others);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -50,6 +52,19 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@theme {
+  --animate-shimmer: shimmer 1.6s ease-in-out infinite;
+
+  @keyframes shimmer {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
 }
 
 @utility grain {
@@ -102,6 +117,8 @@
   --chart-3: oklch(0.442 0.017 285.786);
   --chart-4: oklch(0.37 0.013 285.805);
   --chart-5: oklch(0.274 0.006 286.033);
+  --chart-mine: oklch(0.5 0.12 155);
+  --chart-others: oklch(0.68 0.01 70);
   --radius: 0.375rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.141 0.005 285.823);
@@ -139,6 +156,8 @@
   --chart-3: oklch(0.442 0.017 285.786);
   --chart-4: oklch(0.37 0.013 285.805);
   --chart-5: oklch(0.274 0.006 286.033);
+  --chart-mine: oklch(0.64 0.14 155);
+  --chart-others: oklch(0.5 0.01 70);
   --sidebar: oklch(0.21 0.006 285.885);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
@@ -150,9 +169,11 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* hidden until intro-overlay.tsx / route-enter.tsx reveal it, so there's no flash before hydration */
-  [data-enter]:not([data-entered]),
-  :root:not([data-handoff]) [data-hero]:not([data-entered]),
+  /* hidden until intro-overlay.tsx / route-enter.tsx reveal it; intro-skipped loads paint at once so LCP doesn't wait on hydration */
+  :root:is(:not([data-intro-skip]), [data-booted])
+    [data-enter]:not([data-entered]),
+  :root:not([data-handoff]):is(:not([data-intro-skip]), [data-booted])
+    [data-hero]:not([data-entered]),
   [data-intro-logo],
   [data-intro-photo] {
     visibility: hidden;

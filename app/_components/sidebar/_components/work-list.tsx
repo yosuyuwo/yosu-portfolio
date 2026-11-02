@@ -3,12 +3,18 @@
 import Link from "next/link"
 
 import { usePageTransition } from "@/app/_hooks/use-page-transition"
-import { WORK_ITEMS } from "@/app/_lib/works"
+import type { WorkLink } from "@/app/_lib/work-link"
 import { cn } from "@/lib/utils"
 
 const STAGGER_MS = 40
 
-export function WorkList({ currentSlug }: { currentSlug: string | null }) {
+export function WorkList({
+  works,
+  currentSlug,
+}: {
+  works: readonly WorkLink[]
+  currentSlug: string | null
+}) {
   const { fadeTo } = usePageTransition()
   const isOpen = currentSlug !== null
 
@@ -21,7 +27,7 @@ export function WorkList({ currentSlug }: { currentSlug: string | null }) {
       )}
     >
       <ul className="flex min-h-0 flex-col gap-1 overflow-hidden">
-        {WORK_ITEMS.map((work, i) => {
+        {works.map((work, i) => {
           const isCurrent = work.slug === currentSlug
           const href = `/work/${work.slug}`
           return (

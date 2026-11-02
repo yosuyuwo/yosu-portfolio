@@ -22,6 +22,28 @@ function toRequestMessages(history: DisplayMessage[]): ChatMessage[] {
     .map(({ role, content }) => ({ role, content }))
 }
 
+function createFrameBuffer(onFlush: (text: string) => void) {
+  let pending = ""
+  let frameId = 0
+
+  const flush = () => {
+    cancelAnimationFrame(frameId)
+    frameId = 0
+    if (!pending) return
+    const text = pending
+    pending = ""
+    onFlush(text)
+  }
+
+  return {
+    append: (chunk: string) => {
+      pending += chunk
+      frameId ||= requestAnimationFrame(flush)
+    },
+    flush,
+  }
+}
+
 async function readErrorMessage(response: Response): Promise<string> {
   const body: unknown = await response.json().catch(() => null)
   if (
@@ -55,6 +77,16 @@ export function useChat() {
       { id: assistantId, role: "assistant", content: "" },
     ])
 
+    const buffer = createFrameBuffer((text) =>
+      setMessages((current) =>
+        current.map((message) =>
+          message.id === assistantId
+            ? { ...message, content: message.content + text }
+            : message
+        )
+      )
+    )
+
     const dropEmptyReply = () =>
       setMessages((current) =>
         current.filter(
@@ -82,14 +114,9 @@ export function useChat() {
         const chunk = decoder.decode(value, { stream: true })
         if (!chunk) continue
         received = true
-        setMessages((current) =>
-          current.map((message) =>
-            message.id === assistantId
-              ? { ...message, content: message.content + chunk }
-              : message
-          )
-        )
+        buffer.append(chunk)
       }
+      buffer.flush()
 
       if (!received) {
         dropEmptyReply()
@@ -99,6 +126,7 @@ export function useChat() {
       }
       setStatus("idle")
     } catch (caught) {
+      buffer.flush()
       dropEmptyReply()
       if (controller.signal.aborted) {
         setStatus("idle")

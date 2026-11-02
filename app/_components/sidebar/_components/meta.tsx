@@ -1,5 +1,6 @@
 "use client"
 
+import { loadChatPanel } from "@/app/_components/chat/_lib/load-chat-panel"
 import { useChatPanel } from "@/app/_hooks/use-chat-panel"
 import { useContactDialog } from "@/app/_hooks/use-contact-dialog"
 import { INTRO } from "@/app/_lib/copy"
@@ -63,6 +64,8 @@ export function Meta() {
       <button
         type="button"
         onClick={() => setChatOpen(true)}
+        onPointerEnter={() => void loadChatPanel()}
+        onFocus={() => void loadChatPanel()}
         className={cn("cursor-pointer text-left uppercase", LINK_CLASS)}
       >
         Ask about me

@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation"
 
+import { loadChatPanel } from "@/app/_components/chat/_lib/load-chat-panel"
 import { LogoMark } from "@/app/_components/logo-mark"
 import { TransitionLink } from "@/app/_components/transition-link"
 import { useChatPanel } from "@/app/_hooks/use-chat-panel"
@@ -49,6 +50,7 @@ export function TopBar() {
             type="button"
             aria-label="Ask about me"
             onClick={() => setChatOpen(true)}
+            onPointerDown={() => void loadChatPanel()}
             className={cn("cursor-pointer uppercase", LINK_CLASS)}
           >
             Ask

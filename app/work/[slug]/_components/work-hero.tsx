@@ -45,8 +45,7 @@ export function WorkHero({
       >
         <WorkCoverMedia
           work={work}
-          priority={isPageHeader}
-          isStill={!isPageHeader}
+          preload={isPageHeader}
           sizes="(max-width: 1200px) 100vw, 72rem"
         />
       </div>

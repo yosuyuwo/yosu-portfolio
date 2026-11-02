@@ -10,8 +10,7 @@ export const CHAT_COPY = {
   retry: "Try again",
   thinking: "Thinking",
   assistantName: "Yosua",
-  notice:
-    "Nothing is stored or logged.",
+  notice: "Nothing is stored or logged.",
 } as const
 
 export const CHAT_SUGGESTIONS = [

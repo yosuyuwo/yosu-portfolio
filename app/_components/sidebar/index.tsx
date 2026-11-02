@@ -3,17 +3,22 @@
 import { usePathname } from "next/navigation"
 import { useRef } from "react"
 
-import { ChatPanel } from "@/app/_components/chat"
+import dynamic from "next/dynamic"
+
+import { loadChatPanel } from "@/app/_components/chat/_lib/load-chat-panel"
 import { useActiveSection } from "@/app/_hooks/use-active-section"
 import { useChatPanel } from "@/app/_hooks/use-chat-panel"
 import { workSlugFromPath } from "@/app/_lib/nav"
+import type { WorkLink } from "@/app/_lib/work-link"
 
 import { Brand } from "./_components/brand"
 import { Meta } from "./_components/meta"
 import { NavSerif } from "./_components/nav-serif"
 import { useSidebarSwap } from "./_hooks/use-sidebar-swap"
 
-export function Sidebar() {
+const ChatPanel = dynamic(() => loadChatPanel().then((m) => m.ChatPanel))
+
+export function Sidebar({ works }: { works: readonly WorkLink[] }) {
   const pathname = usePathname()
   const active = useActiveSection(pathname)
   const isHome = pathname === "/"
@@ -34,6 +39,7 @@ export function Sidebar() {
           <NavSerif
             active={active}
             isHome={isHome}
+            works={works}
             currentSlug={workSlugFromPath(pathname)}
           />
         </nav>

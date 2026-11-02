@@ -1,6 +1,12 @@
 "use client"
 
-import { createContext, useContext, useState, type ReactNode } from "react"
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react"
 
 import { useChat } from "@/app/_components/chat/_hooks/use-chat"
 
@@ -19,10 +25,11 @@ const ChatSessionContext = createContext<ChatSession | null>(null)
 export function ChatPanelProvider({ children }: { children: ReactNode }) {
   const session = useChat()
   const [isOpen, setOpen] = useState(false)
+  const panel = useMemo(() => ({ isOpen, setOpen }), [isOpen])
 
   return (
     <ChatSessionContext.Provider value={session}>
-      <ChatPanelContext.Provider value={{ isOpen, setOpen }}>
+      <ChatPanelContext.Provider value={panel}>
         <div
           data-chat={isOpen ? "open" : "closed"}
           className="[--rail:13rem] data-[chat=open]:[--rail:22rem]"

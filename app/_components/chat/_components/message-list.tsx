@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { memo, useEffect, useRef } from "react"
 
 import type { DisplayMessage } from "@/app/_components/chat/_hooks/use-chat"
 import { CHAT_COPY } from "@/app/_components/chat/_lib/copy"
@@ -18,7 +18,7 @@ interface MessageListProps {
   onRetry: () => void
 }
 
-function Bubble({
+const Bubble = memo(function Bubble({
   message,
   isPending,
 }: {
@@ -49,7 +49,7 @@ function Bubble({
       </p>
     </li>
   )
-}
+})
 
 export function MessageList({
   messages,
@@ -57,14 +57,19 @@ export function MessageList({
   error,
   onRetry,
 }: MessageListProps) {
-  const endRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({ block: "end" })
+    const list = listRef.current
+    if (!list) return
+    list.scrollTop = list.scrollHeight
   }, [messages, error])
 
   return (
-    <div className="flex-1 overflow-y-auto px-6 py-5">
+    <div
+      ref={listRef}
+      className="flex-1 overflow-y-auto overscroll-contain px-6 py-5"
+    >
       <ol
         role="log"
         aria-live="polite"
@@ -95,7 +100,6 @@ export function MessageList({
           </Button>
         </div>
       )}
-      <div ref={endRef} />
     </div>
   )
 }

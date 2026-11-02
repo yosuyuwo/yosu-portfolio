@@ -1,5 +1,6 @@
 import { TransitionLink } from "@/app/_components/transition-link"
 import { NAV_ITEMS, navHref, type NavSectionId } from "@/app/_lib/nav"
+import type { WorkLink } from "@/app/_lib/work-link"
 import { cn } from "@/lib/utils"
 
 import { WorkList } from "./work-list"
@@ -10,10 +11,12 @@ const LAYER_CLASS =
 export function NavSerif({
   active,
   isHome,
+  works,
   currentSlug,
 }: {
   active: NavSectionId
   isHome: boolean
+  works: readonly WorkLink[]
   currentSlug: string | null
 }) {
   return (
@@ -51,7 +54,9 @@ export function NavSerif({
                 {item.label}
               </span>
             </TransitionLink>
-            {item.id === "work" ? <WorkList currentSlug={currentSlug} /> : null}
+            {item.id === "work" ? (
+              <WorkList works={works} currentSlug={currentSlug} />
+            ) : null}
           </li>
         )
       })}

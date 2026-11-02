@@ -86,10 +86,11 @@ export const EXPERIENCE = [
       "Co-founded a product studio; design and build client products end to end, including Gaiana and Eastern Star Logistics.",
     highlights: [
       "Co-founded a product studio that takes client ideas from first brief to launch.",
-      "Designed and built Gaiana's rental storefront and back-office end to end, moving the business off spreadsheets and shared drives and going live five months after the first commit.",
-      "Delivered a freight management system, customer-side shipment tracking and a landing page for Eastern Star Logistics.",
+      "Designed and built Gaiana's rental storefront and back-office end to end (Next.js, tRPC, PostgreSQL), moving the business off spreadsheets and shared drives and going live five months after the first commit.",
+      "Covered Gaiana with about 2,500 Vitest and React Testing Library tests under an 80% coverage threshold, and hardened it with a Content Security Policy and separate storage credentials for private customer documents.",
+      "Led design, frontend and backend for Eastern Star Logistics' freight management system, customer-side shipment tracking and landing page, working with one outsourced developer.",
       "Build with AI agents (Claude Code) in a spec, prototype, test-first pipeline, recording every decision and reviewing and QA-ing each change by hand before it ships.",
-      "Run production on a self-managed server: CI-built images, nightly deploys, backups with restore drills, monitoring and alerts.",
+      "Run production on a self-managed server: Docker images built in GitHub Actions, nightly deploys, backups with restore drills, monitoring and alerts.",
     ],
   },
   {
@@ -103,7 +104,8 @@ export const EXPERIENCE = [
     highlights: [
       "Planned and built tens of client web products with the tech lead, from the features clients asked for through to delivery.",
       "Most of that client work is under NDA and can't be shown; the public pieces include Asosiasi Blockchain Indonesia's landing page and reporting portal, Elevate Former's studio booking site and the Morfolabs company site.",
-      "Reviewed outsourced work to keep it working and on course, and built internal tools for the company.",
+      "Built React and Next.js frontends on TanStack Query, tRPC and Zustand, with a shared Mantine-based design system, and ran an accessibility pass on the company site.",
+      "Reviewed outsourced developers' work to keep it working and on course, and built internal tools for the company.",
       "Grew from implementing finished UI designs to owning what was built and why.",
     ],
   },
@@ -166,7 +168,7 @@ export const EDUCATION: readonly Education[] = [
 export const RESUME = {
   headline: "Product Engineer & Frontend Developer",
   summary:
-    "Product engineer with five years of building web products end to end: UX research, UI design, frontend, backend and deployment. Co-founder of Quanta Labs, a product studio, and Techova Labs, an AI automation SaaS; previously nearly three years at Morfolabs shipping tens of client products. Builds with AI agents every day, then reviews and QAs every change by hand: the goal is work polished enough that people are surprised AI was involved at all.",
+    "Frontend-first product engineer with five years of building web products end to end: UX research, UI design, React and Next.js frontends, APIs and production. In the past year, the main engineer on two client products from first brief to launch. Co-founder of Quanta Labs, a product studio, and Techova Labs, an AI automation SaaS; previously nearly three years at Morfolabs shipping tens of client products. Builds with AI agents every day, then tests and reviews every change by hand: the goal is work polished enough that people are surprised AI was involved at all.",
 } as const
 
 export const SITE_METADATA = {
@@ -177,69 +179,89 @@ export const SITE_METADATA = {
 export const SKILL_GROUPS = [
   {
     id: "s1",
-    name: "Programming",
+    name: "Languages",
     skills: [
-      "HTML",
-      "CSS",
       "TypeScript",
       "JavaScript",
-      "PHP",
-      "jQuery",
-      "Java",
-      "C",
-      "C++",
-      "C#",
+      "HTML",
+      "CSS",
       "SQL",
+      "PHP",
+      "Java",
       "Dart",
     ],
   },
   {
     id: "s2",
-    name: "Framework",
+    name: "Frontend",
     skills: [
       "React",
-      "Next.js",
+      "Next.js (App Router, Server Components)",
       "Vue",
       "Nuxt",
-      "Express",
-      "Laravel",
-      "Flutter",
       "Astro",
+      "Tailwind",
+      "shadcn/ui",
+      "Mantine",
+      "GSAP",
+      "Motion",
+      "Flutter",
     ],
   },
   {
     id: "s3",
-    name: "UI",
+    name: "Data & State",
     skills: [
-      "Tailwind",
-      "CSS Modules",
-      "Vanilla CSS",
-      "GSAP",
-      "Motion (formerly Framer Motion)",
+      "TanStack Query (React Query)",
+      "Zustand",
+      "tRPC",
+      "REST APIs",
+      "TanStack Form",
+      "Zod",
+      "nuqs",
+      "Socket.IO",
     ],
   },
   {
     id: "s4",
-    name: "Data & CMS",
+    name: "Backend & CMS",
     skills: [
+      "Node.js",
+      "Express",
+      "Laravel",
+      "Prisma",
       "PostgreSQL",
-      "MongoDB",
-      "Oracle",
-      "Firebase",
       "Supabase",
+      "MongoDB",
+      "Firebase",
       "Sanity",
       "Payload",
     ],
   },
   {
     id: "s5",
-    name: "Design",
-    skills: ["Figma", "UI Design", "Wireframing", "Prototyping"],
+    name: "Testing & Ops",
+    skills: [
+      "Vitest",
+      "React Testing Library",
+      "GitHub Actions",
+      "Docker",
+      "Turborepo",
+      "Vercel",
+      "DigitalOcean",
+    ],
   },
   {
     id: "s6",
-    name: "Tools",
-    skills: ["Cursor", "Claude (Code, Cowork, Design)"],
+    name: "Design & Tools",
+    skills: [
+      "Figma",
+      "UI Design",
+      "Prototyping",
+      "Accessibility",
+      "Claude (Code, Cowork, Design)",
+      "Cursor",
+    ],
   },
 ] as const
 
@@ -273,6 +295,31 @@ export const WORKS = [
       {
         heading: "A landing page that shows the product",
         body: "One scroll-driven video walks a visitor from pasting a link to a scheduled post, so the page demonstrates the product instead of describing it. Copy was written first, in Indonesian, and limited to claims the product can support.",
+        figures: [
+          {
+            kind: "flow",
+            title: "What the scroll video walks through",
+            steps: [
+              {
+                title: "Paste an article",
+                detail: "One link or script is the only input.",
+              },
+              {
+                title: "AI writes each slide",
+                detail:
+                  "The text is split into a carousel, a post and a story.",
+              },
+              {
+                title: "Laid out in the brand's template",
+                detail: "Each brand's own templates, not a generic theme.",
+              },
+              {
+                title: "Scheduled to Instagram",
+                detail: "Posts land on a monthly calendar.",
+              },
+            ],
+          },
+        ],
         images: [
           {
             src: "/works/terbit/landing-steps.webp",
@@ -292,23 +339,46 @@ export const WORKS = [
         ],
       },
       {
+        heading: "Behind the scenes",
+        figures: [
+          {
+            kind: "decisions",
+            items: [
+              {
+                decision:
+                  "Show the product in motion instead of in screenshots",
+                why: "I prefer interactive pages to plain information. A scroll-driven video lets visitors move through the product themselves, step by step, rather than reading the feature list every generic landing page has.",
+              },
+              {
+                decision: "Paint a landscape around an AI product",
+                why: "An AI tool can feel cold and robotic, so I balanced it with scenery. It is also a nod to the writer's window: writers often keep their desk by a window and look out while they write.",
+              },
+            ],
+          },
+        ],
+      },
+      {
         heading: "Screens",
         images: [
           {
             src: "/works/terbit/landing-one-article.webp",
             alt: "The Satu naskah section: one article turned into three Instagram carousels in different brand styles",
+            priority: "primary",
           },
           {
             src: "/works/terbit/landing-schedule.webp",
             alt: "The Jadwal section: a monthly Instagram posting calendar with scheduled carousels",
+            priority: "primary",
           },
           {
             src: "/works/terbit/auth-login.webp",
             alt: "The Terbit sign-in page: a frosted card over a painted sunlit meadow",
+            priority: "secondary",
           },
           {
             src: "/works/terbit/auth-register.webp",
             alt: "The Terbit sign-up page: a frosted card over the same painted meadow",
+            priority: "secondary",
           },
         ],
       },
@@ -340,7 +410,7 @@ export const WORKS = [
       },
       {
         heading: "Designed for the customer",
-        body: "Renting a dress is a date problem as much as a shopping one. Customers filter by rental date, size, colour, price, occasion, length and neckline, and the size filter works from their own measurements. Those filters come from the same attributes the team uses to organise the catalogue, so nothing is maintained twice.",
+        body: "Renting a dress is a date problem as much as a shopping one. Customers filter by rental date, size, colour, price, occasion, length and neckline, and the size filter works from their own measurements. The back-office filters follow the storefront's, so the team and its customers describe a dress the same way.",
         images: [
           {
             src: "/works/gaiana/filters.webp",
@@ -352,6 +422,42 @@ export const WORKS = [
       {
         heading: "One dress, one calendar",
         body: "The customer picks a single event date. The calendar shows when the garment arrives and when it goes back, and dates taken by other bookings are already blocked. A rental holds more than the day it is worn, so courier transit, preparation and cleaning are booked alongside it, and the same rule runs on the product page, at checkout and in the back-office.",
+        figures: [
+          {
+            kind: "span",
+            title: "What one rental books on a single garment",
+            segments: [
+              { label: "Free", weight: 1, tone: "free" },
+              {
+                label: "Preparation",
+                weight: 1,
+                tone: "hold",
+                color: "#eae3ca",
+              },
+              {
+                label: "Courier out",
+                weight: 1.4,
+                tone: "hold",
+                color: "#a98944",
+              },
+              {
+                label: "Event day",
+                weight: 1.1,
+                tone: "focus",
+                color: "#8b572b",
+              },
+              {
+                label: "Courier back",
+                weight: 1.4,
+                tone: "hold",
+                color: "#2e2725",
+              },
+              { label: "Cleaning", weight: 1, tone: "hold", color: "#eae3ca" },
+              { label: "Free", weight: 1, tone: "free" },
+            ],
+            note: "The customer picks only the event day. Every other block is booked around it as its own entry on that garment. Colours follow Gaiana's own calendar. Widths are illustrative; the real windows come from the shop's settings.",
+          },
+        ],
         images: [
           {
             src: "/works/gaiana/calendar.webp",
@@ -364,23 +470,50 @@ export const WORKS = [
         body: "I work with AI agents, and I don't ship slop. Each feature went from questioning to prototype to spec to tested code, with the decisions written down along the way. The goal is a product nobody would guess was built that way.",
       },
       {
+        heading: "Behind the scenes",
+        figures: [
+          {
+            kind: "decisions",
+            items: [
+              {
+                decision: "Ask for one event date, not a rental period",
+                why: "The owner asked for it, and it keeps the system easier to maintain: delivery, return and cleaning are all worked out from that one date, so there is a single rule to keep right everywhere.",
+              },
+              {
+                decision:
+                  "Design the storefront filters first, then mirror them in the back-office",
+                why: "The filters were shaped around how customers look for a dress. The back-office follows the same ones, so the team describes and finds a dress the same way its customers do.",
+              },
+              {
+                decision: "Set the visual direction myself",
+                why: "The owner left the look of the store to me, so I could carry one editorial direction from the home page through checkout instead of mixing references.",
+              },
+            ],
+          },
+        ],
+      },
+      {
         heading: "Screens",
         images: [
           {
             src: "/works/gaiana/catalogue.webp",
             alt: "Gaiana catalogue with search and sorting",
+            priority: "primary",
           },
           {
             src: "/works/gaiana/product.webp",
             alt: "Gaiana product page with gallery, colour, size and measurements",
+            priority: "secondary",
           },
           {
             src: "/works/gaiana/how-to-rent.webp",
             alt: "Gaiana How to Rent page explaining the six rental steps",
+            priority: "secondary",
           },
           {
             src: "/works/gaiana/home-id.webp",
             alt: "Gaiana home page in Indonesian",
+            priority: "primary",
           },
         ],
       },
@@ -412,54 +545,117 @@ export const WORKS = [
     sections: [
       {
         heading: "Overview",
-        body: "Built the hero, the how-to-play tutorial, the navigation and the kit section of an unofficial landing page for the co-op board game Wilmot's Warehouse. Two people, split by section, two weeks start to finish, animated with GSAP. The game, its artwork and its copy belong to its creators and publisher.",
+        body: "Wilmot's Warehouse is a co-op board game where players stock a warehouse together and have to remember where everything went. I built the hero, the how-to-play tutorial, the navigation and the kit section of an unofficial landing page for it, and Fernando Manuel built the footer, the player quotes and the gallery. Two weeks from first commit to finished page. The game, its artwork and its copy belong to its creators and publisher.",
         images: [
           { src: "/works/wilmots/cover.png", alt: "Wilmot's Warehouse cover" },
         ],
       },
       {
         heading: "The hero is the product",
-        body: "A live grid of product tiles follows the pointer, so the page opens with the thing being sold. The section split meant each of us owned a full page section end to end, from motion timing to responsive behavior, rather than dividing by layer.",
+        body: "The page opens on a live grid of the game's product tiles instead of a headline. It follows the pointer on a mouse and works out its own size for every screen, so the first thing a visitor sees and touches is the thing being sold.",
         images: [
           {
-            src: "/works/wilmots/1.webp",
-            alt: "Wilmot's Warehouse section detail",
-          },
-          {
-            src: "/works/wilmots/cover.png",
-            alt: "Wilmot's Warehouse cover repeat",
+            src: "/works/wilmots/hero.webp",
+            alt: "Wilmot's Warehouse hero: a dark warehouse grid of face-down product tiles above the title and an Order now button",
           },
         ],
       },
       {
         heading: "Learn by playing",
-        body: "The rulebook became a small board. Drag a customer card to the right tile and watch the score move, while speech bubbles follow the visitor's scroll through the steps.",
+        body: "Rules are hard to read and easy to play, so the how-to-play section is a small board instead of a rulebook. The visitor drags a customer card onto the right tile, the score moves, and speech bubbles explain each step as they scroll. I rebuilt it from a static first draft into the playable board in a single day.",
+        figures: [
+          {
+            kind: "flow",
+            title: "The tutorial, one step per screen",
+            steps: [
+              { title: "Draw & place" },
+              { title: "Discuss & strategise" },
+              { title: "Open the next day" },
+              { title: "Repeat until empty" },
+              { title: "Start the timer" },
+              { title: "Calculate score" },
+            ],
+          },
+        ],
         images: [
           {
-            src: "/works/wilmots/1.webp",
-            alt: "Wilmot's Warehouse mirrored layout demo",
+            src: "/works/wilmots/tutorial-score.webp",
+            alt: "The how-to-play board at the scoring step, with four product tiles each marked +10s",
           },
         ],
         imageSide: "left",
       },
       {
         heading: "Motion approach",
-        body: "Smooth scrolling runs through Lenis, synced to GSAP so scroll-linked motion and the tutorial steps share one clock.",
-      },
-      {
-        heading: "Final screens",
+        body: "Smooth scrolling runs through Lenis on GSAP's clock, so scroll-linked motion and the tutorial steps share one timeline. Scrolling locks while the menu or a sheet is open, and the description section respects reduced-motion settings.",
         images: [
           {
-            src: "/works/wilmots/1.webp",
-            alt: "Wilmot's Warehouse final screen",
+            src: "/works/wilmots/description.webp",
+            alt: "The description section mid-scroll, its words lighting up one by one over the tile grid",
+          },
+        ],
+      },
+      {
+        heading: "Two people, one page",
+        body: "Fernando Manuel and I brainstormed the page together, then split it by section. He is creative, open-minded and eager to learn new things, and the background music, switched on from the bottom-right corner, was his idea. On the last day I moved both halves into one structure, with each section's copy in its own typed file, so the finished code reads as one project rather than two.",
+        figures: [
+          {
+            kind: "ownership",
+            title: "Who built which section, top to bottom",
+            otherLabel: "Fernando Manuel",
+            parts: [
+              { label: "Navigation and menu", owner: "me" },
+              { label: "Hero tile grid", owner: "me" },
+              { label: "Description", owner: "me" },
+              { label: "What you get", owner: "me" },
+              { label: "How to play", owner: "me" },
+              { label: "Gallery", owner: "other" },
+              { label: "Player quotes", owner: "other" },
+              { label: "Footer conveyor", owner: "other" },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Behind the scenes",
+        figures: [
+          {
+            kind: "decisions",
+            items: [
+              {
+                decision: "Let visitors play the game before they buy it",
+                why: "People choosing a board game look for reviews and play-throughs before they commit. A playable board lets them try it first-hand on the page, so the page does the job a review would instead of describing rules they still have to imagine.",
+              },
+              {
+                decision: "Split the page by section, not by task",
+                why: "Giving each of us whole sections made the work easy to divide and to merge back together. Fernando was still in college, so owning complete sections also let me mentor him through his while building mine.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Screens",
+        images: [
+          {
+            src: "/works/wilmots/how-to-play.webp",
+            alt: "How to play intro: the four product tiles, four customer cards and one rule card the tutorial uses",
+            priority: "primary",
           },
           {
-            src: "/works/wilmots/cover.png",
-            alt: "Wilmot's Warehouse cover repeat 2",
+            src: "/works/wilmots/what-you-get.webp",
+            alt: "What you get: the warehouse board, product tiles, customer cards, idea cards and rulebook in a bento grid",
+            priority: "tertiary",
           },
           {
-            src: "/works/wilmots/1.webp",
-            alt: "Wilmot's Warehouse final screen repeat",
+            src: "/works/wilmots/navigation.webp",
+            alt: "The navigation overlay with the game box photo, section links, creators and publisher",
+            priority: "tertiary",
+          },
+          {
+            src: "/works/wilmots/gallery.webp",
+            alt: "On the table: gallery of the game box and tiles in play, built by Fernando Manuel",
+            priority: "tertiary",
           },
         ],
       },
@@ -488,10 +684,22 @@ export const WORKS = [
     sections: [
       {
         heading: "Overview",
-        body: "Built the landing site for Morfolabs, a blockchain consulting and marketing agency, at the request of the company's owner, replacing an older outsourced WordPress site. Solo build, with a CMS the team edits without a developer.",
+        body: "Morfolabs is a blockchain consulting and marketing agency in Indonesia. At the owner's request I rebuilt its site, replacing an older WordPress site made by an outsourced team. Solo build, with a CMS the team edits without a developer. I built it with an AI coding workflow, writing a plan and a spec for the animation work before the code.",
         images: [
           { src: "/works/morfolabs/cover.webp", alt: "Morfolabs cover" },
         ],
+      },
+      {
+        heading: "Motion with a purpose",
+        body: '"How we work" is a staircase that scrubs with the scroll, with its own timeline for each screen size so it reads on a phone as well as on a desktop. The hero and the logo marquee move with the scroll, and a three.js grid distortion gives the visuals depth.',
+      },
+      {
+        heading: "From code to CMS in six days",
+        body: "I first gathered every line of copy into one place in code, then moved it into Payload CMS running inside the same Next.js app: nine collections and thirteen globals, with fields editors understand, such as an icon name, a button style and whether a link opens in a new tab. A seed script and a media migration carried the content across, and media is served from a CDN.",
+      },
+      {
+        heading: "Readable by people and machines",
+        body: "An accessibility pass, a sitemap, FAQ structured data and an llms.txt, so the site works for keyboard and screen-reader users and is easy for search engines and AI tools to read.",
       },
     ],
     role: "Frontend",
@@ -519,11 +727,42 @@ export const WORKS = [
     sections: [
       {
         heading: "Overview",
-        body: "Built the landing site and reporting portal for Asosiasi Blockchain Indonesia (ABI), a non-profit mobilizing blockchain actors across Indonesia, through Morfolabs. No access to the reporting portal post-handoff. Team of two, frontend end to end with Awank Kaley on backend.",
+        body: "Asosiasi Blockchain Indonesia (ABI) is a non-profit that brings blockchain companies and people across Indonesia together. Through Morfolabs, I built the front end of two products for it: the association's bilingual landing site, and a reporting portal where people file and follow complaints about crypto services. Team of two: I did the front end of both, admin screens included, and Awank Kaley built the backend. I have had no access to the portal since handoff.",
         images: [
           {
             src: "/works/abi/cover.webp",
             alt: "Asosiasi Blockchain Indonesia cover",
+          },
+        ],
+      },
+      {
+        heading: "A site the association can edit",
+        body: "Members, partners, boards, events, news and a dictionary of blockchain terms started out as lists in code. I moved them into a Sanity CMS with migration scripts in about a week, with English and Indonesian side by side in every field, so the staff keep the site current without a developer. The language lives in the URL and the site remembers the visitor's choice. A WebGL gradient and smooth scrolling share one animation loop behind it all.",
+      },
+      {
+        heading: "A complaint, step by step",
+        body: "A user signs in with email, Google or a one-time code, with optional two-factor authentication, reads a risk disclaimer, files the complaint in two steps with attachments and confirms it with a code. They then follow it on a timeline as it is handled, while admins work the same tickets from screens shaped by their role.",
+        figures: [
+          {
+            kind: "flow",
+            title: "Filing a complaint",
+            steps: [
+              {
+                title: "Sign in",
+                detail:
+                  "Email, Google or a one-time code, with optional two-factor.",
+              },
+              { title: "Read the risk disclaimer" },
+              {
+                title: "File in two steps",
+                detail: "What happened, then the evidence as attachments.",
+              },
+              { title: "Confirm with a code" },
+              {
+                title: "Follow it on a timeline",
+                detail: "Admins work the same ticket from their own screens.",
+              },
+            ],
           },
         ],
       },
@@ -554,10 +793,32 @@ export const WORKS = [
     sections: [
       {
         heading: "Overview",
-        body: "Built the landing and booking experience for a Slow Resistance Training (SRT) fitness studio. The client gave full trust on feature decisions, not just structure and layout. Data fetching runs through tRPC on top of TanStack Query, in front of the backend's external API, which Awank Kaley built. Also reviewed quality on the outsourced admin panel. Logo design was handled by an external designer.",
+        body: "Elevate Former is a Slow Resistance Training (SRT) fitness studio. Through Morfolabs, I built the front end of its landing page and members' booking app: a timetable, class packages, reservations, payment and an account area. The client trusted me with feature decisions, not only structure and layout. Awank Kaley built the backend API, and I put a typed tRPC layer on top of TanStack Query in front of it. I also reviewed the quality of the outsourced admin panel. The logo was by an external designer.",
         images: [
           { src: "/works/elevate/cover.webp", alt: "Elevate Former cover" },
         ],
+      },
+      {
+        heading: "Book, pay, come back",
+        body: "A member browses the timetable, picks a session, buys or uses a package and pays. The booking in progress is kept on the device, so after the payment page they land back on a reservation that carries on where they left it. Reservations can be cancelled or reviewed afterwards, and transactions and the profile sit in the same account.",
+        figures: [
+          {
+            kind: "flow",
+            title: "A booking, start to finish",
+            steps: [
+              { title: "Browse the timetable" },
+              { title: "Pick a session" },
+              { title: "Buy or use a package" },
+              { title: "Pay on the payment page" },
+              { title: "Back to the reservation" },
+            ],
+            loop: "The booking in progress survives the payment redirect",
+          },
+        ],
+      },
+      {
+        heading: "Phones first",
+        body: "Timetable filters live in the URL, so a filtered view can be shared, sign-in slides up as a sheet on phones, and smooth scrolling switches off on small screens. Halfway through the build I moved all data fetching onto tRPC in a single day, token handling included, so every screen talks to the API the same way.",
       },
     ],
     role: "Frontend",

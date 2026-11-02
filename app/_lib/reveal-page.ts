@@ -1,6 +1,7 @@
 import gsap from "gsap"
 
 import { STACK_X, Y_OFFSET } from "@/app/_components/logo-mark"
+import { liftVideo } from "@/app/_lib/video-handoff"
 
 const LOGO_SPLIT = { duration: 0.8, ease: "power3.inOut" } as const
 const HANDOFF_ATTR = "data-handoff"
@@ -19,6 +20,12 @@ function hiddenTargets(): HTMLElement[] {
 
 function markEntered(targets: Element[]): void {
   for (const el of targets) el.setAttribute(ENTERED_ATTR, "")
+}
+
+// marks the server-painted content as entered before re-enabling the CSS hiding that later routes rely on
+export function bootWithoutIntro(): void {
+  markEntered(hiddenTargets())
+  document.documentElement.setAttribute("data-booted", "")
 }
 
 export function revealPage(): gsap.core.Timeline {
@@ -141,6 +148,7 @@ export function handOff(section: HTMLElement): Promise<void> {
           for (const el of leaving) el.style.display = "none"
           section.style.marginTop = `${slotOffset}px`
           scrollInstant(0)
+          liftVideo(section)
           document.documentElement.setAttribute(HANDOFF_ATTR, "")
           resolve()
         },

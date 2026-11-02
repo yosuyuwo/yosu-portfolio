@@ -5,7 +5,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 import type { StoryChapter } from "@/app/_lib/experience-story"
-import type { WorkItem } from "@/app/_lib/work-item"
+import type { WorkLink } from "@/app/_lib/work-link"
 
 export const MONO_CLASS = "font-mono text-[11px] tracking-[0.12em] uppercase"
 
@@ -16,7 +16,7 @@ export function Chapter({
 }: {
   chapter: StoryChapter
   index: number
-  works: readonly WorkItem[]
+  works: readonly WorkLink[]
 }) {
   const number = String(index + 1).padStart(2, "0")
 

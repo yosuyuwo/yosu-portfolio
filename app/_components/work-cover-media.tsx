@@ -1,46 +1,44 @@
-import Image from "next/image"
-
 import { CoverVideo } from "@/app/_components/cover-video"
+import { FadeInImage } from "@/app/_components/fade-in-image"
 import type { WorkItem } from "@/app/_lib/work-item"
 import { cn } from "@/lib/utils"
 
 /**
- * Renders a work's cover video when available, falling back to the
- * static cover image. The caller owns the wrapping `relative` container.
+ * Renders a work's cover image, with the cover video layered on top when
+ * available. The caller owns the wrapping `relative` container.
  */
 export function WorkCoverMedia({
   work,
   className,
-  priority,
-  isStill,
+  preload,
   sizes = "(max-width: 768px) 100vw, 50vw",
 }: {
   work: WorkItem
   className?: string
-  priority?: boolean
-  isStill?: boolean
+  preload?: boolean
   sizes?: string
 }) {
-  if (work.coverVideoPath && !isStill) {
-    return (
-      <CoverVideo
-        src={work.coverVideoPath}
-        poster={work.coverPath || undefined}
-        className={className}
-      />
-    )
-  }
-
-  if (!work.coverPath) return null
-
-  return (
-    <Image
+  const image = work.coverPath ? (
+    <FadeInImage
       src={work.coverPath}
       alt={`${work.title} cover`}
       fill
-      priority={priority}
+      preload={preload}
       sizes={sizes}
       className={cn("object-cover object-top", className)}
     />
+  ) : null
+
+  if (!work.coverVideoPath) return image
+
+  return (
+    <>
+      {image}
+      <CoverVideo
+        src={work.coverVideoPath}
+        hasSkeleton={!image}
+        className={className}
+      />
+    </>
   )
 }

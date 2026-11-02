@@ -22,7 +22,7 @@ export function WorkCard({
           <span className="absolute inset-0 transition-transform duration-slow ease-out-expo group-hover:scale-[1.03]">
             <WorkCoverMedia
               work={work}
-              priority={isPriority}
+              preload={isPriority}
               sizes="(max-width: 640px) 100vw, 36rem"
             />
           </span>

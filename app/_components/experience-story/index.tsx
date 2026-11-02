@@ -5,12 +5,16 @@ import { useRef } from "react"
 import { useContactDialog } from "@/app/_hooks/use-contact-dialog"
 
 import { STORY_CHAPTERS, STORY_INTRO } from "@/app/_lib/experience-story"
-import { WORK_ITEMS } from "@/app/_lib/works"
+import type { WorkLink } from "@/app/_lib/work-link"
 import { Chapter } from "./_components/chapter"
 import { HireMarker } from "./_components/hire-marker"
 import { useChapterRail } from "./_hooks/use-chapter-rail"
 
-export function ExperienceStory() {
+export function ExperienceStory({
+  chapterWorks,
+}: {
+  chapterWorks: readonly (readonly WorkLink[])[]
+}) {
   const { setOpen } = useContactDialog()
   const listRef = useRef<HTMLOListElement>(null)
   const fillRef = useRef<HTMLSpanElement>(null)
@@ -43,9 +47,7 @@ export function ExperienceStory() {
               key={chapter.id}
               chapter={chapter}
               index={index}
-              works={WORK_ITEMS.filter((w) =>
-                chapter.workSlugs.includes(w.slug)
-              )}
+              works={chapterWorks[index]}
             />
           ))}
           <HireMarker onContact={() => setOpen(true)} />

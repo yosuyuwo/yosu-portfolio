@@ -2,7 +2,7 @@ import "server-only"
 
 import { INTRO } from "@/app/_lib/copy"
 import { formatRange } from "@/app/_lib/format-range"
-import type { WorkItem } from "@/app/_lib/work-item"
+import type { WorkFigure, WorkItem } from "@/app/_lib/work-item"
 import { WORK_ITEMS } from "@/app/_lib/works"
 import {
   ABOUT_INTRO,
@@ -41,10 +41,35 @@ function skillFacts(): string {
   ).join("\n")
 }
 
+function figureFacts(figure: WorkFigure): string | null {
+  if (figure.kind === "decisions") {
+    return figure.items
+      .map((item) => `Decision: ${item.decision}. Why: ${item.why}`)
+      .join(" ")
+  }
+  if (figure.kind === "flow") {
+    return `${figure.title}: ${figure.steps.map((step) => step.title).join(" → ")}`
+  }
+  if (figure.kind === "ownership") {
+    const mine = figure.parts.filter((part) => part.owner === "me")
+    const theirs = figure.parts.filter((part) => part.owner === "other")
+    return `Built by Yosua: ${mine.map((p) => p.label).join(", ")}; by ${figure.otherLabel}: ${theirs.map((p) => p.label).join(", ")}`
+  }
+  return figure.note ?? null
+}
+
 function workFacts(work: WorkItem): string {
   const details = work.sections
-    .filter((section) => section.body)
-    .map((section) => `  - ${section.heading}: ${section.body}`)
+    .flatMap((section) => {
+      const lines = section.body
+        ? [`  - ${section.heading}: ${section.body}`]
+        : []
+      const figures = (section.figures ?? [])
+        .map(figureFacts)
+        .filter((fact): fact is string => Boolean(fact))
+        .map((fact) => `    - ${fact}`)
+      return [...lines, ...figures]
+    })
     .join("\n")
   const links = [work.liveSite, work.github]
     .filter((link) => link?.href)

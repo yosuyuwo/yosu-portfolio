@@ -1,8 +1,17 @@
 import { ABOUT_INTRO, ABOUT_WORKFLOW, SKILL_GROUPS } from "@/lib/site-content"
 
 import { SECTIONS } from "@/app/_lib/copy"
+import { STORY_CHAPTERS } from "@/app/_lib/experience-story"
+import { toWorkLink } from "@/app/_lib/work-link"
+import { WORK_ITEMS } from "@/app/_lib/works"
 import { ExperienceStory } from "./experience-story"
 import { SectionLabel } from "./section-label"
+
+const CHAPTER_WORKS = STORY_CHAPTERS.map((chapter) =>
+  WORK_ITEMS.filter((work) => chapter.workSlugs.includes(work.slug)).map(
+    toWorkLink
+  )
+)
 
 const SUBHEAD_CLASS =
   "font-mono text-[11px] tracking-[0.14em] text-muted-foreground uppercase"
@@ -35,7 +44,7 @@ export function About() {
 
         <div>
           <h2 className={SUBHEAD_CLASS}>Experience</h2>
-          <ExperienceStory />
+          <ExperienceStory chapterWorks={CHAPTER_WORKS} />
         </div>
       </div>
 
