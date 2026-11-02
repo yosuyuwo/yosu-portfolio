@@ -1,15 +1,10 @@
 "use client"
 
-import { useRef } from "react"
-
 import { useContactDialog } from "@/app/_hooks/use-contact-dialog"
-import { useFitText } from "@/app/_hooks/use-fit-text"
 import {
   CONTACT_EMAIL,
   FOOTER_COPYRIGHT_NAME,
   RESUME_FILE,
-  SITE_FAMILY_NAME,
-  SITE_GIVEN_NAME,
   SITE_SOCIALS,
 } from "@/lib/site-content"
 import { cn } from "@/lib/utils"
@@ -17,6 +12,7 @@ import { cn } from "@/lib/utils"
 import { CONTACT_CTA, INTRO, SECTIONS } from "@/app/_lib/copy"
 import { CONTENT_COLUMN, CONTENT_GRID, RAIL_GRID } from "@/app/_lib/page-grid"
 import { ContactDialog } from "./contact-dialog"
+import { FooterWordmark } from "./footer-wordmark"
 import { LocalTime } from "./local-time"
 import { SectionLabel } from "./section-label"
 
@@ -74,9 +70,6 @@ function MobileMeta() {
 
 export function ContactFooter() {
   const { setOpen } = useContactDialog()
-  const wordmarkRef = useRef<HTMLParagraphElement>(null)
-  useFitText(wordmarkRef)
-
   return (
     <footer
       id="contact"
@@ -134,20 +127,7 @@ export function ContactFooter() {
         </div>
       </div>
 
-      <div
-        aria-hidden
-        className="pointer-events-none mt-14 px-4 select-none md:col-span-2 md:px-7"
-      >
-        <p
-          ref={wordmarkRef}
-          className="w-max translate-y-[0.12em] [mask-image:linear-gradient(to_bottom,black_30%,transparent_95%)] pr-[0.06em] leading-[0.8] font-medium tracking-[-0.06em] whitespace-nowrap text-foreground/[0.08] max-md:text-background/[0.14]"
-        >
-          {SITE_GIVEN_NAME}{" "}
-          <span className="font-serif font-normal tracking-normal italic">
-            {SITE_FAMILY_NAME}
-          </span>
-        </p>
-      </div>
+      <FooterWordmark />
 
       <ContactDialog />
     </footer>
