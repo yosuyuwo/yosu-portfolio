@@ -74,7 +74,7 @@ export function ContactFooter() {
     <footer
       id="contact"
       className={cn(
-        "overflow-hidden max-md:bg-foreground max-md:text-background",
+        "overflow-hidden max-md:bg-foreground max-md:text-background max-md:[--brand:var(--brand-inverse)]",
         RAIL_GRID
       )}
     >

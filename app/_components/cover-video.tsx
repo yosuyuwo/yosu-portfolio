@@ -6,9 +6,30 @@ import { MediaSkeleton } from "@/app/_components/media-skeleton"
 import { claimVideo, releaseVideo } from "@/app/_lib/video-handoff"
 import { cn } from "@/lib/utils"
 
-const VIEWPORT_MARGIN = "200px"
+const UNREVEALED =
+  "[data-enter]:not([data-entered]), [data-hero]:not([data-entered])"
 
 type Reveal = "hidden" | "fade" | "instant"
+
+// covers behind the intro overlay would otherwise download several MB nobody can see yet
+function whenRevealed(
+  video: HTMLVideoElement,
+  callback: () => void
+): () => void {
+  const pending = video.closest<HTMLElement>(UNREVEALED)
+  if (!pending) {
+    callback()
+    return () => {}
+  }
+
+  const observer = new MutationObserver(() => {
+    if (!pending.hasAttribute("data-entered")) return
+    observer.disconnect()
+    callback()
+  })
+  observer.observe(pending, { attributeFilter: ["data-entered"] })
+  return () => observer.disconnect()
+}
 
 function whenFramePainted(video: HTMLVideoElement, callback: () => void): void {
   if (typeof video.requestVideoFrameCallback === "function") {
@@ -70,16 +91,14 @@ export function CoverVideo({
     isTakingOverRef.current = source !== null
     const cancelTakeOver = source ? takeOverFrom(video, source) : undefined
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) void video.play().catch(() => {})
-        else video.pause()
-      },
-      { rootMargin: VIEWPORT_MARGIN }
-    )
-    observer.observe(video)
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) void video.play().catch(() => {})
+      else video.pause()
+    })
+    const stopWaiting = whenRevealed(video, () => observer.observe(video))
     return () => {
       cancelTakeOver?.()
+      stopWaiting()
       observer.disconnect()
     }
   }, [src])

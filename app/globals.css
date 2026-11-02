@@ -93,7 +93,8 @@
 
 :root {
   --brand: oklch(0.5 0.12 155);
-  --hire: oklch(0.64 0.17 50);
+  --brand-inverse: oklch(0.76 0.15 155);
+  --hire: oklch(0.56 0.16 50);
   --background: oklch(0.985 0.001 106);
   --foreground: oklch(0.19 0.012 60);
   --card: oklch(0.985 0.001 106);
@@ -132,6 +133,7 @@
 
 .dark {
   --brand: oklch(0.76 0.15 155);
+  --brand-inverse: oklch(0.5 0.12 155);
   --hire: oklch(0.76 0.16 55);
   --background: oklch(0.16 0.006 60);
   --foreground: oklch(0.94 0.008 85);
@@ -169,11 +171,9 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* hidden until intro-overlay.tsx / route-enter.tsx reveal it; intro-skipped loads paint at once so LCP doesn't wait on hydration */
-  :root:is(:not([data-intro-skip]), [data-booted])
-    [data-enter]:not([data-entered]),
-  :root:not([data-handoff]):is(:not([data-intro-skip]), [data-booted])
-    [data-hero]:not([data-entered]),
+  /* server-rendered content paints at once (under the intro overlay on first visits) so LCP doesn't wait on the intro; only later routes start hidden */
+  :root[data-booted] [data-enter]:not([data-entered]),
+  :root[data-booted]:not([data-handoff]) [data-hero]:not([data-entered]),
   [data-intro-logo],
   [data-intro-photo] {
     visibility: hidden;

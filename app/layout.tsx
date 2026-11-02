@@ -14,7 +14,6 @@ import { INTRO_VISIT_SCRIPT } from "@/app/_lib/intro-visit"
 import { toWorkLink } from "@/app/_lib/work-link"
 import { WORK_ITEMS } from "@/app/_lib/works"
 import { ThemeProvider } from "@/components/theme-provider"
-import { NuqsProvider } from "@/lib/nuqs/provider"
 import { SITE_METADATA, SITE_NAME } from "@/lib/site-content"
 import { SITE_URL } from "@/lib/site-url"
 import { cn } from "@/lib/utils"
@@ -103,25 +102,23 @@ export default function RootLayout({
           aria-hidden
           className="pointer-events-none fixed inset-0 z-50 grain opacity-[0.05] mix-blend-multiply dark:opacity-[0.07] dark:mix-blend-screen"
         />
-        <NuqsProvider>
-          <ThemeProvider>
-            <ContactDialogProvider>
-              <ChatPanelProvider>
-                <IntroOverlay />
-                <RouteEnter />
-                <div className="md:grid md:grid-cols-[var(--rail)_minmax(0,1fr)]">
-                  <Sidebar works={WORK_LINKS} />
-                  <div>
-                    <TopBar />
-                    {children}
-                  </div>
+        <ThemeProvider>
+          <ContactDialogProvider>
+            <ChatPanelProvider>
+              <IntroOverlay />
+              <RouteEnter />
+              <div className="md:grid md:grid-cols-[var(--rail)_minmax(0,1fr)]">
+                <Sidebar works={WORK_LINKS} />
+                <div>
+                  <TopBar />
+                  {children}
                 </div>
-                <ContactFooter />
-                <ChatSheet />
-              </ChatPanelProvider>
-            </ContactDialogProvider>
-          </ThemeProvider>
-        </NuqsProvider>
+              </div>
+              <ContactFooter />
+              <ChatSheet />
+            </ChatPanelProvider>
+          </ContactDialogProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

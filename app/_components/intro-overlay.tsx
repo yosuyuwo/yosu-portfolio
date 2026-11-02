@@ -6,7 +6,11 @@ import { useEffect, useRef } from "react"
 
 import { STACK_X, Y_OFFSET, Y_PATH } from "@/app/_components/logo-mark"
 import { shouldSkipIntro } from "@/app/_lib/intro-visit"
-import { bootWithoutIntro, revealPage } from "@/app/_lib/reveal-page"
+import {
+  bootWithoutIntro,
+  markBooted,
+  revealPage,
+} from "@/app/_lib/reveal-page"
 import { cdnUrl } from "@/lib/cdn"
 import { HERO_PORTRAIT } from "@/lib/site-content"
 
@@ -78,6 +82,7 @@ export function IntroOverlay() {
           `+=${EXIT_DELAY}`
         )
         .add(revealPage(), "-=0.5")
+      markBooted()
 
       return () => {
         html.style.overflow = ""
@@ -100,8 +105,9 @@ export function IntroOverlay() {
             alt=""
             width={HERO_PORTRAIT.width}
             height={HERO_PORTRAIT.height}
-            loading="lazy"
+            loading="eager"
             fetchPriority="high"
+            sizes="(min-width: 768px) 50vh, 44vh"
             className="h-[58svh] w-auto object-cover grayscale md:h-[66svh]"
           />
         </div>

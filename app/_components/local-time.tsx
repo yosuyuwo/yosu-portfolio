@@ -24,8 +24,7 @@ export function LocalTime({ className }: { className?: string }) {
   return (
     <time className={className} aria-label={`Local time ${parts.display} WIB`}>
       <span className="tabular-nums">
-        {parts.display}
-        <span className="text-muted-foreground">:{parts.second}</span>
+        {parts.display}:{parts.second}
       </span>{" "}
       WIB
     </time>

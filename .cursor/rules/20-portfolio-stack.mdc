@@ -30,6 +30,7 @@ UI is built **on** shadcn — never invent parallel components.
 
 - All shareable UI state that belongs in the URL (filters, tabs, pagination, modal ids)
 - Prefer typed parsers over raw `useSearchParams` string parsing
+- Mount `NuqsAdapter` (and its `<Suspense>`) around only the subtree that reads URL state — never in the root layout, where the boundary holds the whole page's first paint until React reveals it
 
 ## GSAP
 

@@ -22,10 +22,14 @@ function markEntered(targets: Element[]): void {
   for (const el of targets) el.setAttribute(ENTERED_ATTR, "")
 }
 
-// marks the server-painted content as entered before re-enabling the CSS hiding that later routes rely on
+// enables the CSS hiding that later routes rely on; the first load's content is already hidden or entered by then
+export function markBooted(): void {
+  document.documentElement.setAttribute("data-booted", "")
+}
+
 export function bootWithoutIntro(): void {
   markEntered(hiddenTargets())
-  document.documentElement.setAttribute("data-booted", "")
+  markBooted()
 }
 
 export function revealPage(): gsap.core.Timeline {
