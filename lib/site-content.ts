@@ -81,16 +81,16 @@ export const EXPERIENCE = [
     organization: "Quanta Labs",
     role: "Co-founder, Product Engineer",
     startDate: "2026-01-01",
-    endDate: null,
+    endDate: "2026-10-01",
     blurb:
-      "Co-founded a product studio; design and build client products end to end, including Gaiana and Eastern Star Logistics.",
+      "Co-founded a product studio; designed and built client products end to end, including Gaiana and Eastern Star Logistics.",
     highlights: [
-      "Co-founded a product studio that takes client ideas from first brief to launch.",
+      "Co-founded a product studio that took client ideas from first brief to launch.",
       "Designed and built Gaiana's rental storefront and back-office end to end (Next.js, tRPC, PostgreSQL), moving the business off spreadsheets and shared drives and going live five months after the first commit.",
       "Covered Gaiana with about 2,500 Vitest and React Testing Library tests under an 80% coverage threshold, and hardened it with a Content Security Policy and separate storage credentials for private customer documents.",
       "Led design, frontend and backend for Eastern Star Logistics' freight management system, customer-side shipment tracking and landing page, working with one outsourced developer.",
-      "Build with AI agents (Claude Code) in a spec, prototype, test-first pipeline, recording every decision and reviewing and QA-ing each change by hand before it ships.",
-      "Run production on a self-managed server: Docker images built in GitHub Actions, nightly deploys, backups with restore drills, monitoring and alerts.",
+      "Built with AI agents (Claude Code) in a spec, prototype, test-first pipeline, recording every decision and reviewing and QA-ing each change by hand before it shipped.",
+      "Ran production on a self-managed server: Docker images built in GitHub Actions, nightly deploys, backups with restore drills, monitoring and alerts.",
     ],
   },
   {
@@ -168,7 +168,7 @@ export const EDUCATION: readonly Education[] = [
 export const RESUME = {
   headline: "Product Engineer & Frontend Developer",
   summary:
-    "Frontend-first product engineer with five years of building web products end to end: UX research, UI design, React and Next.js frontends, APIs and production. In the past year, the main engineer on two client products from first brief to launch. Co-founder of Quanta Labs, a product studio, and Techova Labs, an AI automation SaaS; previously nearly three years at Morfolabs shipping tens of client products. Builds with AI agents every day, then tests and reviews every change by hand: the goal is work polished enough that people are surprised AI was involved at all.",
+    "Frontend-first product engineer with five years of building web products end to end: UX research, UI design, React and Next.js frontends, APIs and production. In the past year, the main engineer on two client products from first brief to launch. Co-founder of Techova Labs, an AI automation SaaS; previously co-founded Quanta Labs, a product studio, and spent nearly three years at Morfolabs shipping tens of client products. Builds with AI agents every day, then tests and reviews every change by hand: the goal is work polished enough that people are surprised AI was involved at all.",
 } as const
 
 export const SITE_METADATA = {

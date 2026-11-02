@@ -10,7 +10,7 @@ export type StoryChapter = {
 }
 
 export const STORY_INTRO = {
-  title: "Five chapters",
+  title: "Six chapters",
   span: "2021 → now",
 } as const
 
@@ -77,17 +77,28 @@ export const STORY_CHAPTERS: readonly StoryChapter[] = [
     workSlugs: ["abi", "morfolabs", "elevate"],
   },
   {
-    id: "quanta-techova",
-    organization: "Quanta Labs & Techova Labs",
+    id: "quanta",
+    organization: "Quanta Labs",
     role: "Co-founder, product engineer",
     startDate: "2026-01-01",
-    endDate: null,
+    endDate: "2026-10-01",
     pullLine: "Now the whole product is the job.",
     body: [
-      "In 2026 I co-founded two companies: Quanta Labs, a product studio, with Davin from the accounting game, and Techova Labs, which builds its own software.",
-      "Quanta Labs takes client ideas to launch. Gaiana moved a dress-rental business off spreadsheets and shared drives onto its own storefront and back-office, five months from first commit to going live. For Eastern Star Logistics we built a freight management system, customer-side shipment tracking and their landing page.",
-      "Techova Labs builds AI automation for the work that eats a team's time. Our first product, Terbit, turns one article or script into Instagram carousels, posts and stories, each in the brand's own template, in minutes.",
+      "I co-founded Quanta Labs, a product studio, with Davin from the accounting game. It took client ideas from first brief to launch.",
+      "Gaiana moved a dress-rental business off spreadsheets and shared drives onto its own storefront and back-office, five months from first commit to going live. For Eastern Star Logistics we built a freight management system, customer-side shipment tracking and their landing page.",
     ],
     workSlugs: ["gaiana"],
+  },
+  {
+    id: "techova",
+    organization: "Techova Labs",
+    role: "Co-founder, product engineer",
+    startDate: "2026-08-01",
+    endDate: null,
+    pullLine: "Building our own product this time.",
+    body: [
+      "Techova Labs builds AI automation for the work that eats a team's time. Our first product, Terbit, turns one article or script into Instagram carousels, posts and stories, each in the brand's own template, in minutes.",
+    ],
+    workSlugs: [],
   },
 ]
