@@ -35,25 +35,6 @@ const ownershipFigureSchema = z.object({
     .min(2),
 })
 
-const spanFigureSchema = z.object({
-  kind: z.literal("span"),
-  title: z.string(),
-  segments: z
-    .array(
-      z.object({
-        label: z.string(),
-        weight: z.number().positive(),
-        tone: z.enum(["focus", "hold", "free"]),
-        color: z
-          .string()
-          .regex(/^#[0-9a-f]{6}$/i)
-          .optional(),
-      })
-    )
-    .min(2),
-  note: z.string().optional(),
-})
-
 const decisionsFigureSchema = z.object({
   kind: z.literal("decisions"),
   items: z.array(z.object({ decision: z.string(), why: z.string() })).min(1),
@@ -63,7 +44,6 @@ const workFigureSchema = z.discriminatedUnion("kind", [
   decisionsFigureSchema,
   flowFigureSchema,
   ownershipFigureSchema,
-  spanFigureSchema,
 ])
 
 const workSectionSchema = z.object({
@@ -96,5 +76,4 @@ export type WorkFigure = z.infer<typeof workFigureSchema>
 export type DecisionsFigure = z.infer<typeof decisionsFigureSchema>
 export type FlowFigure = z.infer<typeof flowFigureSchema>
 export type OwnershipFigure = z.infer<typeof ownershipFigureSchema>
-export type SpanFigure = z.infer<typeof spanFigureSchema>
 export type WorkItem = z.infer<typeof workItemSchema>

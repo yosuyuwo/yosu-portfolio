@@ -87,7 +87,7 @@ export const EXPERIENCE = [
     highlights: [
       "Co-founded a product studio that took client ideas from first brief to launch.",
       "Designed and built Gaiana's rental storefront and back-office end to end (Next.js, tRPC, PostgreSQL), moving the business off spreadsheets and shared drives and going live five months after the first commit.",
-      "Covered Gaiana with about 2,500 Vitest and React Testing Library tests under an 80% coverage threshold, and hardened it with a Content Security Policy and separate storage credentials for private customer documents.",
+      "Covered Gaiana with about 2,500 Vitest and React Testing Library tests under an 80% coverage threshold, and hardened it for handling private customer documents.",
       "Led design, frontend and backend for Eastern Star Logistics' freight management system, customer-side shipment tracking and landing page, working with one outsourced developer.",
       "Built with AI agents (Claude Code) in a spec, prototype, test-first pipeline, recording every decision and reviewing and QA-ing each change by hand before it shipped.",
       "Ran production on a self-managed server: Docker images built in GitHub Actions, nightly deploys, backups with restore drills, monitoring and alerts.",
@@ -410,7 +410,7 @@ export const WORKS = [
       },
       {
         heading: "Designed for the customer",
-        body: "Renting a dress is a date problem as much as a shopping one. Customers filter by rental date, size, colour, price, occasion, length and neckline, and the size filter works from their own measurements. The back-office filters follow the storefront's, so the team and its customers describe a dress the same way.",
+        body: "Renting a dress is a date problem as much as a shopping one. Customers filter by rental date, size, colour, price, occasion, length and neckline, and the size filter works from their own measurements.",
         images: [
           {
             src: "/works/gaiana/filters.webp",
@@ -421,43 +421,7 @@ export const WORKS = [
       },
       {
         heading: "One dress, one calendar",
-        body: "The customer picks a single event date. The calendar shows when the garment arrives and when it goes back, and dates taken by other bookings are already blocked. A rental holds more than the day it is worn, so courier transit, preparation and cleaning are booked alongside it, and the same rule runs on the product page, at checkout and in the back-office.",
-        figures: [
-          {
-            kind: "span",
-            title: "What one rental books on a single garment",
-            segments: [
-              { label: "Free", weight: 1, tone: "free" },
-              {
-                label: "Preparation",
-                weight: 1,
-                tone: "hold",
-                color: "#eae3ca",
-              },
-              {
-                label: "Courier out",
-                weight: 1.4,
-                tone: "hold",
-                color: "#a98944",
-              },
-              {
-                label: "Event day",
-                weight: 1.1,
-                tone: "focus",
-                color: "#8b572b",
-              },
-              {
-                label: "Courier back",
-                weight: 1.4,
-                tone: "hold",
-                color: "#2e2725",
-              },
-              { label: "Cleaning", weight: 1, tone: "hold", color: "#eae3ca" },
-              { label: "Free", weight: 1, tone: "free" },
-            ],
-            note: "The customer picks only the event day. Every other block is booked around it as its own entry on that garment. Colours follow Gaiana's own calendar. Widths are illustrative; the real windows come from the shop's settings.",
-          },
-        ],
+        body: "I wanted the calendar to ask one question: when is your event? Everything else about a rental is worked out from that date, so the customer never has to plan around it, and taken dates are blocked before they choose. One rule sits behind it, so the product page, checkout and the back-office always agree.",
         images: [
           {
             src: "/works/gaiana/calendar.webp",
@@ -477,16 +441,11 @@ export const WORKS = [
             items: [
               {
                 decision: "Ask for one event date, not a rental period",
-                why: "The owner asked for it, and it keeps the system easier to maintain: delivery, return and cleaning are all worked out from that one date, so there is a single rule to keep right everywhere.",
+                why: "A customer knows the day they need the dress, not the logistics around it. Working everything else out from that one date keeps booking simple for them and leaves a single rule to keep right across the system.",
               },
               {
-                decision:
-                  "Design the storefront filters first, then mirror them in the back-office",
-                why: "The filters were shaped around how customers look for a dress. The back-office follows the same ones, so the team describes and finds a dress the same way its customers do.",
-              },
-              {
-                decision: "Set the visual direction myself",
-                why: "The owner left the look of the store to me, so I could carry one editorial direction from the home page through checkout instead of mixing references.",
+                decision: "Set an elegant visual direction",
+                why: "I chose elegance for the store and looked to fashion houses for how to carry it. Kindred of Ireland shaped the story-led sections and the product grid. Brunello Cucinelli's earlier, minimal shop set the restraint: generous whitespace and a quiet header and navigation.",
               },
             ],
           },

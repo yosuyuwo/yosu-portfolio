@@ -41,7 +41,7 @@ function skillFacts(): string {
   ).join("\n")
 }
 
-function figureFacts(figure: WorkFigure): string | null {
+function figureFacts(figure: WorkFigure): string {
   if (figure.kind === "decisions") {
     return figure.items
       .map((item) => `Decision: ${item.decision}. Why: ${item.why}`)
@@ -50,12 +50,9 @@ function figureFacts(figure: WorkFigure): string | null {
   if (figure.kind === "flow") {
     return `${figure.title}: ${figure.steps.map((step) => step.title).join(" → ")}`
   }
-  if (figure.kind === "ownership") {
-    const mine = figure.parts.filter((part) => part.owner === "me")
-    const theirs = figure.parts.filter((part) => part.owner === "other")
-    return `Built by Yosua: ${mine.map((p) => p.label).join(", ")}; by ${figure.otherLabel}: ${theirs.map((p) => p.label).join(", ")}`
-  }
-  return figure.note ?? null
+  const mine = figure.parts.filter((part) => part.owner === "me")
+  const theirs = figure.parts.filter((part) => part.owner === "other")
+  return `Built by Yosua: ${mine.map((p) => p.label).join(", ")}; by ${figure.otherLabel}: ${theirs.map((p) => p.label).join(", ")}`
 }
 
 function workFacts(work: WorkItem): string {
@@ -64,10 +61,9 @@ function workFacts(work: WorkItem): string {
       const lines = section.body
         ? [`  - ${section.heading}: ${section.body}`]
         : []
-      const figures = (section.figures ?? [])
-        .map(figureFacts)
-        .filter((fact): fact is string => Boolean(fact))
-        .map((fact) => `    - ${fact}`)
+      const figures = (section.figures ?? []).map(
+        (figure) => `    - ${figureFacts(figure)}`
+      )
       return [...lines, ...figures]
     })
     .join("\n")
