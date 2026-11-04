@@ -85,6 +85,8 @@ function scrollThumbIntoView(page: HTMLElement, thumb: HTMLElement) {
 
 function playOpen({ page, frame, mask, chrome }: Parts, thumb: HTMLElement) {
   const duration = motionDuration(OPEN_DURATION_S)
+  // the recorded state only pairs with the frame if it was captured with the flip id on
+  thumb.dataset.flipId = FLIP_ID
   const thumbState = Flip.getState(thumb)
 
   hideThumb(thumb)
