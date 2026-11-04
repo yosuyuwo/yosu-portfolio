@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils"
 
 import { WorkFigure } from "../../work-figure"
 import { ZoomableImage } from "../../zoomable-image"
+import { ZoomableImageGroup } from "../../zoomable-image-group"
 
 type MediaSpans = {
   figures: string
@@ -17,7 +18,8 @@ export function SectionMedia({
   section: WorkSection
   spans: MediaSpans
 }) {
-  const [heroImage, ...restImages] = section.images ?? []
+  const images = section.images ?? []
+  const restImages = images.slice(1)
 
   return (
     <>
@@ -29,24 +31,18 @@ export function SectionMedia({
         </div>
       ) : null}
 
-      {heroImage ? (
-        <ZoomableImage
-          src={heroImage.src}
-          alt={heroImage.alt}
-          className={spans.hero}
-        />
-      ) : null}
+      {images.length ? (
+        <ZoomableImageGroup images={images}>
+          <ZoomableImage index={0} className={spans.hero} />
 
-      {restImages.length ? (
-        <div className={cn("grid gap-4 sm:grid-cols-2", spans.rest)}>
-          {restImages.map((image, i) => (
-            <ZoomableImage
-              key={`${image.src}-${i}`}
-              src={image.src}
-              alt={image.alt}
-            />
-          ))}
-        </div>
+          {restImages.length ? (
+            <div className={cn("grid gap-4 sm:grid-cols-2", spans.rest)}>
+              {restImages.map((image, i) => (
+                <ZoomableImage key={`${image.src}-${i}`} index={i + 1} />
+              ))}
+            </div>
+          ) : null}
+        </ZoomableImageGroup>
       ) : null}
     </>
   )
