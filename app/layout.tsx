@@ -108,14 +108,16 @@ export default function RootLayout({
             <ChatPanelProvider>
               <IntroOverlay />
               <RouteEnter />
-              <div className={RAIL_GRID}>
-                <Sidebar works={WORK_LINKS} />
-                <div>
-                  <TopBar />
-                  {children}
+              <div data-site-root>
+                <div className={RAIL_GRID}>
+                  <Sidebar works={WORK_LINKS} />
+                  <div>
+                    <TopBar />
+                    {children}
+                  </div>
                 </div>
+                <ContactFooter />
               </div>
-              <ContactFooter />
               <ChatSheet />
             </ChatPanelProvider>
           </ContactDialogProvider>
