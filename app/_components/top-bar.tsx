@@ -18,7 +18,10 @@ export function TopBar() {
   const { setOpen: setChatOpen } = useChatPanel()
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md lg:hidden">
+    <header
+      data-topbar
+      className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md lg:hidden"
+    >
       <div className="flex h-14 items-center justify-between gap-6 px-4 font-mono text-[11px] tracking-[0.12em] uppercase">
         <TransitionLink
           href={isHome ? "#top" : "/"}

@@ -95,7 +95,7 @@ export default function RootLayout({
         <noscript>
           <style>
             {
-              "[data-enter],[data-hero]{visibility:visible}[data-intro]{display:none}"
+              "[data-enter],[data-hero],[data-topbar]{visibility:visible}[data-intro]{display:none}"
             }
           </style>
         </noscript>

@@ -23,6 +23,24 @@ const LOGO_DELAY = 0.5
 const SPLIT_DURATION = 1.3
 const SPLIT_EASE = "power4.in"
 const EXIT_DELAY = 1
+const TOP_BAR_DELAY = 0.15
+
+function slideInTopBar(): gsap.core.Tween {
+  const topBar = document.querySelector<HTMLElement>("[data-topbar]")
+  // inline styles from the tween keep it hidden until it plays, so the CSS hide can lift now
+  topBar?.setAttribute("data-entered", "")
+  return gsap.fromTo(
+    topBar,
+    { autoAlpha: 0, yPercent: -100 },
+    {
+      autoAlpha: 1,
+      yPercent: 0,
+      duration: 0.9,
+      ease: "expo.out",
+      clearProps: "transform,opacity,visibility",
+    }
+  )
+}
 
 export function IntroOverlay() {
   const rootRef = useRef<HTMLDivElement>(null)
@@ -82,6 +100,7 @@ export function IntroOverlay() {
           `+=${EXIT_DELAY}`
         )
         .add(revealPage(), "-=0.5")
+        .add(slideInTopBar(), `<${TOP_BAR_DELAY}`)
       markBooted()
 
       return () => {
