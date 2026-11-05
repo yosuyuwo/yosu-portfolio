@@ -756,7 +756,10 @@ export const WORKS = [
         heading: "Overview",
         body: "Elevate Former is a Slow Resistance Training (SRT) fitness studio. Through Morfolabs, I built the front end of its landing page and members' booking app: a timetable, class packages, reservations, payment and an account area. The client trusted me with feature decisions, not only structure and layout. Awank Kaley built the backend API, and I put a typed tRPC layer on top of TanStack Query in front of it. I also reviewed the quality of the outsourced admin panel. The logo was by an external designer.",
         images: [
-          { src: "/works/elevate/cover.webp", alt: "Elevate Former cover" },
+          {
+            src: "/works/elevate/hero.webp",
+            alt: "Elevate Former home page with the studio video under the headline",
+          },
         ],
       },
       {
@@ -776,10 +779,68 @@ export const WORKS = [
             loop: "The booking in progress survives the payment redirect",
           },
         ],
+        images: [
+          {
+            src: "/works/elevate/schedule.webp",
+            alt: "Elevate Former schedule listing sessions by day with filters",
+          },
+        ],
       },
       {
         heading: "Phones first",
         body: "Timetable filters live in the URL, so a filtered view can be shared, sign-in slides up as a sheet on phones, and smooth scrolling switches off on small screens. Halfway through the build I moved all data fetching onto tRPC in a single day, token handling included, so every screen talks to the API the same way.",
+        images: [
+          {
+            src: "/works/elevate/classes.webp",
+            alt: "Elevate Former classes page with search, level and category filters",
+          },
+        ],
+        imageSide: "left",
+      },
+      {
+        heading: "Screens",
+        images: [
+          {
+            src: "/works/elevate/studio.webp",
+            alt: "Elevate Former home page section on the studio space",
+            priority: "primary",
+          },
+          {
+            src: "/works/elevate/class-detail.webp",
+            alt: "Elevate Former class page for Megaformer Basics",
+            priority: "secondary",
+          },
+          {
+            src: "/works/elevate/package-checkout.webp",
+            alt: "Elevate Former package page with quantity and total",
+            priority: "secondary",
+          },
+          {
+            src: "/works/elevate/classes-carousel.webp",
+            alt: "Elevate Former home page carousel of classes",
+            priority: "secondary",
+          },
+          {
+            src: "/works/elevate/packages-list.webp",
+            alt: "Elevate Former home page list of packages with prices",
+            priority: "secondary",
+          },
+          {
+            src: "/works/elevate/packages.webp",
+            alt: "Elevate Former packages page with filters",
+            priority: "tertiary",
+          },
+          {
+            src: "/works/elevate/sign-in.webp",
+            alt: "Elevate Former sign-in page",
+            priority: "tertiary",
+          },
+          {
+            src: "/works/elevate/contact.webp",
+            alt: "Elevate Former contact page with form and map",
+            priority: "tertiary",
+          },
+        ],
       },
     ],
     role: "Frontend",
