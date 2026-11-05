@@ -159,7 +159,7 @@ export const EDUCATION: readonly Education[] = [
   {
     id: "istts-skom",
     institution: "Institut Sains dan Teknologi Terpadu Surabaya (iSTTS)",
-    credential: "Bachelor of Computer Science (S.Kom.)",
+    credential: "Bachelor of Computer Science (S.Kom.), Informatics",
     startDate: "2018-01-01",
     endDate: "2023-01-01",
   },

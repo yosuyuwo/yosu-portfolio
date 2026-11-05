@@ -4,6 +4,7 @@ import { INTRO } from "@/app/_lib/copy"
 import { formatRange } from "@/app/_lib/format-range"
 import type { WorkFigure, WorkItem } from "@/app/_lib/work-item"
 import { WORK_ITEMS } from "@/app/_lib/works"
+import { formatYearRange } from "@/lib/resume/format-month-year"
 import {
   ABOUT_INTRO,
   ABOUT_WORKFLOW,
@@ -31,7 +32,7 @@ function experienceFacts(): string {
 function educationFacts(): string {
   return EDUCATION.map(
     (entry) =>
-      `- ${entry.credential}, ${entry.institution} (${formatRange(entry.startDate, entry.endDate)})`
+      `- ${entry.credential}, ${entry.institution} (${formatYearRange(entry.startDate, entry.endDate)})`
   ).join("\n")
 }
 
