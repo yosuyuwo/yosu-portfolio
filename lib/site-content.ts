@@ -691,14 +691,21 @@ export const WORKS = [
         body: "Asosiasi Blockchain Indonesia (ABI) is a non-profit that brings blockchain companies and people across Indonesia together. Through Morfolabs, I built the front end of two products for it: the association's bilingual landing site, and a reporting portal where people file and follow complaints about crypto services. Team of two: I did the front end of both, admin screens included, and Awank Kaley built the backend. I have had no access to the portal since handoff.",
         images: [
           {
-            src: "/works/abi/cover.webp",
-            alt: "Asosiasi Blockchain Indonesia cover",
+            src: "/works/abi/hero.webp",
+            alt: "Asosiasi Blockchain Indonesia home page with the WebGL gradient behind the headline",
           },
         ],
       },
       {
         heading: "A site the association can edit",
         body: "Members, partners, boards, events, news and a dictionary of blockchain terms started out as lists in code. I moved them into a Sanity CMS with migration scripts in about a week, with English and Indonesian side by side in every field, so the staff keep the site current without a developer. The language lives in the URL and the site remembers the visitor's choice. A WebGL gradient and smooth scrolling share one animation loop behind it all.",
+        images: [
+          {
+            src: "/works/abi/hero-id.webp",
+            alt: "Asosiasi Blockchain Indonesia home page in Indonesian",
+          },
+        ],
+        imageSide: "left",
       },
       {
         heading: "A complaint, step by step",
@@ -724,6 +731,46 @@ export const WORKS = [
                 detail: "Admins work the same ticket from their own screens.",
               },
             ],
+          },
+        ],
+      },
+      {
+        heading: "Screens",
+        images: [
+          {
+            src: "/works/abi/vision-mission.webp",
+            alt: "Asosiasi Blockchain Indonesia vision and mission section",
+            priority: "primary",
+          },
+          {
+            src: "/works/abi/members.webp",
+            alt: "Asosiasi Blockchain Indonesia member logo grid",
+            priority: "secondary",
+          },
+          {
+            src: "/works/abi/partners.webp",
+            alt: "Asosiasi Blockchain Indonesia partner logo grid",
+            priority: "secondary",
+          },
+          {
+            src: "/works/abi/dictionary.webp",
+            alt: "Asosiasi Blockchain Indonesia legal dictionary of laws and regulations",
+            priority: "secondary",
+          },
+          {
+            src: "/works/abi/events-grid.webp",
+            alt: "Asosiasi Blockchain Indonesia home page events grid",
+            priority: "secondary",
+          },
+          {
+            src: "/works/abi/events.webp",
+            alt: "Asosiasi Blockchain Indonesia events page in Indonesian",
+            priority: "secondary",
+          },
+          {
+            src: "/works/abi/event-detail.webp",
+            alt: "Asosiasi Blockchain Indonesia event article for the 2026 conference",
+            priority: "secondary",
           },
         ],
       },
