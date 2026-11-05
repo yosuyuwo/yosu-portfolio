@@ -9,6 +9,7 @@ import {
   EXPERIENCE,
   HERO_PORTRAIT,
   RESUME,
+  SITE_DOMAIN_URL,
   SITE_LOCATION,
   SITE_NAME,
   SITE_SOCIALS,
@@ -30,16 +31,54 @@ function displayUrl(href: string): string {
   return href.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")
 }
 
-function contactItems(): { label: string; href?: string }[] {
+type ContactItem = { label: string; href?: string }
+
+function contactRows(): ContactItem[][] {
   const profiles = SITE_SOCIALS.filter((social) =>
     RESUME_PROFILE_IDS.has(social.id)
   ).map((social) => ({ label: displayUrl(social.href), href: social.href }))
 
   return [
-    { label: SITE_LOCATION },
-    { label: CONTACT_EMAIL, href: CONTACT_MAILTO },
-    ...profiles,
+    [
+      { label: SITE_LOCATION },
+      { label: CONTACT_EMAIL, href: CONTACT_MAILTO },
+      { label: displayUrl(SITE_DOMAIN_URL), href: SITE_DOMAIN_URL },
+    ],
+    profiles,
   ]
+}
+
+function ContactRow({
+  items,
+  isFollowing,
+}: {
+  items: ContactItem[]
+  isFollowing: boolean
+}) {
+  return (
+    <Text
+      style={
+        isFollowing
+          ? [styles.contactRow, styles.contactRowFollowing]
+          : styles.contactRow
+      }
+    >
+      {items.map((item, index) => (
+        <Fragment key={item.label}>
+          {index > 0 ? (
+            <Text style={styles.contactSeparator}>{"  /  "}</Text>
+          ) : null}
+          {item.href ? (
+            <Link src={item.href} style={styles.contactLink}>
+              {item.label}
+            </Link>
+          ) : (
+            item.label
+          )}
+        </Fragment>
+      ))}
+    </Text>
+  )
 }
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
@@ -83,29 +122,18 @@ function EntryHead({ title, date }: { title: string; date: string }) {
 }
 
 function Header({ portrait }: { portrait: Buffer }) {
-  const items = contactItems()
-
   return (
     <View style={styles.header}>
       <View style={styles.headerText}>
         <Text style={styles.name}>{SITE_NAME}</Text>
         <Text style={styles.headline}>{RESUME.headline}</Text>
-        <Text style={styles.contactRow}>
-          {items.map((item, index) => (
-            <Fragment key={item.label}>
-              {index > 0 ? (
-                <Text style={styles.contactSeparator}>{"  /  "}</Text>
-              ) : null}
-              {item.href ? (
-                <Link src={item.href} style={styles.contactLink}>
-                  {item.label}
-                </Link>
-              ) : (
-                item.label
-              )}
-            </Fragment>
-          ))}
-        </Text>
+        {contactRows().map((items, index) => (
+          <ContactRow
+            key={items[0]?.label}
+            items={items}
+            isFollowing={index > 0}
+          />
+        ))}
       </View>
       <Image
         src={{ data: portrait, format: "jpg" }}

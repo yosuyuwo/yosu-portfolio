@@ -3,6 +3,8 @@ export const SITE_FAMILY_NAME = "Yuwono"
 export const SITE_NAME = `${SITE_GIVEN_NAME} ${SITE_FAMILY_NAME}`
 export const SITE_SHORT_NAME = SITE_GIVEN_NAME
 
+export const SITE_DOMAIN_URL = "https://yosuayuwono.com"
+
 export const CONTACT_EMAIL = "hello@yosuayuwono.com"
 export const CONTACT_MAILTO = `mailto:${CONTACT_EMAIL}`
 
@@ -788,7 +790,8 @@ export const WORKS = [
 ] as const
 
 export const RESUME_FILE = {
-  href: "/resume/yosua-yuwono-resume.pdf",
+  href: "/resume/Yosua-Yuwono-CV.pdf",
+  legacyHref: "/resume/yosua-yuwono-resume.pdf",
   label: "Download CV",
 } as const
 

@@ -55,6 +55,9 @@ export const styles = StyleSheet.create({
     fontSize: 8.5,
     color: PDF_COLORS.inkMuted,
   },
+  contactRowFollowing: {
+    marginTop: 3,
+  },
   contactLink: {
     color: PDF_COLORS.inkMuted,
     textDecoration: "none",

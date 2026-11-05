@@ -6,9 +6,10 @@ import { renderToFile } from "@react-pdf/renderer"
 import { loadResumePortrait } from "@/lib/resume/load-portrait"
 import { registerResumeFonts } from "@/lib/resume/register-fonts"
 import { ResumeDocument } from "@/lib/resume/resume-document"
+import { RESUME_FILE } from "@/lib/site-content"
 
-const OUTPUT_DIR = path.join(process.cwd(), "public", "resume")
-const OUTPUT_FILE = path.join(OUTPUT_DIR, "yosua-yuwono-resume.pdf")
+const OUTPUT_FILE = path.join(process.cwd(), "public", RESUME_FILE.href)
+const OUTPUT_DIR = path.dirname(OUTPUT_FILE)
 
 async function main() {
   registerResumeFonts()
