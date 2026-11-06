@@ -647,20 +647,83 @@ export const WORKS = [
         heading: "Overview",
         body: "Morfolabs is a blockchain consulting and marketing agency in Indonesia. At the owner's request I rebuilt its site, replacing an older WordPress site made by an outsourced team. Solo build, with a CMS the team edits without a developer. I built it with an AI coding workflow, writing a plan and a spec for the animation work before the code.",
         images: [
-          { src: "/works/morfolabs/cover.webp", alt: "Morfolabs cover" },
+          {
+            src: "/works/morfolabs/hero.webp",
+            alt: "Morfolabs home page with the outlined FIRM wordmark under the headline",
+          },
         ],
       },
       {
         heading: "Motion with a purpose",
         body: '"How we work" is a staircase that scrubs with the scroll, with its own timeline for each screen size so it reads on a phone as well as on a desktop. The hero and the logo marquee move with the scroll, and a three.js grid distortion gives the visuals depth.',
+        images: [
+          {
+            src: "/works/morfolabs/exchanges.webp",
+            alt: "Morfolabs logo marquee of exchanges and aggregators above the services section",
+          },
+        ],
+        imageSide: "left",
       },
       {
         heading: "From code to CMS in six days",
         body: "I first gathered every line of copy into one place in code, then moved it into Payload CMS running inside the same Next.js app: nine collections and thirteen globals, with fields editors understand, such as an icon name, a button style and whether a link opens in a new tab. A seed script and a media migration carried the content across, and media is served from a CDN.",
+        images: [
+          {
+            src: "/works/morfolabs/services.webp",
+            alt: "Morfolabs services cards for marketing, listing and market management",
+          },
+        ],
       },
       {
         heading: "Readable by people and machines",
         body: "An accessibility pass, a sitemap, FAQ structured data and an llms.txt, so the site works for keyboard and screen-reader users and is easy for search engines and AI tools to read.",
+        images: [
+          {
+            src: "/works/morfolabs/faq.webp",
+            alt: "Morfolabs frequently asked questions",
+          },
+        ],
+        imageSide: "left",
+      },
+      {
+        heading: "Screens",
+        images: [
+          {
+            src: "/works/morfolabs/dashboard.webp",
+            alt: "Morfolabs compliance dashboard preview with market depth and volume charts",
+            priority: "primary",
+          },
+          {
+            src: "/works/morfolabs/use-cases.webp",
+            alt: "Morfolabs use cases tabs for different project situations",
+            priority: "secondary",
+          },
+          {
+            src: "/works/morfolabs/proof.webp",
+            alt: "Morfolabs results in numbers above blurred client logos",
+            priority: "secondary",
+          },
+          {
+            src: "/works/morfolabs/about.webp",
+            alt: "Morfolabs about page with its mission and values",
+            priority: "secondary",
+          },
+          {
+            src: "/works/morfolabs/about-stats.webp",
+            alt: "Morfolabs about page figures and closing call to action",
+            priority: "secondary",
+          },
+          {
+            src: "/works/morfolabs/get-started.webp",
+            alt: "Morfolabs project enquiry form on a green gradient",
+            priority: "secondary",
+          },
+          {
+            src: "/works/morfolabs/footer.webp",
+            alt: "Morfolabs footer with the oversized wordmark",
+            priority: "secondary",
+          },
+        ],
       },
     ],
     role: "Frontend",
@@ -753,9 +816,29 @@ export const WORKS = [
             priority: "secondary",
           },
           {
+            src: "/works/abi/government-partners.webp",
+            alt: "Asosiasi Blockchain Indonesia government partner logo grid",
+            priority: "secondary",
+          },
+          {
             src: "/works/abi/dictionary.webp",
             alt: "Asosiasi Blockchain Indonesia legal dictionary of laws and regulations",
             priority: "secondary",
+          },
+          {
+            src: "/works/abi/important-files.webp",
+            alt: "Asosiasi Blockchain Indonesia important files with report covers",
+            priority: "secondary",
+          },
+          {
+            src: "/works/abi/code-of-ethics.webp",
+            alt: "Asosiasi Blockchain Indonesia code of ethics call to action",
+            priority: "secondary",
+          },
+          {
+            src: "/works/abi/boards.webp",
+            alt: "Asosiasi Blockchain Indonesia boards and councils with the executives",
+            priority: "primary",
           },
           {
             src: "/works/abi/events-grid.webp",
@@ -770,6 +853,11 @@ export const WORKS = [
           {
             src: "/works/abi/event-detail.webp",
             alt: "Asosiasi Blockchain Indonesia event article for the 2026 conference",
+            priority: "secondary",
+          },
+          {
+            src: "/works/abi/take-part.webp",
+            alt: "Asosiasi Blockchain Indonesia call to take part in national blockchain initiatives",
             priority: "secondary",
           },
         ],
