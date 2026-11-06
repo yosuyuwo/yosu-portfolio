@@ -12,6 +12,7 @@
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
     "resume:generate": "tsx scripts/generate-resume.tsx",
+    "thumbnails:generate": "tsx scripts/generate-thumbnails.ts",
     "assets:sync": "tsx scripts/sync-r2-assets.ts",
     "chat:questions": "tsx --env-file=.env.local scripts/chat-questions.ts",
     "chat:reports": "tsx --env-file=.env.local scripts/chat-reports.ts",
