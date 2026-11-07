@@ -3,7 +3,7 @@
 import { useMutation } from "@tanstack/react-query"
 import Link from "next/link"
 import { useSelectedLayoutSegments } from "next/navigation"
-import type { ReactNode } from "react"
+import { useState, type ReactNode } from "react"
 
 import { Button } from "@/components/ui/button"
 import { authClient } from "@/lib/sentrasera/auth-client"
@@ -32,6 +32,19 @@ function useActiveHref(basePath: string): string {
   return `${basePath}/${segments.join("/")}`
 }
 
+// lights the clicked tab straight away instead of waiting for the route to arrive
+function useDisplayedHref(activeHref: string) {
+  const [pending, setPending] = useState<{ href: string; from: string } | null>(
+    null
+  )
+  if (pending && pending.from !== activeHref) setPending(null)
+
+  return {
+    displayedHref: pending?.href ?? activeHref,
+    markPending: (href: string) => setPending({ href, from: activeHref }),
+  }
+}
+
 export function PortalShell({
   basePath = "",
   nav,
@@ -39,7 +52,9 @@ export function PortalShell({
   accountDetail,
   children,
 }: Props) {
-  const activeHref = useActiveHref(basePath)
+  const { displayedHref, markPending } = useDisplayedHref(
+    useActiveHref(basePath)
+  )
   const signOut = useMutation({
     mutationFn: () => authClient.signOut(),
     onSuccess: () => window.location.assign("/login"),
@@ -59,7 +74,8 @@ export function PortalShell({
             <Link
               key={item.href}
               href={item.href}
-              aria-current={activeHref === item.href ? "page" : undefined}
+              onNavigate={() => markPending(item.href)}
+              aria-current={displayedHref === item.href ? "page" : undefined}
               className={cn(
                 "rounded-md px-2.5 py-1.5 text-sm whitespace-nowrap text-muted-foreground transition-colors duration-fast hover:text-foreground",
                 "aria-[current=page]:bg-accent aria-[current=page]:font-medium aria-[current=page]:text-accent-foreground"

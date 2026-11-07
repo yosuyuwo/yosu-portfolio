@@ -9,6 +9,7 @@ import { resolvePortalRedirect } from "@/lib/sentrasera/access"
 import type { PortalRole } from "@/lib/sentrasera/schemas"
 import { useTRPC } from "@/lib/trpc/client"
 
+import { usePrefetchPortalData } from "../_hooks/use-prefetch-portal-data"
 import { PortalShell, type PortalNavItem } from "./portal-shell"
 import { QueryError, RowsSkeleton } from "./query-states"
 
@@ -29,6 +30,7 @@ export function PortalGate({ role, basePath, nav, children }: Props) {
   const router = useRouter()
   const me = useQuery(trpc.sentrasera.auth.me.queryOptions())
   const redirectTo = me.isSuccess ? resolvePortalRedirect(me.data, role) : null
+  usePrefetchPortalData(role, Boolean(me.data) && !redirectTo)
 
   useEffect(() => {
     if (redirectTo) router.replace(redirectTo)
