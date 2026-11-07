@@ -23,6 +23,30 @@ test("rating answers must be a whole number from 1 to 5", () => {
   assert.equal(isValidAnswer(question, "2.5"), false)
 })
 
+test("Bahasa choices must line up with the English choices", () => {
+  const base = {
+    categoryId: "7f1f5b1e-3f2c-4a55-9d6e-0b7c2a1d4e11",
+    prompt: "How often?",
+    promptBahasa: "Seberapa sering?",
+    kind: "choice",
+    choices: ["Daily", "Weekly"],
+  }
+  assert.equal(
+    questionInputSchema.safeParse({ ...base, choicesBahasa: ["Harian"] }).success,
+    false
+  )
+  assert.equal(
+    questionInputSchema.safeParse({ ...base, choicesBahasa: ["Harian", "Mingguan"] })
+      .success,
+    true
+  )
+  assert.equal(
+    questionInputSchema.safeParse({ ...base, promptBahasa: "", choicesBahasa: [] })
+      .success,
+    true
+  )
+})
+
 test("choice questions need at least two choices", () => {
   const result = questionInputSchema.safeParse({
     categoryId: "7f1f5b1e-3f2c-4a55-9d6e-0b7c2a1d4e11",

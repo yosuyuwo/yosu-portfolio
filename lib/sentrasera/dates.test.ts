@@ -1,7 +1,13 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
 
-import { groupByDateKey, toPilotDateKey } from "./dates"
+import { formatPilotDateTime, groupByDateKey, toPilotDateKey } from "./dates"
+
+test("formats timestamps in the selected language", () => {
+  const timestamp = "2026-08-17T02:00:00.000Z"
+  assert.match(formatPilotDateTime(timestamp), /17 Aug 2026/)
+  assert.match(formatPilotDateTime(timestamp, "id"), /17 Agu 2026/)
+})
 
 test("uses the pilot's local day, not UTC", () => {
   assert.equal(toPilotDateKey("2026-11-07T18:30:00.000Z"), "2026-11-08")
