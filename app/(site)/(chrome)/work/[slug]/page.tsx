@@ -6,6 +6,7 @@ import { JsonLd } from "@/lib/seo/json-ld"
 import { workSchema } from "@/lib/seo/schemas"
 import { SITE_NAME } from "@/lib/site-content"
 
+import { NOT_FOUND_METADATA } from "../../../_lib/not-found-metadata"
 import { NextWork } from "./_components/next-work"
 import { WorkDetail } from "./_components/work-detail"
 
@@ -18,7 +19,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = await props.params
   const work = WORK_ITEMS.find((w) => w.slug === slug)
-  if (!work) return {}
+  if (!work) return NOT_FOUND_METADATA
   return {
     title: work.title,
     description: work.summary,

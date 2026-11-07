@@ -8,3 +8,7 @@ export const INTRO_VISIT_SCRIPT = `(function(){var r=document.documentElement;tr
 export function shouldSkipIntro(): boolean {
   return document.documentElement.hasAttribute(INTRO_SKIP_ATTR)
 }
+
+export function skipIntro(): void {
+  document.documentElement.setAttribute(INTRO_SKIP_ATTR, "")
+}

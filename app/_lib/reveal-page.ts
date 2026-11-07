@@ -28,6 +28,8 @@ export function markBooted(): void {
 }
 
 export function bootWithoutIntro(): void {
+  // already booted means a client navigation is mounting this, and enterRoute owns the reveal
+  if (document.documentElement.hasAttribute("data-booted")) return
   markEntered(hiddenTargets())
   markBooted()
 }

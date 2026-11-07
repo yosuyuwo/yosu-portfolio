@@ -1,0 +1,25 @@
+html[data-sentrasera] {
+  --background: #fbfbfb;
+  --foreground: #121212;
+  --card: #ffffff;
+  --card-foreground: #121212;
+  --popover: #ffffff;
+  --popover-foreground: #121212;
+  --primary: #002bba;
+  --primary-foreground: #fbfbfb;
+  --secondary: #f3f3f3;
+  --secondary-foreground: #121212;
+  --muted: #f3f3f3;
+  /* #9b9b9b, the palette's grey, is only 2.7:1 on this background: too faint for small text */
+  --muted-foreground: #5c5c5c;
+  --accent: #eff0f8;
+  --accent-foreground: #002bba;
+  --border: rgb(18 18 18 / 14%);
+  --input: rgb(18 18 18 / 22%);
+  --ring: #002bba;
+  --destructive: #ae1d2b;
+
+  --sera-rule: rgb(18 18 18 / 12%);
+  --sera-awaiting: oklch(0.62 0.13 70);
+  --sera-tick-empty: rgb(18 18 18 / 16%);
+}

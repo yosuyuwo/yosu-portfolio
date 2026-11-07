@@ -13,7 +13,7 @@ function r2Hostname() {
 }
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ["*.shares.zrok.io"],
+  allowedDevOrigins: ["*.shares.zrok.io", "sentrasera.localhost"],
   images: {
     remotePatterns: [
       {

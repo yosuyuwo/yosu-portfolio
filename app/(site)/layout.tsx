@@ -1,25 +1,13 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google"
 
-import "./globals.css"
-import { ChatSheet } from "@/app/_components/chat/mobile-sheet"
-import { ContactFooter } from "@/app/_components/contact-footer"
-import { IntroOverlay } from "@/app/_components/intro-overlay"
+import "@/app/globals.css"
 import { RouteEnter } from "@/app/_components/route-enter"
-import { Sidebar } from "@/app/_components/sidebar"
-import { TopBar } from "@/app/_components/top-bar"
-import { ChatPanelProvider } from "@/app/_hooks/use-chat-panel"
-import { ContactDialogProvider } from "@/app/_hooks/use-contact-dialog"
 import { INTRO_VISIT_SCRIPT } from "@/app/_lib/intro-visit"
-import { RAIL_GRID } from "@/app/_lib/page-grid"
-import { toWorkLink } from "@/app/_lib/work-link"
-import { WORK_ITEMS } from "@/app/_lib/works"
 import { ThemeProvider } from "@/components/theme-provider"
 import { SITE_METADATA, SITE_NAME } from "@/lib/site-content"
 import { SITE_URL } from "@/lib/site-url"
 import { cn } from "@/lib/utils"
-
-const WORK_LINKS = WORK_ITEMS.map(toWorkLink)
 
 const fontSans = Geist({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -104,23 +92,8 @@ export default function RootLayout({
           className="pointer-events-none fixed inset-0 z-50 grain opacity-[0.05] mix-blend-multiply dark:opacity-[0.07] dark:mix-blend-screen"
         />
         <ThemeProvider>
-          <ContactDialogProvider>
-            <ChatPanelProvider>
-              <IntroOverlay />
-              <RouteEnter />
-              <div data-site-root>
-                <div className={RAIL_GRID}>
-                  <Sidebar works={WORK_LINKS} />
-                  <div>
-                    <TopBar />
-                    {children}
-                  </div>
-                </div>
-                <ContactFooter />
-              </div>
-              <ChatSheet />
-            </ChatPanelProvider>
-          </ContactDialogProvider>
+          <RouteEnter />
+          {children}
         </ThemeProvider>
       </body>
     </html>
