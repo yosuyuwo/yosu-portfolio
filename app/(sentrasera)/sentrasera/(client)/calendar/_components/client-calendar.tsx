@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query"
 
+import { useMessages } from "@/app/(sentrasera)/sentrasera/_components/portal-locale"
 import { PageHeading } from "@/app/(sentrasera)/sentrasera/_components/page-heading"
 import {
   QueryError,
@@ -12,6 +13,7 @@ import { useTRPC } from "@/lib/trpc/client"
 
 export function ClientCalendar() {
   const trpc = useTRPC()
+  const t = useMessages()
   const updates = useQuery(trpc.sentrasera.updates.list.queryOptions())
   const feedback = useQuery(trpc.sentrasera.feedback.mine.queryOptions())
   const error = updates.error ?? feedback.error
@@ -19,8 +21,8 @@ export function ClientCalendar() {
   return (
     <>
       <PageHeading
-        title="Calendar"
-        description="Upcoming Sentrasera updates, with your feedback and our responses on the day they happened."
+        title={t.calendar.title}
+        description={t.calendar.description}
       />
       {(updates.isPending || feedback.isPending) && !error && <RowsSkeleton />}
       {error && (

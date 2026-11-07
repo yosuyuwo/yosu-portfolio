@@ -1,5 +1,7 @@
 import { cn } from "@/lib/utils"
 
+import { useMessages } from "./portal-locale"
+
 type Props = {
   answered: number
   total: number
@@ -8,12 +10,13 @@ type Props = {
 
 // one mark per question, so progress reads as work remaining rather than an abstract percentage
 export function TickStrip({ answered, total, size = "regular" }: Props) {
+  const t = useMessages()
   const ticks = Array.from({ length: total }, (_, index) => index < answered)
 
   return (
     <div
       role="img"
-      aria-label={`${answered} of ${total} questions answered`}
+      aria-label={t.questions.progressLabel(answered, total)}
       className="flex flex-wrap gap-0.75"
     >
       {ticks.map((isDone, index) => (

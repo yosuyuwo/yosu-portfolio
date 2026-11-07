@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query"
 import { parseAsString, parseAsStringLiteral, useQueryStates } from "nuqs"
 
 import { OptionSelect } from "@/app/(sentrasera)/sentrasera/_components/option-select"
+import { useLocale, useMessages } from "@/app/(sentrasera)/sentrasera/_components/portal-locale"
 import { PageHeading } from "@/app/(sentrasera)/sentrasera/_components/page-heading"
 import {
   EmptyState,
@@ -12,6 +13,7 @@ import {
 } from "@/app/(sentrasera)/sentrasera/_components/query-states"
 import { TickStrip } from "@/app/(sentrasera)/sentrasera/_components/tick-strip"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { pickText, toChoiceOptions } from "@/lib/sentrasera/locale"
 import { useTRPC } from "@/lib/trpc/client"
 
 import { QuestionRow } from "./question-row"
@@ -21,6 +23,8 @@ const ALL_CATEGORIES = "all"
 
 export function QuestionsBoard() {
   const trpc = useTRPC()
+  const locale = useLocale()
+  const t = useMessages()
   const questions = useQuery(
     trpc.sentrasera.questions.listForClient.queryOptions()
   )
@@ -29,7 +33,16 @@ export function QuestionsBoard() {
     category: parseAsString.withDefault(ALL_CATEGORIES),
   })
 
-  const all = questions.data ?? []
+  const all = (questions.data ?? []).map((question) => ({
+    ...question,
+    prompt: pickText(locale, question.prompt, question.promptBahasa),
+    categoryName: pickText(
+      locale,
+      question.categoryName,
+      question.categoryNameBahasa
+    ),
+    options: toChoiceOptions(locale, question.choices, question.choicesBahasa),
+  }))
   const answered = all.filter((question) => question.answer !== null)
   const pending = all.filter((question) => question.answer === null)
   const inStatus = filters.status === "pending" ? pending : answered
@@ -39,7 +52,7 @@ export function QuestionsBoard() {
       question.categoryId === filters.category
   )
   const categoryOptions = [
-    { value: ALL_CATEGORIES, label: "All categories" },
+    { value: ALL_CATEGORIES, label: t.common.allCategories },
     ...[...new Map(all.map((q) => [q.categoryId, q.categoryName]))].map(
       ([value, label]) => ({ value, label })
     ),
@@ -51,8 +64,8 @@ export function QuestionsBoard() {
   return (
     <>
       <PageHeading
-        title="Questions"
-        description="Your answers shape what we build next. You can change an answer at any time."
+        title={t.questions.title}
+        description={t.questions.description}
       />
 
       {questions.isPending && <RowsSkeleton />}
@@ -68,7 +81,7 @@ export function QuestionsBoard() {
           <div className="mb-8 flex flex-col gap-2">
             <TickStrip answered={answered.length} total={all.length} />
             <p className="text-sm text-muted-foreground tabular-nums">
-              {answered.length} of {all.length} answered
+              {t.questions.progress(answered.length, all.length)}
             </p>
           </div>
 
@@ -81,15 +94,15 @@ export function QuestionsBoard() {
             >
               <TabsList>
                 <TabsTrigger value="pending">
-                  Pending ({pending.length})
+                  {t.questions.pendingTab(pending.length)}
                 </TabsTrigger>
                 <TabsTrigger value="answered">
-                  Answered ({answered.length})
+                  {t.questions.answeredTab(answered.length)}
                 </TabsTrigger>
               </TabsList>
             </Tabs>
             <OptionSelect
-              label="Filter by category"
+              label={t.questions.filterByCategory}
               className="w-48"
               value={filters.category}
               options={categoryOptions}
@@ -101,13 +114,13 @@ export function QuestionsBoard() {
             <EmptyState
               title={
                 filters.status === "pending"
-                  ? "You're all caught up"
-                  : "Nothing answered here yet"
+                  ? t.questions.caughtUpTitle
+                  : t.questions.noneAnsweredTitle
               }
             >
               {filters.status === "pending"
-                ? "New questions will appear here as the pilot goes on."
-                : "Answers you give will be kept here."}
+                ? t.questions.caughtUpBody
+                : t.questions.noneAnsweredBody}
             </EmptyState>
           )}
 

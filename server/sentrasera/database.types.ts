@@ -52,6 +52,7 @@ type ProfileRow = {
 type CategoryRow = {
   id: string
   name: string
+  name_bahasa: string | null
   sort_order: number
   created_at: string
 }
@@ -60,8 +61,10 @@ type QuestionRow = {
   id: string
   category_id: string
   prompt: string
+  prompt_bahasa: string | null
   kind: QuestionKind
   choices: string[]
+  choices_bahasa: string[]
   is_active: boolean
   sort_order: number
   created_at: string

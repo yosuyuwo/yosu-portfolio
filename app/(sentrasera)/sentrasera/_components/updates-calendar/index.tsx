@@ -8,9 +8,11 @@ import { Calendar } from "@/components/ui/calendar"
 import { groupByDateKey, toPilotDateKey } from "@/lib/sentrasera/dates"
 import { cn } from "@/lib/utils"
 
+import { useLocale } from "../portal-locale"
 import { CalendarDay, CalendarItemsContext } from "./_components/calendar-day"
 import { ComingUp } from "./_components/coming-up"
 import { DayPanel } from "./_components/day-panel"
+import { DATE_LOCALES } from "./date-locales"
 import type { CalendarFeedback, CalendarUpdate } from "./types"
 
 const DATE_FORMAT = "yyyy-MM-dd"
@@ -35,6 +37,7 @@ export function UpdatesCalendar({
   showAuthor = false,
   renderUpdateActions,
 }: Props) {
+  const locale = useLocale()
   const [monthParam, setMonthParam] = useQueryState("month", parseAsString)
   const [dateParam, setDateParam] = useQueryState("date", parseAsString)
 
@@ -66,6 +69,7 @@ export function UpdatesCalendar({
         <Calendar
           mode="single"
           required
+          locale={DATE_LOCALES[locale]}
           selected={selectedDate}
           month={visibleMonth}
           weekStartsOn={1}

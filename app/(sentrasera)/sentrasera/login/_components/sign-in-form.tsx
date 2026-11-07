@@ -6,32 +6,45 @@ import { useRouter } from "next/navigation"
 import { parseAsString, useQueryState } from "nuqs"
 import { useEffect } from "react"
 
+import { useMessages } from "@/app/(sentrasera)/sentrasera/_components/portal-locale"
 import { TextField } from "@/app/(sentrasera)/sentrasera/_components/form-fields"
 import { Button } from "@/components/ui/button"
 import { authClient } from "@/lib/sentrasera/auth-client"
+import type { PortalMessages } from "@/lib/sentrasera/messages"
 import { signInSchema } from "@/lib/sentrasera/schemas"
 import { useTRPC } from "@/lib/trpc/client"
 
 const TOO_MANY_REQUESTS = 429
 
-async function requestLink(email: string): Promise<string> {
+async function requestLink(
+  email: string,
+  t: PortalMessages
+): Promise<string> {
   const { error } = await authClient.signIn.magicLink({ email })
   if (error?.status === TOO_MANY_REQUESTS) {
-    throw new Error("Too many attempts. Please wait a few minutes.")
+    throw new Error(t.signIn.tooManyAttempts)
   }
-  if (error) throw new Error("We couldn't send your link. Please try again.")
+  if (error) throw new Error(t.signIn.sendFailed)
   return email
 }
 
 export function SignInForm() {
   const trpc = useTRPC()
+  const t = useMessages()
   const router = useRouter()
   const me = useQuery(trpc.sentrasera.auth.me.queryOptions())
   const [linkError] = useQueryState("error", parseAsString)
-  const request = useMutation({ mutationFn: requestLink })
+  const request = useMutation({
+    mutationFn: (email: string) => requestLink(email, t),
+  })
   const form = useForm({
     defaultValues: { email: "" },
-    validators: { onSubmit: signInSchema },
+    validators: {
+      onSubmit: ({ value }) =>
+        signInSchema.safeParse(value).success
+          ? undefined
+          : { fields: { email: { message: t.signIn.invalidEmail } } },
+    },
     onSubmit: ({ value }) => request.mutate(value.email),
   })
 
@@ -42,10 +55,9 @@ export function SignInForm() {
   if (request.isSuccess) {
     return (
       <div className="self-center">
-        <h2 className="font-serif text-3xl">Check your email</h2>
+        <h2 className="font-serif text-3xl">{t.signIn.checkEmailTitle}</h2>
         <p className="mt-3 text-sm text-pretty text-muted-foreground">
-          If {request.data} is part of the pilot, a sign-in link is on its way.
-          It expires in 15 minutes.
+          {t.signIn.checkEmailBody(request.data)}
         </p>
         <Button
           type="button"
@@ -53,7 +65,7 @@ export function SignInForm() {
           className="mt-4"
           onClick={() => request.reset()}
         >
-          Use a different email
+          {t.signIn.differentEmail}
         </Button>
       </div>
     )
@@ -70,17 +82,16 @@ export function SignInForm() {
     >
       {linkError && (
         <p role="alert" className="text-sm text-destructive">
-          That link has expired or was already used. Enter your email for a new
-          one.
+          {t.signIn.linkExpired}
         </p>
       )}
       <form.Field name="email">
         {(field) => (
           <TextField
             field={field}
-            label="Email"
+            label={t.signIn.emailLabel}
             type="email"
-            placeholder="you@company.com"
+            placeholder={t.signIn.emailPlaceholder}
             autoComplete="email"
           />
         )}
@@ -91,7 +102,7 @@ export function SignInForm() {
         </p>
       )}
       <Button type="submit" size="lg" disabled={request.isPending}>
-        {request.isPending ? "Sending…" : "Email me a sign-in link"}
+        {request.isPending ? t.signIn.sending : t.signIn.submit}
       </Button>
     </form>
   )

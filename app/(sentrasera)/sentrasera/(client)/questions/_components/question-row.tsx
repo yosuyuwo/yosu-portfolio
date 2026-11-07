@@ -4,9 +4,11 @@ import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
 import { toast } from "sonner"
 
+import { useLocale, useMessages } from "@/app/(sentrasera)/sentrasera/_components/portal-locale"
 import { useInvalidatePortal } from "@/app/(sentrasera)/sentrasera/_hooks/use-invalidate-portal"
 import { Button } from "@/components/ui/button"
 import { formatPilotDateTime } from "@/lib/sentrasera/dates"
+import type { ChoiceOption } from "@/lib/sentrasera/locale"
 import { isValidAnswer, type QuestionKind } from "@/lib/sentrasera/schemas"
 import { useTRPC } from "@/lib/trpc/client"
 
@@ -18,6 +20,7 @@ type Props = {
     prompt: string
     kind: QuestionKind
     choices: string[]
+    options: ChoiceOption[]
     answer: string | null
     answeredAt: string | null
   }
@@ -25,19 +28,24 @@ type Props = {
 
 export function QuestionRow({ question }: Props) {
   const trpc = useTRPC()
+  const locale = useLocale()
+  const t = useMessages()
   const invalidate = useInvalidatePortal()
   const [isEditing, setIsEditing] = useState(question.answer === null)
   const [draft, setDraft] = useState(question.answer ?? "")
   const save = useMutation(
     trpc.sentrasera.questions.answer.mutationOptions({
       onSuccess: async () => {
-        toast.success("Answer saved")
+        toast.success(t.questions.answerSaved)
         await invalidate()
       },
       onError: (error) => toast.error(error.message),
     })
   )
   const canSave = isValidAnswer(question, draft) && !save.isPending
+  const answerLabel =
+    question.options.find((option) => option.value === question.answer)?.label ??
+    question.answer
 
   return (
     <article className="grid gap-3 py-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-8">
@@ -54,13 +62,13 @@ export function QuestionRow({ question }: Props) {
           <AnswerControl
             questionId={question.id}
             kind={question.kind}
-            choices={question.choices}
+            choices={question.options}
             value={draft}
             onChange={setDraft}
           />
           <div className="flex gap-2">
             <Button type="submit" size="sm" disabled={!canSave}>
-              {save.isPending ? "Saving…" : "Save answer"}
+              {save.isPending ? t.common.saving : t.questions.saveAnswer}
             </Button>
             {question.answer !== null && (
               <Button
@@ -72,7 +80,7 @@ export function QuestionRow({ question }: Props) {
                   setIsEditing(false)
                 }}
               >
-                Cancel
+                {t.common.cancel}
               </Button>
             )}
           </div>
@@ -80,10 +88,10 @@ export function QuestionRow({ question }: Props) {
       ) : (
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <p className="text-sm whitespace-pre-wrap">{question.answer}</p>
+            <p className="text-sm whitespace-pre-wrap">{answerLabel}</p>
             {question.answeredAt && (
               <p className="mt-1 text-xs text-muted-foreground">
-                {formatPilotDateTime(question.answeredAt)}
+                {formatPilotDateTime(question.answeredAt, locale)}
               </p>
             )}
           </div>
@@ -93,7 +101,7 @@ export function QuestionRow({ question }: Props) {
             variant="outline"
             onClick={() => setIsEditing(true)}
           >
-            Edit
+            {t.common.edit}
           </Button>
         </div>
       )}

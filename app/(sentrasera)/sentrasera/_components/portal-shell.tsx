@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { authClient } from "@/lib/sentrasera/auth-client"
 import { cn } from "@/lib/utils"
 
+import { useMessages } from "./portal-locale"
 import { PortalLogo } from "./portal-logo"
 
 export type PortalNavItem = {
@@ -21,6 +22,7 @@ type Props = {
   nav: readonly PortalNavItem[]
   accountName: string
   accountDetail: string | null
+  headerActions?: ReactNode
   children: ReactNode
 }
 
@@ -50,8 +52,10 @@ export function PortalShell({
   nav,
   accountName,
   accountDetail,
+  headerActions,
   children,
 }: Props) {
+  const t = useMessages()
   const { displayedHref, markPending } = useDisplayedHref(
     useActiveHref(basePath)
   )
@@ -67,7 +71,7 @@ export function PortalShell({
           <PortalLogo className="h-5 w-auto" />
         </Link>
         <nav
-          aria-label="Portal"
+          aria-label={t.common.portalNav}
           className="order-last -mx-4 flex w-[calc(100%+2rem)] gap-1 overflow-x-auto px-4 sm:order-none sm:mx-0 sm:w-auto sm:px-0"
         >
           {nav.map((item) => (
@@ -92,6 +96,7 @@ export function PortalShell({
               <p className="text-muted-foreground">{accountDetail}</p>
             )}
           </div>
+          {headerActions}
           <Button
             type="button"
             variant="ghost"
@@ -99,7 +104,7 @@ export function PortalShell({
             disabled={signOut.isPending}
             onClick={() => signOut.mutate()}
           >
-            Sign out
+            {t.common.signOut}
           </Button>
         </div>
       </header>

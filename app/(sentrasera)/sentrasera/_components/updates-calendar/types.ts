@@ -8,6 +8,7 @@ export type CalendarUpdate = {
   status: UpdateStatus
   categoryId: string | null
   categoryName: string | null
+  categoryNameBahasa: string | null
 }
 
 export type CalendarFeedback = {
@@ -15,6 +16,7 @@ export type CalendarFeedback = {
   body: string
   createdAt: string
   categoryName: string | null
+  categoryNameBahasa: string | null
   response: string | null
   respondedAt: string | null
   contactName: string

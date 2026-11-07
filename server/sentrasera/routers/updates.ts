@@ -31,7 +31,7 @@ export const updatesRouter = createTRPCRouter({
       await ctx.db
         .from("sentrasera_updates")
         .select(
-          "id, title, description, scheduled_for, status, category_id, sentrasera_categories(name)"
+          "id, title, description, scheduled_for, status, category_id, sentrasera_categories(name, name_bahasa)"
         )
         .order("scheduled_for")
     )
@@ -43,6 +43,7 @@ export const updatesRouter = createTRPCRouter({
       status: row.status,
       categoryId: row.category_id,
       categoryName: row.sentrasera_categories?.name ?? null,
+      categoryNameBahasa: row.sentrasera_categories?.name_bahasa ?? null,
     }))
   }),
 

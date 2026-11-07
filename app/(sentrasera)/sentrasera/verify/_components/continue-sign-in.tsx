@@ -3,11 +3,13 @@
 import { parseAsString, useQueryState } from "nuqs"
 import { useState } from "react"
 
+import { useMessages } from "@/app/(sentrasera)/sentrasera/_components/portal-locale"
 import { Button } from "@/components/ui/button"
 import { buildVerifyUrl, LOGIN_PATH } from "@/lib/sentrasera/access"
 
 // A click is required because email security scanners open links automatically, which would spend the one-time token.
 export function ContinueSignIn() {
+  const t = useMessages()
   const [token] = useQueryState("token", parseAsString)
   const [isContinuing, setIsContinuing] = useState(false)
 
@@ -15,7 +17,7 @@ export function ContinueSignIn() {
     return (
       <div>
         <p className="text-sm text-muted-foreground">
-          This sign-in link isn&apos;t complete.
+          {t.signIn.incompleteLink}
         </p>
         <Button
           type="button"
@@ -23,7 +25,7 @@ export function ContinueSignIn() {
           className="mt-4"
           onClick={() => window.location.assign(LOGIN_PATH)}
         >
-          Get a new link
+          {t.signIn.newLink}
         </Button>
       </div>
     )
@@ -32,7 +34,7 @@ export function ContinueSignIn() {
   return (
     <div>
       <p className="text-sm text-muted-foreground">
-        You&apos;re one step away from your Sentrasera workspace.
+        {t.signIn.oneStepAway}
       </p>
       <Button
         type="button"
@@ -44,7 +46,7 @@ export function ContinueSignIn() {
           window.location.assign(buildVerifyUrl(token))
         }}
       >
-        {isContinuing ? "Signing in…" : "Continue to Sentrasera"}
+        {isContinuing ? t.signIn.signingIn : t.signIn.continue}
       </Button>
     </div>
   )

@@ -14,7 +14,7 @@ export const categoriesRouter = createTRPCRouter({
       "list categories",
       await ctx.db
         .from("sentrasera_categories")
-        .select("id, name")
+        .select("id, name, name_bahasa")
         .order("sort_order")
         .order("name")
     )
@@ -29,8 +29,12 @@ export const categoriesRouter = createTRPCRouter({
 
       const result = await ctx.db
         .from("sentrasera_categories")
-        .insert({ name: input.name, sort_order: ((count ?? 0) + 1) * SORT_STEP })
-        .select("id, name")
+        .insert({
+          name: input.name,
+          name_bahasa: input.nameBahasa || null,
+          sort_order: ((count ?? 0) + 1) * SORT_STEP,
+        })
+        .select("id, name, name_bahasa")
         .single()
 
       if (result.error?.code === UNIQUE_VIOLATION) {

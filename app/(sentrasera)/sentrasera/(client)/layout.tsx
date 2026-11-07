@@ -1,17 +1,12 @@
 import type { ReactNode } from "react"
 
-import { PortalGate } from "../_components/portal-gate"
-
-const CLIENT_NAV = [
-  { href: "/questions", label: "Questions" },
-  { href: "/feedback", label: "Feedback" },
-  { href: "/calendar", label: "Calendar" },
-] as const
+import { PortalLocaleProvider } from "../_components/portal-locale"
+import { ClientFrame } from "./_components/client-frame"
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
   return (
-    <PortalGate role="client" nav={CLIENT_NAV}>
-      {children}
-    </PortalGate>
+    <PortalLocaleProvider>
+      <ClientFrame>{children}</ClientFrame>
+    </PortalLocaleProvider>
   )
 }

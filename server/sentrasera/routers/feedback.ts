@@ -16,7 +16,7 @@ import {
 } from "../procedures"
 
 const FEEDBACK_COLUMNS =
-  "id, client_id, category_id, body, response, responded_at, created_at, sentrasera_categories(name), client:sentrasera_profiles!sentrasera_feedback_client_id_fkey(contact_name, organization, email)"
+  "id, client_id, category_id, body, response, responded_at, created_at, sentrasera_categories(name, name_bahasa), client:sentrasera_profiles!sentrasera_feedback_client_id_fkey(contact_name, organization, email)"
 
 type FeedbackRecord = {
   id: string
@@ -26,7 +26,7 @@ type FeedbackRecord = {
   response: string | null
   responded_at: string | null
   created_at: string
-  sentrasera_categories: { name: string } | null
+  sentrasera_categories: { name: string; name_bahasa: string | null } | null
   client: { contact_name: string; organization: string | null; email: string }
 }
 
@@ -36,6 +36,7 @@ function toFeedbackItem(row: FeedbackRecord) {
     clientId: row.client_id,
     categoryId: row.category_id,
     categoryName: row.sentrasera_categories?.name ?? null,
+    categoryNameBahasa: row.sentrasera_categories?.name_bahasa ?? null,
     body: row.body,
     response: row.response,
     respondedAt: row.responded_at,

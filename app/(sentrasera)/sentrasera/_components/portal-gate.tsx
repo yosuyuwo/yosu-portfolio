@@ -17,6 +17,7 @@ type Props = {
   role: PortalRole
   basePath?: string
   nav: readonly PortalNavItem[]
+  headerActions?: ReactNode
   children: ReactNode
 }
 
@@ -25,7 +26,13 @@ function GatePlaceholder({ children }: { children: ReactNode }) {
 }
 
 // Decides what to show, not what is allowed: every tRPC procedure enforces the role itself.
-export function PortalGate({ role, basePath, nav, children }: Props) {
+export function PortalGate({
+  role,
+  basePath,
+  nav,
+  headerActions,
+  children,
+}: Props) {
   const trpc = useTRPC()
   const router = useRouter()
   const me = useQuery(trpc.sentrasera.auth.me.queryOptions())
@@ -59,6 +66,7 @@ export function PortalGate({ role, basePath, nav, children }: Props) {
     <PortalShell
       basePath={basePath}
       nav={nav}
+      headerActions={headerActions}
       accountName={me.data.contactName}
       accountDetail={
         me.data.role === "admin" ? "Admin" : me.data.organization

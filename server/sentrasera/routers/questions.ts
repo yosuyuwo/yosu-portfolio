@@ -40,7 +40,7 @@ export const questionsRouter = createTRPCRouter({
       ctx.db
         .from("sentrasera_questions")
         .select(
-          "id, prompt, kind, choices, category_id, sort_order, sentrasera_categories(name, sort_order)"
+          "id, prompt, prompt_bahasa, kind, choices, choices_bahasa, category_id, sort_order, sentrasera_categories(name, name_bahasa, sort_order)"
         )
         .eq("is_active", true),
       ctx.db
@@ -61,10 +61,13 @@ export const questionsRouter = createTRPCRouter({
       .map((question) => ({
         id: question.id,
         prompt: question.prompt,
+        promptBahasa: question.prompt_bahasa,
         kind: question.kind,
         choices: question.choices,
+        choicesBahasa: question.choices_bahasa,
         categoryId: question.category_id,
         categoryName: question.sentrasera_categories.name,
+        categoryNameBahasa: question.sentrasera_categories.name_bahasa,
         answer: answerByQuestion.get(question.id)?.value ?? null,
         answeredAt: answerByQuestion.get(question.id)?.updated_at ?? null,
       }))
@@ -107,15 +110,17 @@ export const questionsRouter = createTRPCRouter({
       await ctx.db
         .from("sentrasera_questions")
         .select(
-          "id, prompt, kind, choices, category_id, is_active, sort_order, sentrasera_categories(name, sort_order), sentrasera_answers(count)"
+          "id, prompt, prompt_bahasa, kind, choices, choices_bahasa, category_id, is_active, sort_order, sentrasera_categories(name, sort_order), sentrasera_answers(count)"
         )
     )
 
     return rows.toSorted(byCategoryThenOrder).map((row) => ({
       id: row.id,
       prompt: row.prompt,
+      promptBahasa: row.prompt_bahasa,
       kind: row.kind,
       choices: row.choices,
+      choicesBahasa: row.choices_bahasa,
       categoryId: row.category_id,
       categoryName: row.sentrasera_categories.name,
       isActive: row.is_active,
@@ -134,8 +139,10 @@ export const questionsRouter = createTRPCRouter({
       const { error } = await ctx.db.from("sentrasera_questions").insert({
         category_id: input.categoryId,
         prompt: input.prompt,
+        prompt_bahasa: input.promptBahasa || null,
         kind: input.kind,
         choices: input.kind === "choice" ? input.choices : [],
+        choices_bahasa: input.kind === "choice" ? input.choicesBahasa : [],
         sort_order: ((count ?? 0) + 1) * SORT_STEP,
       })
       if (error) failInternal("create question", error)
@@ -173,8 +180,10 @@ export const questionsRouter = createTRPCRouter({
         .update({
           category_id: values.categoryId,
           prompt: values.prompt,
+          prompt_bahasa: values.promptBahasa || null,
           kind: values.kind,
           choices,
+          choices_bahasa: values.kind === "choice" ? values.choicesBahasa : [],
           is_active: input.isActive,
           updated_at: new Date().toISOString(),
         })

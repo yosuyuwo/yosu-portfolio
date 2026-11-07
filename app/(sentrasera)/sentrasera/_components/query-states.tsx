@@ -3,6 +3,8 @@ import type { ReactNode } from "react"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 
+import { useMessages } from "./portal-locale"
+
 export function QueryError({
   message,
   onRetry,
@@ -10,9 +12,11 @@ export function QueryError({
   message: string
   onRetry: () => void
 }) {
+  const t = useMessages()
+
   return (
     <div role="alert" className="border-y border-(--sera-rule) py-8">
-      <p className="text-sm font-medium">We couldn&apos;t load this.</p>
+      <p className="text-sm font-medium">{t.common.loadError}</p>
       <p className="mt-1 text-sm text-muted-foreground">{message}</p>
       <Button
         type="button"
@@ -21,7 +25,7 @@ export function QueryError({
         className="mt-4"
         onClick={onRetry}
       >
-        Try again
+        {t.common.tryAgain}
       </Button>
     </div>
   )
@@ -49,10 +53,12 @@ export function EmptyState({
 const SKELETON_KEYS = ["first", "second", "third", "fourth"] as const
 
 export function RowsSkeleton() {
+  const t = useMessages()
+
   return (
     <div
       aria-busy="true"
-      aria-label="Loading"
+      aria-label={t.common.loading}
       className="divide-y divide-(--sera-rule) border-y border-(--sera-rule)"
     >
       {SKELETON_KEYS.map((key) => (

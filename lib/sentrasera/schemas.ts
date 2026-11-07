@@ -36,19 +36,39 @@ export const clientUpdateSchema = z.object({
 
 export const categoryCreateSchema = z.object({
   name: requiredText("Category name", 80),
+  nameBahasa: z.string().trim().max(80, "Bahasa name is too long").default(""),
 })
 
 export const questionInputSchema = z
   .object({
     categoryId: z.uuid("Choose a category"),
     prompt: requiredText("Question", 1000),
+    promptBahasa: z
+      .string()
+      .trim()
+      .max(1000, "Bahasa question is too long")
+      .default(""),
     kind: z.enum(QUESTION_KINDS),
     choices: z.array(requiredText("Choice", 200)).max(20),
+    choicesBahasa: z
+      .array(requiredText("Choice", 200))
+      .max(20)
+      .default([]),
   })
   .refine((value) => value.kind !== "choice" || value.choices.length >= 2, {
     message: "Add at least two choices",
     path: ["choices"],
   })
+  .refine(
+    (value) =>
+      value.kind !== "choice" ||
+      value.choicesBahasa.length === 0 ||
+      value.choicesBahasa.length === value.choices.length,
+    {
+      message: "Add one Bahasa choice for each English choice, in the same order",
+      path: ["choicesBahasa"],
+    }
+  )
 
 export const questionUpdateSchema = z.object({
   id: z.uuid(),

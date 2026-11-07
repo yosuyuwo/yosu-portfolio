@@ -2,6 +2,8 @@ import { format } from "date-fns"
 import type { ReactNode } from "react"
 
 import { FeedbackThread } from "../../feedback-thread"
+import { useLocale, useMessages } from "../../portal-locale"
+import { DATE_LOCALES } from "../date-locales"
 import type { CalendarFeedback, CalendarUpdate } from "../types"
 import { UpdateEntry } from "./update-entry"
 
@@ -20,17 +22,19 @@ export function DayPanel({
   showAuthor,
   renderUpdateActions,
 }: Props) {
+  const locale = useLocale()
+  const t = useMessages()
   const isEmpty = updates.length === 0 && feedback.length === 0
 
   return (
     <section aria-live="polite" aria-labelledby="selected-day">
       <h2 id="selected-day" className="font-serif text-2xl">
-        {format(date, "EEEE, d MMMM")}
+        {format(date, "EEEE, d MMMM", { locale: DATE_LOCALES[locale] })}
       </h2>
 
       {isEmpty && (
         <p className="mt-2 text-sm text-muted-foreground">
-          Nothing on this day.
+          {t.calendar.nothingOnDay}
         </p>
       )}
 

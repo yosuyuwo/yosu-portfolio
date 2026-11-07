@@ -1,3 +1,5 @@
+import type { Locale } from "./locale"
+
 // the pilot runs in Indonesia, so a late-evening submission must land on that local day everywhere
 const PILOT_TIME_ZONE = "Asia/Jakarta"
 
@@ -22,8 +24,13 @@ export function groupByDateKey<T>(
   }, new Map())
 }
 
-export function formatPilotDateTime(isoTimestamp: string): string {
-  return new Intl.DateTimeFormat("en-GB", {
+const DATE_TIME_LOCALES: Record<Locale, string> = { en: "en-GB", id: "id-ID" }
+
+export function formatPilotDateTime(
+  isoTimestamp: string,
+  locale: Locale = "en"
+): string {
+  return new Intl.DateTimeFormat(DATE_TIME_LOCALES[locale], {
     timeZone: PILOT_TIME_ZONE,
     day: "numeric",
     month: "short",

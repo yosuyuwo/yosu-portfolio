@@ -6,6 +6,7 @@ import { toast } from "sonner"
 
 import { TextareaField } from "@/app/(sentrasera)/sentrasera/_components/form-fields"
 import { OptionSelect } from "@/app/(sentrasera)/sentrasera/_components/option-select"
+import { useMessages } from "@/app/(sentrasera)/sentrasera/_components/portal-locale"
 import { useCategoryOptions } from "@/app/(sentrasera)/sentrasera/_hooks/use-category-options"
 import { useInvalidatePortal } from "@/app/(sentrasera)/sentrasera/_hooks/use-invalidate-portal"
 import { Button } from "@/components/ui/button"
@@ -18,6 +19,7 @@ const CATEGORY_FIELD_ID = "feedback-category"
 
 export function FeedbackComposer() {
   const trpc = useTRPC()
+  const t = useMessages()
   const invalidate = useInvalidatePortal()
   const categoryOptions = useCategoryOptions()
   const submit = useMutation(
@@ -30,10 +32,18 @@ export function FeedbackComposer() {
       categoryId: null as string | null,
       body: "",
     },
-    validators: { onSubmit: feedbackSubmitSchema },
+    validators: {
+      onSubmit: ({ value }) => {
+        if (feedbackSubmitSchema.safeParse(value).success) return undefined
+        const message = value.body.trim()
+          ? t.feedback.bodyTooLong
+          : t.feedback.bodyRequired
+        return { fields: { body: { message } } }
+      },
+    },
     onSubmit: async ({ value, formApi }) => {
       await submit.mutateAsync(value)
-      toast.success("Feedback sent")
+      toast.success(t.feedback.sent)
       formApi.reset()
       await invalidate()
     },
@@ -42,7 +52,7 @@ export function FeedbackComposer() {
   return (
     <form
       noValidate
-      aria-label="Send feedback"
+      aria-label={t.feedback.formLabel}
       className="flex flex-col gap-4 self-start border-t border-foreground/80 pt-4 lg:sticky lg:top-6"
       onSubmit={(event) => {
         event.preventDefault()
@@ -52,13 +62,15 @@ export function FeedbackComposer() {
       <form.Field name="categoryId">
         {(field) => (
           <Field>
-            <FieldLabel htmlFor={CATEGORY_FIELD_ID}>Topic</FieldLabel>
+            <FieldLabel htmlFor={CATEGORY_FIELD_ID}>
+              {t.feedback.topic}
+            </FieldLabel>
             <OptionSelect
               id={CATEGORY_FIELD_ID}
-              label="Topic"
+              label={t.feedback.topic}
               value={field.state.value ?? GENERAL}
               options={[
-                { value: GENERAL, label: "General" },
+                { value: GENERAL, label: t.feedback.general },
                 ...categoryOptions,
               ]}
               onChange={(value) =>
@@ -72,14 +84,14 @@ export function FeedbackComposer() {
         {(field) => (
           <TextareaField
             field={field}
-            label="Your feedback"
-            placeholder="What happened, and what would make it better?"
+            label={t.feedback.bodyLabel}
+            placeholder={t.feedback.bodyPlaceholder}
             rows={6}
           />
         )}
       </form.Field>
       <Button type="submit" disabled={submit.isPending}>
-        {submit.isPending ? "Sending…" : "Send feedback"}
+        {submit.isPending ? t.feedback.sending : t.feedback.send}
       </Button>
     </form>
   )

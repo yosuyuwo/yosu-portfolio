@@ -72,24 +72,32 @@ export function QuestionFormDialog({
     trpc.sentrasera.categories.create.mutationOptions({ onError: handleError })
   )
   const [newCategory, setNewCategory] = useState("")
+  const [newCategoryBahasa, setNewCategoryBahasa] = useState("")
 
   const form = useForm({
     defaultValues: {
       categoryId: question?.categoryId ?? categoryOptions[0]?.value ?? "",
       prompt: question?.prompt ?? "",
+      promptBahasa: question?.promptBahasa ?? "",
       kind: (question?.kind ?? "text") as QuestionKind,
       choicesText: question?.choices.join("\n") ?? "",
+      choicesBahasaText: question?.choicesBahasa.join("\n") ?? "",
     },
     validators: {
       onSubmit: ({ value }) => {
         const parsed = questionInputSchema.safeParse({
           categoryId: value.categoryId,
           prompt: value.prompt,
+          promptBahasa: value.promptBahasa,
           kind: value.kind,
           choices: toChoices(value.choicesText),
+          choicesBahasa: toChoices(value.choicesBahasaText),
         })
         if (parsed.success) return undefined
-        const fieldNames = { choices: "choicesText" } as Record<string, string>
+        const fieldNames: Record<string, string> = {
+          choices: "choicesText",
+          choicesBahasa: "choicesBahasaText",
+        }
         return {
           fields: Object.fromEntries(
             parsed.error.issues.map((issue) => {
@@ -104,8 +112,10 @@ export function QuestionFormDialog({
       const values = {
         categoryId: value.categoryId,
         prompt: value.prompt,
+        promptBahasa: value.promptBahasa,
         kind: value.kind,
         choices: toChoices(value.choicesText),
+        choicesBahasa: toChoices(value.choicesBahasaText),
       }
       if (question) {
         await update.mutateAsync({
@@ -124,10 +134,14 @@ export function QuestionFormDialog({
   const isPending = create.isPending || update.isPending
 
   async function addCategory() {
-    const category = await createCategory.mutateAsync({ name: newCategory })
+    const category = await createCategory.mutateAsync({
+      name: newCategory,
+      nameBahasa: newCategoryBahasa,
+    })
     await invalidate()
     form.setFieldValue("categoryId", category.id)
     setNewCategory("")
+    setNewCategoryBahasa("")
   }
 
   return (
@@ -150,6 +164,17 @@ export function QuestionFormDialog({
                 field={field}
                 label="Question"
                 placeholder="e.g. How easy was it to reconcile payments last week?"
+                rows={3}
+              />
+            )}
+          </form.Field>
+
+          <form.Field name="promptBahasa">
+            {(field) => (
+              <TextareaField
+                field={field}
+                label="Question in Bahasa Indonesia (optional)"
+                placeholder="Blank = clients see the English question"
                 rows={3}
               />
             )}
@@ -183,6 +208,14 @@ export function QuestionFormDialog({
                       Add
                     </Button>
                   </div>
+                  <Input
+                    aria-label="New category name in Bahasa Indonesia"
+                    placeholder="New category in Bahasa (optional)"
+                    value={newCategoryBahasa}
+                    onChange={(event) =>
+                      setNewCategoryBahasa(event.target.value)
+                    }
+                  />
                 </Field>
               )}
             </form.Field>
@@ -218,6 +251,33 @@ export function QuestionFormDialog({
                         id={field.name}
                         rows={4}
                         placeholder={"e.g. Very easy\nManageable\nDifficult"}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(event) =>
+                          field.handleChange(event.target.value)
+                        }
+                      />
+                      <FieldError errors={field.state.meta.errors} />
+                    </Field>
+                  )}
+                </form.Field>
+              )
+            }
+          </form.Subscribe>
+
+          <form.Subscribe selector={(state) => state.values.kind}>
+            {(kind) =>
+              kind === "choice" && (
+                <form.Field name="choicesBahasaText">
+                  {(field) => (
+                    <Field>
+                      <FieldLabel htmlFor={field.name}>
+                        Choices in Bahasa Indonesia, same order (optional)
+                      </FieldLabel>
+                      <Textarea
+                        id={field.name}
+                        rows={4}
+                        placeholder={"e.g. Sangat mudah\nCukup mudah\nSulit"}
                         value={field.state.value}
                         onBlur={field.handleBlur}
                         onChange={(event) =>

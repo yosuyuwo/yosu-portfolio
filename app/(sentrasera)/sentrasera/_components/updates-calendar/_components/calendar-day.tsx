@@ -7,6 +7,7 @@ import type { DayButton } from "react-day-picker"
 import { CalendarDayButton } from "@/components/ui/calendar"
 import { cn } from "@/lib/utils"
 
+import { useMessages } from "../../portal-locale"
 import type { CalendarFeedback, CalendarUpdate } from "../types"
 
 const MAX_VISIBLE_UPDATES = 2
@@ -27,6 +28,7 @@ export function CalendarDay({
   className,
   ...props
 }: ComponentProps<typeof DayButton>) {
+  const t = useMessages()
   const { updatesByDay, feedbackByDay } = use(CalendarItemsContext)
   const key = format(day.date, "yyyy-MM-dd")
   const updates = updatesByDay.get(key) ?? []
@@ -35,8 +37,8 @@ export function CalendarDay({
   const hiddenCount = updates.length - MAX_VISIBLE_UPDATES
 
   const summary = [
-    updates.length > 0 && `${updates.length} updates`,
-    feedback.length > 0 && `${feedback.length} feedback`,
+    updates.length > 0 && t.calendar.daySummaryUpdates(updates.length),
+    feedback.length > 0 && t.calendar.daySummaryFeedback(feedback.length),
   ]
     .filter(Boolean)
     .join(", ")
@@ -76,7 +78,7 @@ export function CalendarDay({
         ))}
         {hiddenCount > 0 && (
           <div className="px-1 text-[0.6875rem] text-muted-foreground">
-            +{hiddenCount} more
+            {t.calendar.more(hiddenCount)}
           </div>
         )}
       </div>

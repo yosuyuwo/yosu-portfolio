@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query"
 import { parseAsStringLiteral, useQueryState } from "nuqs"
 
 import { FeedbackThread } from "@/app/(sentrasera)/sentrasera/_components/feedback-thread"
+import { useMessages } from "@/app/(sentrasera)/sentrasera/_components/portal-locale"
 import { PageHeading } from "@/app/(sentrasera)/sentrasera/_components/page-heading"
 import {
   EmptyState,
@@ -19,6 +20,7 @@ const STATUSES = ["all", "awaiting", "responded"] as const
 
 export function FeedbackDesk() {
   const trpc = useTRPC()
+  const t = useMessages()
   const feedback = useQuery(trpc.sentrasera.feedback.mine.queryOptions())
   const [status, setStatus] = useQueryState(
     "status",
@@ -34,13 +36,13 @@ export function FeedbackDesk() {
   return (
     <>
       <PageHeading
-        title="Feedback"
-        description="Tell us what's working and what isn't. Only you and the pilot admin can see this."
+        title={t.feedback.title}
+        description={t.feedback.description}
       />
       <div className="grid gap-12 lg:grid-cols-[22rem_minmax(0,1fr)]">
         <FeedbackComposer />
 
-        <section aria-label="Your feedback">
+        <section aria-label={t.feedback.listLabel}>
           <Tabs
             className="mb-4"
             value={status}
@@ -49,9 +51,13 @@ export function FeedbackDesk() {
             }
           >
             <TabsList>
-              <TabsTrigger value="all">All</TabsTrigger>
-              <TabsTrigger value="awaiting">Awaiting</TabsTrigger>
-              <TabsTrigger value="responded">Responded</TabsTrigger>
+              <TabsTrigger value="all">{t.feedback.allTab}</TabsTrigger>
+              <TabsTrigger value="awaiting">
+                {t.feedback.awaitingTab}
+              </TabsTrigger>
+              <TabsTrigger value="responded">
+                {t.feedback.respondedTab}
+              </TabsTrigger>
             </TabsList>
           </Tabs>
 
@@ -63,8 +69,8 @@ export function FeedbackDesk() {
             />
           )}
           {feedback.data && visible.length === 0 && (
-            <EmptyState title="Nothing here yet">
-              Feedback you send will appear here, along with our response.
+            <EmptyState title={t.feedback.emptyTitle}>
+              {t.feedback.emptyBody}
             </EmptyState>
           )}
           {visible.length > 0 && (

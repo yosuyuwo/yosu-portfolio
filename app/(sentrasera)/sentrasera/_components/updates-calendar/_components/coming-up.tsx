@@ -2,6 +2,8 @@ import { format, parseISO } from "date-fns"
 
 import { Button } from "@/components/ui/button"
 
+import { useLocale, useMessages } from "../../portal-locale"
+import { DATE_LOCALES } from "../date-locales"
 import type { CalendarUpdate } from "../types"
 
 const MAX_COMING_UP = 5
@@ -13,6 +15,8 @@ type Props = {
 }
 
 export function ComingUp({ updates, fromKey, onSelect }: Props) {
+  const locale = useLocale()
+  const t = useMessages()
   const upcoming = updates
     .filter(
       (update) => update.scheduledFor >= fromKey && update.status === "planned"
@@ -22,11 +26,11 @@ export function ComingUp({ updates, fromKey, onSelect }: Props) {
   return (
     <section aria-labelledby="coming-up">
       <h2 id="coming-up" className="font-serif text-2xl">
-        Coming up
+        {t.calendar.comingUp}
       </h2>
       {upcoming.length === 0 ? (
         <p className="mt-2 text-sm text-muted-foreground">
-          No updates scheduled yet.
+          {t.calendar.noneScheduled}
         </p>
       ) : (
         <ul className="mt-2 divide-y divide-(--sera-rule)">
@@ -39,7 +43,9 @@ export function ComingUp({ updates, fromKey, onSelect }: Props) {
                 onClick={() => onSelect(update.scheduledFor)}
               >
                 <span className="w-12 shrink-0 text-xs text-muted-foreground tabular-nums">
-                  {format(parseISO(update.scheduledFor), "d MMM")}
+                  {format(parseISO(update.scheduledFor), "d MMM", {
+                    locale: DATE_LOCALES[locale],
+                  })}
                 </span>
                 <span className="text-sm font-normal">{update.title}</span>
               </Button>
