@@ -89,7 +89,7 @@ export const EXPERIENCE = [
     highlights: [
       "Co-founded a product studio that took client ideas from first brief to launch.",
       "Designed and built Gaiana's rental storefront and back-office end to end (Next.js, tRPC, PostgreSQL), moving the business off spreadsheets and shared drives and going live five months after the first commit.",
-      "Covered Gaiana with about 2,500 Vitest and React Testing Library tests under an 80% coverage threshold, and hardened it for handling private customer documents.",
+      "Covered Gaiana with about 2,500 Vitest and React Testing Library tests, enforcing at least 80% coverage, and hardened it for handling private customer documents.",
       "Led design, frontend and backend for Eastern Star Logistics' freight management system, customer-side shipment tracking and landing page, working with one outsourced developer.",
       "Built with AI agents (Claude Code) in a spec, prototype, test-first pipeline, recording every decision and reviewing and QA-ing each change by hand before it shipped.",
       "Ran production on a self-managed server: Docker images built in GitHub Actions, nightly deploys, backups with restore drills, monitoring and alerts.",
@@ -172,6 +172,38 @@ export const RESUME = {
   summary:
     "Frontend-first product engineer with five years of building web products end to end: UX research, UI design, React and Next.js frontends, APIs and production. In the past year, the main engineer on two client products from first brief to launch. Co-founder of Techova Labs, an AI automation SaaS; previously co-founded Quanta Labs, a product studio, and spent nearly three years at Morfolabs shipping tens of client products. Builds with AI agents every day, then tests and reviews every change by hand: the goal is work polished enough that people are surprised AI was involved at all.",
 } as const
+
+export type ResumeProject = {
+  id: string
+  title: string
+  year: number
+  role: string
+  status: string
+  summary: string
+  stack: readonly string[]
+  afterWorkSlug: string
+}
+
+export const RESUME_PROJECTS: readonly ResumeProject[] = [
+  {
+    id: "eastern-star-logistics",
+    title: "Eastern Star Logistics",
+    year: 2026,
+    role: "Design, Frontend & Backend",
+    status: "Internal system, launching soon",
+    summary:
+      "Freight management system for a sea-freight forwarder that replaced its spreadsheets: quotations, shipments, billing and payments for staff, plus a tracking page customers open from a link without an account.",
+    stack: [
+      "Next.js",
+      "tRPC",
+      "Prisma",
+      "PostgreSQL",
+      "Better Auth",
+      "pdfmake",
+    ],
+    afterWorkSlug: "gaiana",
+  },
+]
 
 export const SITE_METADATA = {
   title: `${SITE_NAME} — ${RESUME.headline}`,

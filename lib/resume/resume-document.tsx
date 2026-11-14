@@ -1,14 +1,14 @@
 import { Children, Fragment, type ReactNode } from "react"
 
-import { Document, Image, Link, Page, Text, View } from "@react-pdf/renderer"
+import { Document, Link, Page, Text, View } from "@react-pdf/renderer"
 
 import {
   CONTACT_EMAIL,
   CONTACT_MAILTO,
   EDUCATION,
   EXPERIENCE,
-  HERO_PORTRAIT,
   RESUME,
+  RESUME_PROJECTS,
   SITE_DOMAIN_URL,
   SITE_LOCATION,
   SITE_NAME,
@@ -17,15 +17,12 @@ import {
   WORKS,
 } from "@/lib/site-content"
 
-import {
-  formatDateRange,
-  formatMonthYear,
-  formatYearRange,
-} from "./format-month-year"
+import { formatDateRange, formatYearRange } from "./format-month-year"
 import { toPdfSafeText } from "./pdf-safe-text"
 import { styles } from "./resume-styles"
 
 const RESUME_PROFILE_IDS = new Set<string>(["linkedin", "github"])
+const SEPARATOR = "  |  "
 
 function displayUrl(href: string): string {
   return href.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")
@@ -66,7 +63,7 @@ function ContactRow({
       {items.map((item, index) => (
         <Fragment key={item.label}>
           {index > 0 ? (
-            <Text style={styles.contactSeparator}>{"  /  "}</Text>
+            <Text style={styles.contactSeparator}>{SEPARATOR}</Text>
           ) : null}
           {item.href ? (
             <Link src={item.href} style={styles.contactLink}>
@@ -104,7 +101,7 @@ function Bullets({ items }: { items: readonly string[] }) {
     <View style={styles.bulletList}>
       {items.map((item) => (
         <View key={item} style={styles.bulletRow}>
-          <View style={styles.bulletMarker} />
+          <Text style={styles.bulletMarker}>•</Text>
           <Text style={styles.bulletText}>{toPdfSafeText(item)}</Text>
         </View>
       ))}
@@ -112,48 +109,40 @@ function Bullets({ items }: { items: readonly string[] }) {
   )
 }
 
-function EntryHead({ title, date }: { title: string; date: string }) {
+function EntryHead({ title, meta }: { title: string; meta: ReactNode }) {
   return (
-    <View style={styles.entryHeadRow}>
-      <Text style={styles.entryTitle}>{title}</Text>
-      <Text style={styles.entryDate}>{date}</Text>
-    </View>
+    <>
+      <Text style={styles.entryTitle}>{toPdfSafeText(title)}</Text>
+      <Text style={styles.entrySubtitle}>{meta}</Text>
+    </>
   )
 }
 
-function Header({ portrait }: { portrait: Buffer }) {
+function Header() {
   return (
     <View style={styles.header}>
-      <View style={styles.headerText}>
-        <Text style={styles.name}>{SITE_NAME}</Text>
-        <Text style={styles.headline}>{RESUME.headline}</Text>
-        {contactRows().map((items, index) => (
-          <ContactRow
-            key={items[0]?.label}
-            items={items}
-            isFollowing={index > 0}
-          />
-        ))}
-      </View>
-      <Image
-        src={{ data: portrait, format: "jpg" }}
-        style={styles.portrait}
-        aria-label={HERO_PORTRAIT.alt}
-      />
+      <Text style={styles.name}>{SITE_NAME}</Text>
+      <Text style={styles.headline}>{RESUME.headline}</Text>
+      {contactRows().map((items, index) => (
+        <ContactRow
+          key={items[0]?.label}
+          items={items}
+          isFollowing={index > 0}
+        />
+      ))}
     </View>
   )
 }
 
 function ExperienceSection() {
   return (
-    <Section title="Experience">
+    <Section title="Work Experience">
       {EXPERIENCE.map((role) => (
         <View key={role.id} style={styles.entry} wrap={false}>
           <EntryHead
             title={role.role}
-            date={formatDateRange(role.startDate, role.endDate)}
+            meta={`${role.organization}${SEPARATOR}${formatDateRange(role.startDate, role.endDate)}`}
           />
-          <Text style={styles.entrySubtitle}>{role.organization}</Text>
           <Bullets items={role.highlights} />
         </View>
       ))}
@@ -161,22 +150,60 @@ function ExperienceSection() {
   )
 }
 
+type ProjectEntry = {
+  id: string
+  title: string
+  year: number
+  role: string
+  link?: string
+  status?: string
+  summary: string
+  stack: readonly string[]
+}
+
+function projectEntries(): ProjectEntry[] {
+  return WORKS.flatMap((work) => [
+    {
+      id: work.id,
+      title: work.title,
+      year: work.year,
+      role: work.role,
+      link: work.liveSite.href,
+      summary: work.summary,
+      stack: work.stack,
+    },
+    ...RESUME_PROJECTS.filter((project) => project.afterWorkSlug === work.slug),
+  ])
+}
+
 function ProjectsSection() {
   return (
-    <Section title="Selected Projects">
-      {WORKS.map((work) => (
-        <View key={work.id} style={styles.entry} wrap={false}>
-          <EntryHead title={work.title} date={String(work.year)} />
-          <Text style={styles.entrySubtitle}>
-            {work.role}
-            {"  /  "}
-            <Link src={work.liveSite.href} style={styles.entryLink}>
-              {displayUrl(work.liveSite.href)}
-            </Link>
+    <Section title="Projects">
+      {projectEntries().map((project) => (
+        <View key={project.id} style={styles.entry} wrap={false}>
+          <EntryHead
+            title={project.title}
+            meta={
+              <>
+                {project.role}
+                {SEPARATOR}
+                {project.year}
+                {SEPARATOR}
+                {project.link ? (
+                  <Link src={project.link} style={styles.entryLink}>
+                    {displayUrl(project.link)}
+                  </Link>
+                ) : (
+                  project.status
+                )}
+              </>
+            }
+          />
+          <Text style={styles.projectSummary}>
+            {toPdfSafeText(project.summary)}
           </Text>
-          <Text style={styles.projectSummary}>{work.summary}</Text>
           <Text style={styles.projectStack}>
-            Stack: {work.stack.join(", ")}
+            Tech stack: {project.stack.join(", ")}
           </Text>
         </View>
       ))}
@@ -188,10 +215,10 @@ function SkillsSection() {
   return (
     <Section title="Skills">
       {SKILL_GROUPS.map((group) => (
-        <View key={group.id} style={styles.skillRow} wrap={false}>
-          <Text style={styles.skillGroupName}>{group.name}</Text>
-          <Text style={styles.skillList}>{group.skills.join(", ")}</Text>
-        </View>
+        <Text key={group.id} style={styles.skillRow}>
+          <Text style={styles.skillGroupName}>{group.name}: </Text>
+          {group.skills.join(", ")}
+        </Text>
       ))}
     </Section>
   )
@@ -206,40 +233,34 @@ function EducationSection() {
         <View key={entry.id} style={styles.entry} wrap={false}>
           <EntryHead
             title={entry.credential}
-            date={formatYearRange(entry.startDate, entry.endDate)}
+            meta={`${entry.institution}${SEPARATOR}${formatYearRange(entry.startDate, entry.endDate)}`}
           />
-          <Text style={styles.entrySubtitle}>{entry.institution}</Text>
         </View>
       ))}
     </Section>
   )
 }
 
-export function ResumeDocument({ portrait }: { portrait: Buffer }) {
-  const updated = formatMonthYear(new Date().toISOString())
-
+export function ResumeDocument() {
   return (
     <Document
       title={`${SITE_NAME} — CV`}
       author={SITE_NAME}
       subject={RESUME.headline}
+      keywords={SKILL_GROUPS.flatMap((group) => group.skills).join(", ")}
       language="en"
     >
       <Page size="A4" style={styles.page}>
-        <Header portrait={portrait} />
+        <Header />
 
         <Section title="Summary">
-          <Text>{RESUME.summary}</Text>
+          <Text>{toPdfSafeText(RESUME.summary)}</Text>
         </Section>
 
         <ExperienceSection />
-        <ProjectsSection />
         <SkillsSection />
+        <ProjectsSection />
         <EducationSection />
-
-        <Text style={styles.footer} fixed>
-          {SITE_NAME} / CV / Updated {updated}
-        </Text>
       </Page>
     </Document>
   )

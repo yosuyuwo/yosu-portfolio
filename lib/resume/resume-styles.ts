@@ -15,27 +15,15 @@ export const styles = StyleSheet.create({
     lineHeight: 1.4,
     color: PDF_COLORS.inkMuted,
     backgroundColor: PDF_COLORS.background,
-    paddingTop: 38,
-    paddingBottom: 44,
+    paddingTop: 36,
+    paddingBottom: 36,
     paddingHorizontal: 44,
   },
 
   header: {
-    flexDirection: "row",
-    alignItems: "flex-end",
     paddingBottom: 12,
     borderBottomWidth: 0.75,
     borderBottomColor: PDF_COLORS.ink,
-  },
-  headerText: {
-    flex: 1,
-    paddingRight: 16,
-  },
-  portrait: {
-    width: 68,
-    height: 85,
-    borderRadius: 4,
-    objectFit: "cover",
   },
   name: {
     fontSize: 25,
@@ -67,7 +55,7 @@ export const styles = StyleSheet.create({
   },
 
   section: {
-    marginTop: 14,
+    marginTop: 12,
   },
   sectionHead: {
     flexDirection: "row",
@@ -92,24 +80,12 @@ export const styles = StyleSheet.create({
   },
 
   entry: {
-    marginBottom: 8,
-  },
-  entryHeadRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "baseline",
+    marginBottom: 7,
   },
   entryTitle: {
-    flex: 1,
-    paddingRight: 12,
     fontSize: 9.5,
     fontWeight: 600,
     color: PDF_COLORS.ink,
-  },
-  entryDate: {
-    fontFamily: PDF_FONTS.mono,
-    fontSize: 7.5,
-    color: PDF_COLORS.inkSubtle,
   },
   entrySubtitle: {
     fontSize: 9,
@@ -137,38 +113,18 @@ export const styles = StyleSheet.create({
     marginTop: 1.5,
   },
   bulletMarker: {
-    width: 2.5,
-    height: 2.5,
-    marginTop: 5,
-    marginRight: 7,
-    marginLeft: 1,
-    borderRadius: 1.25,
-    backgroundColor: PDF_COLORS.inkSubtle,
+    width: 9,
+    color: PDF_COLORS.inkSubtle,
   },
   bulletText: {
     flex: 1,
   },
 
   skillRow: {
-    flexDirection: "row",
     marginBottom: 2.5,
   },
   skillGroupName: {
-    width: 78,
     fontWeight: 600,
     color: PDF_COLORS.ink,
-  },
-  skillList: {
-    flex: 1,
-  },
-
-  footer: {
-    ...LABEL,
-    letterSpacing: 0.6,
-    position: "absolute",
-    bottom: 22,
-    left: 44,
-    fontSize: 6.5,
-    color: PDF_COLORS.inkSubtle,
   },
 })

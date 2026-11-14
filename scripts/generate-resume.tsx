@@ -3,7 +3,6 @@ import path from "node:path"
 
 import { renderToFile } from "@react-pdf/renderer"
 
-import { loadResumePortrait } from "@/lib/resume/load-portrait"
 import { registerResumeFonts } from "@/lib/resume/register-fonts"
 import { ResumeDocument } from "@/lib/resume/resume-document"
 import { RESUME_FILE } from "@/lib/site-content"
@@ -14,8 +13,7 @@ const OUTPUT_DIR = path.dirname(OUTPUT_FILE)
 async function main() {
   registerResumeFonts()
   await mkdir(OUTPUT_DIR, { recursive: true })
-  const portrait = await loadResumePortrait()
-  await renderToFile(<ResumeDocument portrait={portrait} />, OUTPUT_FILE)
+  await renderToFile(<ResumeDocument />, OUTPUT_FILE)
   console.log(`Resume written to ${path.relative(process.cwd(), OUTPUT_FILE)}`)
 }
 
