@@ -19,7 +19,7 @@ export function HireMarker({ onContact }: { onContact: () => void }) {
       </span>
 
       <div className="flex flex-col gap-4 md:col-span-7">
-        <p className="max-w-[28ch] font-serif text-[clamp(1.125rem,1.6vw,1.375rem)] leading-[1.25] italic">
+        <p className="max-w-[28ch] font-serif text-[clamp(1.25rem,1.8vw,1.5rem)] leading-tight font-normal tracking-[-0.02em]">
           {STORY_OUTRO.line}
         </p>
         <div className="flex flex-wrap items-center gap-x-5 gap-y-3">

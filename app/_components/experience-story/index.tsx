@@ -23,10 +23,10 @@ export function ExperienceStory({
   return (
     <div className="mt-4 border-t border-border pt-8 md:pt-10">
       <p className="mb-10 flex items-baseline gap-3 md:mb-12">
-        <span className="text-[clamp(1.5rem,2.4vw,2rem)] leading-none font-semibold tracking-[-0.04em]">
+        <span className="font-serif text-[clamp(1.5rem,2.4vw,2rem)] leading-none font-normal tracking-[-0.025em]">
           {STORY_INTRO.title}
         </span>
-        <span className="font-serif text-[clamp(1.125rem,1.8vw,1.5rem)] text-brand italic">
+        <span className="font-serif text-[clamp(1.125rem,1.8vw,1.5rem)] tracking-[-0.015em] text-brand italic">
           {STORY_INTRO.span}
         </span>
       </p>

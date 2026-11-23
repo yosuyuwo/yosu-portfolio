@@ -14,13 +14,10 @@ export function Intro() {
     >
       <h1
         data-enter
-        className="max-w-[22ch] text-[clamp(1.625rem,3.2vw,2.5rem)] leading-[1.1] font-medium tracking-[-0.035em] text-balance md:col-span-8"
+        className="max-w-[22ch] font-serif text-[clamp(1.625rem,3.2vw,2.5rem)] leading-[1.1] font-normal tracking-[-0.025em] text-balance md:col-span-8"
       >
         <span className="sr-only">{SITE_NAME}, </span>
-        {INTRO.lead}{" "}
-        <em className="font-serif text-[1.12em] font-normal tracking-normal text-brand">
-          {INTRO.emphasis}
-        </em>
+        {INTRO.lead} <em className="text-brand">{INTRO.emphasis}</em>
       </h1>
 
       <dl className="grid content-end gap-3 text-sm md:col-span-4">

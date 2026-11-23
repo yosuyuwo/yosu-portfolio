@@ -89,11 +89,11 @@ export function FooterWordmark() {
       {/* mask clips anything outside the box, so pad the top to give lifted letters headroom */}
       <div
         ref={wordmarkRef}
-        className="-mt-[0.3em] w-max translate-y-[0.12em] [mask-image:linear-gradient(to_bottom,black_0.54em,transparent_1.06em)] pt-[0.3em] pr-[0.06em] leading-[0.8] font-medium tracking-[-0.06em] whitespace-nowrap"
+        className="-mt-[0.3em] w-max translate-y-[0.12em] [mask-image:linear-gradient(to_bottom,black_0.54em,transparent_1.06em)] pt-[0.3em] pr-[0.06em] font-serif leading-[0.8] font-normal tracking-[-0.04em] whitespace-nowrap"
       >
         <p className="text-foreground/[0.08] max-lg:text-background/[0.14] [&_[data-letter]]:[color:color-mix(in_oklch,var(--brand)_calc(var(--lit,0)*100%),currentColor)]">
           {splitLetters(SITE_GIVEN_NAME, 0)}{" "}
-          <span className="font-serif font-normal tracking-normal italic">
+          <span className="italic">
             {splitLetters(SITE_FAMILY_NAME, SITE_GIVEN_NAME.length)}
           </span>
         </p>

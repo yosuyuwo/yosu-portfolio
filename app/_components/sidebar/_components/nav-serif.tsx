@@ -45,7 +45,7 @@ export function NavSerif({
                 aria-hidden
                 className={cn(
                   LAYER_CLASS,
-                  "-bottom-px font-serif text-[1.75rem] leading-none text-brand italic",
+                  "-bottom-px text-[1.75rem] leading-none font-medium tracking-[-0.035em] text-brand",
                   isActive
                     ? "translate-y-0 scale-100 opacity-100 blur-none"
                     : "translate-y-1 scale-75 opacity-0 blur-[2px]"

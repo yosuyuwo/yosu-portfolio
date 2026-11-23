@@ -34,10 +34,22 @@ function useFallingY(fallenRef: RefObject<SVGPathElement | null>) {
       gsap.set(fallen, { svgOrigin: PIVOT })
       gsap
         .timeline({ delay: 0.5 })
-        .to(fallen, { rotation: WOBBLE_DEG, duration: 0.3, ease: "power1.inOut" })
-        .to(fallen, { rotation: SETTLE_DEG, duration: 0.25, ease: "power1.inOut" })
+        .to(fallen, {
+          rotation: WOBBLE_DEG,
+          duration: 0.3,
+          ease: "power1.inOut",
+        })
+        .to(fallen, {
+          rotation: SETTLE_DEG,
+          duration: 0.25,
+          ease: "power1.inOut",
+        })
         .to(fallen, { rotation: FALLEN_DEG, duration: 0.6, ease: "power3.in" })
-        .to(fallen, { rotation: REBOUND_DEG, duration: 0.1, ease: "power2.out" })
+        .to(fallen, {
+          rotation: REBOUND_DEG,
+          duration: 0.1,
+          ease: "power2.out",
+        })
         .to(fallen, { rotation: FALLEN_DEG, duration: 0.12, ease: "power2.in" })
     })
     return () => {
@@ -108,11 +120,8 @@ export function NotFoundContent() {
       </div>
 
       <div className="self-end md:col-span-5">
-        <h1 className="text-[clamp(1.625rem,3.2vw,2.5rem)] leading-[1.1] font-medium tracking-[-0.035em]">
-          This page{" "}
-          <em className="font-serif text-[1.12em] font-normal tracking-normal text-brand">
-            fell over.
-          </em>
+        <h1 className="font-serif text-[clamp(1.625rem,3.2vw,2.5rem)] leading-[1.1] font-normal tracking-[-0.025em]">
+          This page <em className="text-brand">fell over.</em>
         </h1>
         <p className="mt-3 text-pretty text-muted-foreground">
           The link may be old or mistyped. Everything else is still standing.

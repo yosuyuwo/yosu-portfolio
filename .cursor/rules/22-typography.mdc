@@ -1,0 +1,19 @@
+---
+description: Typography — when to use serif, sans and mono
+alwaysApply: true
+---
+
+# Typography
+
+One job per family. Never mix two families inside one role.
+
+| Family | Font | Use for |
+|---|---|---|
+| Serif (`font-serif`) | Gelasio | Headlines: every `h1`–`h3`, dialog titles, the footer wordmark, the closing "Hiring?" line |
+| Sans (`font-sans`, default) | Geist | Everything read or operated: body, subtitles, pull lines, nav, buttons, card titles, form fields |
+| Mono (`font-mono`) | Geist Mono | Small metadata labels (uppercase, tracked) |
+
+- Headlines are `font-serif font-normal` (Gelasio ships one weight; never `font-medium`/`font-semibold` on it) with tracking around `-0.025em`.
+- An emphasis word inside a headline is `<em className="text-brand">` — same family, italic, brand green. No size bump, no family switch.
+- Never put `font-serif` on a paragraph, subtitle, link or button.
+- Sans headings are not allowed; a title that needs weight contrast should change size, not family.

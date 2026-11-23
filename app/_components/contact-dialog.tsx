@@ -25,12 +25,10 @@ const LABEL_CLASS =
 function ContactAside() {
   return (
     <aside className="flex flex-col gap-5 border-b border-border p-6 md:border-r md:border-b-0 md:p-8">
-      <SectionLabel {...SECTIONS.contact} />
-      <DialogTitle className="text-[clamp(2rem,4vw,2.75rem)] leading-[1] font-medium tracking-[-0.04em]">
+      <SectionLabel label={SECTIONS.contact.label} />
+      <DialogTitle className="font-serif text-[clamp(2rem,4vw,2.75rem)] leading-[1] font-normal tracking-[-0.025em]">
         {CONTACT_CTA.lead}{" "}
-        <em className="font-serif text-[1.12em] font-normal tracking-normal text-brand">
-          {CONTACT_CTA.emphasis}
-        </em>
+        <em className="text-brand">{CONTACT_CTA.emphasis}</em>
       </DialogTitle>
       <DialogDescription className="max-w-[34ch] leading-relaxed">
         {CONTACT.dialogDescription}

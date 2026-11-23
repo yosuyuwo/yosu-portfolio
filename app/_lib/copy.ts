@@ -7,9 +7,9 @@ export const INTRO = {
 } as const
 
 export const SECTIONS = {
-  works: { index: "01", label: "Selected work" },
-  about: { index: "02", label: "About" },
-  contact: { index: "03", label: "Contact" },
+  works: { sectionId: "work", label: "Selected work" },
+  about: { sectionId: "about", label: "About" },
+  contact: { sectionId: "contact", label: "Contact" },
 } as const
 
 export const CONTACT_CTA = {

@@ -27,13 +27,13 @@ export function WorkHero({
         </div>
         <Title
           {...heroAttr}
-          className="text-[clamp(2.75rem,7.5vw,6.5rem)] leading-[0.9] font-semibold tracking-[-0.05em] text-balance md:col-span-12"
+          className="font-serif text-[clamp(2.75rem,7.5vw,6.5rem)] leading-[0.95] font-normal tracking-[-0.03em] text-balance md:col-span-12"
         >
           {work.title}
         </Title>
         <p
           {...heroAttr}
-          className="max-w-[48ch] font-serif text-[clamp(1.375rem,2.4vw,1.875rem)] leading-[1.2] text-pretty text-foreground/80 md:col-span-9 md:col-start-4"
+          className="max-w-[48ch] text-[clamp(1.25rem,2vw,1.5rem)] leading-[1.3] tracking-[-0.02em] text-pretty text-foreground/80 md:col-span-9 md:col-start-4"
         >
           {work.summary}
         </p>

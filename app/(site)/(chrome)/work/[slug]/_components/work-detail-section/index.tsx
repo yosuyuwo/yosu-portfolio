@@ -11,7 +11,7 @@ type SectionProps = {
 }
 
 const BODY_TEXT =
-  "max-w-[60ch] text-[clamp(1.0625rem,1.4vw,1.25rem)] leading-[1.6] text-pretty text-foreground/90"
+  "max-w-[60ch] text-[clamp(1.0625rem,1.4vw,1.25rem)] leading-[1.6] tracking-[-0.015em] text-pretty text-foreground/90"
 
 function SplitSection({ section }: SectionProps) {
   const hero =
@@ -21,7 +21,7 @@ function SplitSection({ section }: SectionProps) {
 
   return (
     <section className={cn(CONTENT_GRID, "gap-y-6 md:gap-y-8")}>
-      <h2 className="font-serif text-[1.75rem] leading-[1.05] text-balance md:col-span-3">
+      <h2 className="font-serif text-[1.75rem] leading-[1.05] tracking-[-0.02em] text-balance md:col-span-3">
         {section.heading}
       </h2>
       {section.body ? (
@@ -49,11 +49,11 @@ function StatementSection({ section }: SectionProps) {
 
   return (
     <section className={cn(CONTENT_GRID, "gap-y-6 md:gap-y-10")}>
-      <h2 className="font-serif text-[1.75rem] leading-[1.05] text-balance md:col-span-10">
+      <h2 className="font-serif text-[1.75rem] leading-[1.05] tracking-[-0.02em] text-balance md:col-span-10">
         {section.heading}
       </h2>
       {section.body ? (
-        <p className="max-w-[48ch] text-[clamp(1.25rem,1.9vw,1.625rem)] leading-[1.45] text-pretty text-foreground md:col-span-10">
+        <p className="max-w-[48ch] text-[clamp(1.25rem,1.9vw,1.625rem)] leading-[1.45] tracking-[-0.02em] text-pretty text-foreground md:col-span-10">
           {section.body}
         </p>
       ) : null}
@@ -74,7 +74,7 @@ function WideSection({ section }: SectionProps) {
 
   return (
     <section className={cn(CONTENT_GRID, "gap-y-6 md:gap-y-10")}>
-      <h2 className="max-w-[14ch] font-serif text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[0.98] tracking-[-0.01em] text-balance md:col-span-7">
+      <h2 className="max-w-[14ch] font-serif text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[0.98] tracking-[-0.03em] text-balance md:col-span-7">
         {section.heading}
       </h2>
       {section.body ? (
@@ -103,7 +103,7 @@ function PanelSection({ section }: SectionProps) {
   return (
     <section className="-mx-4 squircle border border-border bg-muted px-4 py-10 md:mx-0 md:px-12 md:py-14">
       <div className={cn(CONTENT_GRID, "gap-y-8 md:gap-y-10")}>
-        <h2 className="font-serif text-[clamp(2rem,3.5vw,2.75rem)] leading-[1.02] text-balance md:col-span-4">
+        <h2 className="font-serif text-[clamp(2rem,3.5vw,2.75rem)] leading-[1.02] tracking-[-0.025em] text-balance md:col-span-4">
           {section.heading}
         </h2>
         {section.body ? (
@@ -125,7 +125,7 @@ function PanelSection({ section }: SectionProps) {
 function GallerySection({ section }: SectionProps) {
   return (
     <section className={cn(CONTENT_GRID, "gap-y-6 md:gap-y-8")}>
-      <h2 className="font-serif text-[1.75rem] leading-[1.05] text-balance md:col-span-12">
+      <h2 className="font-serif text-[1.75rem] leading-[1.05] tracking-[-0.02em] text-balance md:col-span-12">
         {section.heading}
       </h2>
       <GalleryGrid images={section.images ?? []} />

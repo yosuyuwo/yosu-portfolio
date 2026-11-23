@@ -39,7 +39,7 @@ export function Chapter({
 
       <div className="flex flex-col gap-4 md:col-span-7">
         <div>
-          <h3 className="text-[clamp(1.25rem,1.8vw,1.5rem)] leading-tight font-medium tracking-[-0.025em]">
+          <h3 className="font-serif text-[clamp(1.25rem,1.8vw,1.5rem)] leading-tight font-normal tracking-[-0.02em]">
             {chapter.organization}
           </h3>
           <p className={`${MONO_CLASS} mt-2 text-muted-foreground`}>
@@ -47,7 +47,7 @@ export function Chapter({
           </p>
         </div>
 
-        <p className="max-w-[28ch] font-serif text-[clamp(1.125rem,1.6vw,1.375rem)] leading-[1.25] italic">
+        <p className="max-w-[32ch] text-[clamp(1rem,1.25vw,1.125rem)] leading-[1.3] font-medium tracking-[-0.02em]">
           {chapter.pullLine}
         </p>
 

@@ -35,7 +35,7 @@ export function ChatPanel({ onClose, inputRef }: ChatPanelProps) {
       className="flex min-h-0 flex-1 flex-col bg-background"
     >
       <div className="flex h-16 shrink-0 items-center justify-between border-b border-border pr-4 pl-6">
-        <SectionLabel index="AI" label={CHAT_COPY.label} />
+        <SectionLabel label={CHAT_COPY.label} />
         {onClose && (
           <Tooltip>
             <TooltipTrigger

@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google"
+import { Geist, Geist_Mono, Gelasio } from "next/font/google"
 
 import "@/app/globals.css"
 import { RouteEnter } from "@/app/_components/route-enter"
@@ -16,7 +16,7 @@ const fontMono = Geist_Mono({
   variable: "--font-mono",
 })
 
-const fontSerif = Instrument_Serif({
+const fontSerif = Gelasio({
   subsets: ["latin"],
   weight: "400",
   style: ["normal", "italic"],
