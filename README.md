@@ -59,3 +59,7 @@ Upload before deploying a build that references new media.
 ```bash
 pnpm dlx shadcn@latest add button
 ```
+
+## License
+
+All rights reserved. The source is public for reference only: the code, design, and content may not be reused or redeployed. See [LICENSE](LICENSE).
