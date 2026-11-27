@@ -1,15 +1,12 @@
 import gsap from "gsap"
 
 import { STACK_X, Y_OFFSET } from "@/app/_components/logo-mark"
+import { scrollInstant } from "@/app/_lib/smooth-scroll"
 import { liftVideo } from "@/app/_lib/video-handoff"
 
 const LOGO_SPLIT = { duration: 0.8, ease: "power3.inOut" } as const
 const HANDOFF_ATTR = "data-handoff"
 const ENTERED_ATTR = "data-entered"
-
-function scrollInstant(top: number): void {
-  window.scrollTo({ top, behavior: "instant" })
-}
 
 // the sidebar persists across routes, so only reveal what hasn't entered yet
 function hiddenTargets(): HTMLElement[] {

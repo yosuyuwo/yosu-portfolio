@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Gelasio } from "next/font/google"
 
 import "@/app/globals.css"
 import { RouteEnter } from "@/app/_components/route-enter"
+import { SmoothScroll } from "@/app/_components/smooth-scroll"
 import { INTRO_VISIT_SCRIPT } from "@/app/_lib/intro-visit"
 import { ThemeProvider } from "@/components/theme-provider"
 import { SITE_METADATA, SITE_NAME } from "@/lib/site-content"
@@ -93,6 +94,7 @@ export default function RootLayout({
         />
         <ThemeProvider>
           <RouteEnter />
+          <SmoothScroll />
           {children}
         </ThemeProvider>
       </body>
